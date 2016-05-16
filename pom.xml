@@ -15,9 +15,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <inceptionYear>2016</inceptionYear>
+    <name>SASTIX CMS</name>
 
     <modules>
-        <!--<module>common</module>-->
+        <module>common</module>
         <module>server</module>
         <!--<module>clients</module>-->
         <!--<module>integration-tests</module>-->

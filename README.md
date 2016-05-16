@@ -7,3 +7,4 @@ A general purpose java cms
 - Caching
 - Clustering
 - REST api
+- PDF export
