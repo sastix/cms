@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common;
+package com.sastix.cms.common.dataobjects;
 
 public class RestErrorDTO {
     

@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common.client;
+package com.sastix.cms.common.services.htmltopdf;
 
-import com.sastix.cms.common.dataobjects.VersionDTO;
+import com.sastix.cms.common.services.htmltopdf.config.HtmlToPdfConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface ApiVersionClient {
+@Service
+public class PdfBuilder {
+    private static final Logger LOG = LoggerFactory.getLogger(PdfBuilder.class);
 
-    VersionDTO getApiVersion();
-    
-    String getContext();
-    
-    String getApiUrl();
+    @Autowired
+    HtmlToPdfConfig htmlToPdfConfig;
 
-    void updateContext();
+
+    public PdfImpl build(){
+        return new PdfImpl(htmlToPdfConfig);
+    }
 }

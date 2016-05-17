@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common;
+package com.sastix.cms.common.dataobjects;
 
 import java.util.HashMap;
 import java.util.Map;

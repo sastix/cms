@@ -14,17 +14,28 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common.client;
+package com.sastix.cms.common.services.api;
 
 import com.sastix.cms.common.dataobjects.VersionDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-public interface ApiVersionClient {
+@Service
+public class ApiVersionServiceImpl implements ApiVersionService {
+    /**
+     * this is the API version we support
+     */
+    private VersionDTO version;
 
-    VersionDTO getApiVersion();
-    
-    String getContext();
-    
-    String getApiUrl();
+    @Autowired
+    public ApiVersionServiceImpl(@Value("#{new com.sastix.cms.common.dataobjects.VersionDTO()}") VersionDTO version) {
+        this.version = version;
+    }
 
-    void updateContext();
+    @Override
+    public VersionDTO getApiVersion() {
+        return version;
+    }
+
 }

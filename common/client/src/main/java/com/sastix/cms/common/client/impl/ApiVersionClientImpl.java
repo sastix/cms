@@ -16,7 +16,7 @@
 
 package com.sastix.cms.common.client.impl;
 
-import com.sastix.cms.common.VersionDTO;
+import com.sastix.cms.common.dataobjects.VersionDTO;
 import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.constants.Constants;

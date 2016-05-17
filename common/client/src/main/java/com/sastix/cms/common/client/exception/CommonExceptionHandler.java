@@ -18,7 +18,7 @@ package com.sastix.cms.common.client.exception;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sastix.cms.common.RestErrorDTO;
+import com.sastix.cms.common.dataobjects.RestErrorDTO;
 import com.sastix.cms.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common.client;
+package com.sastix.cms.common.services.hazelcast;
 
-import com.sastix.cms.common.dataobjects.VersionDTO;
+import com.hazelcast.core.HazelcastInstance;
 
-public interface ApiVersionClient {
-
-    VersionDTO getApiVersion();
-    
-    String getContext();
-    
-    String getApiUrl();
-
-    void updateContext();
+public interface HazelcastService {
+    /**
+     * Get a hazelcast instance
+     *
+     * @return a Hazelcast instance
+     * */
+    HazelcastInstance hazelcastInstance();
 }
