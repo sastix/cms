@@ -26,9 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-/**
- * Created by akribopo on 28/2/2015.
- */
 public class ApiVersionClientImpl implements ApiVersionClient {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(ApiVersionClient.class);
