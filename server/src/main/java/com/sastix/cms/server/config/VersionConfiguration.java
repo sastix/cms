@@ -26,7 +26,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.ccs.lykio")
+@ComponentScan("com.sastix.cms")
 public class VersionConfiguration {
     public static VersionDTO CMS_SERVER_VERSION = new VersionDTO()
             .withMinVersion(Double.valueOf(Constants.REST_API_1_0))
