@@ -26,6 +26,8 @@ package com.sastix.cms.common.constants;
  */
 public interface Constants {
 
+    String REST_API_1_0 = "1.0";
+
     String GET_API_VERSION = "/apiversion";
     
     String DEFAULT_LANGUAGE = "en";
