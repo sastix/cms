@@ -16,10 +16,10 @@
 
 package com.sastix.cms.client.config;
 
+import com.sastix.cms.common.Constants;
 import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.client.impl.ApiVersionClientImpl;
-import com.sastix.cms.dataobjects.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright(c) 2016 the original author or authors.
+  ~ Copyright(c) 2017 the original author or authors.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -22,17 +22,15 @@
 
     <parent>
         <groupId>com.sastix.cms</groupId>
-        <artifactId>cms-parent</artifactId>
+        <artifactId>cms-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-
     <groupId>com.sastix.cms</groupId>
-    <artifactId>cms-client</artifactId>
+    <artifactId>common-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>CMS Client</name>
+    <name>Common Api</name>
 
     <dependencies>
         <dependency>
@@ -41,19 +39,16 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sastix.cms</groupId>
-            <artifactId>common-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sastix.cms</groupId>
-            <artifactId>common-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -62,29 +57,13 @@
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
-            <version>1.1.2.RELEASE</version>
+            <version>${spring.retry.version}</version>
         </dependency>
-        <!-- http://mvnrepository.com/artifact/org.mockito/mockito-core -->
+
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-spring</artifactId>
+            <version>${hazelcast.version}</version>
         </dependency>
-
-
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

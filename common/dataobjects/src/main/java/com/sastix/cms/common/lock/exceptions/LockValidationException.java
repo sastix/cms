@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2016 the original author or authors.
+ * Copyright(c) 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.client;
+package com.sastix.cms.common.lock.exceptions;
 
-import com.sastix.cms.common.api.CmsApi;
+import com.sastix.cms.common.exception.BusinessException;
 
-public interface CmsClient extends CmsApi {
+public class LockValidationException extends BusinessException {
 
+    private static final long serialVersionUID = 1318419478939387138L;
+
+    public LockValidationException(String message) {
+        super(message);
+    }
+
+    public LockValidationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

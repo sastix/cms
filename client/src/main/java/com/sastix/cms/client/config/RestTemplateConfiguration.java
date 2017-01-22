@@ -16,17 +16,17 @@
 
 package com.sastix.cms.client.config;
 
+import com.sastix.cms.common.cache.exceptions.CacheValidationException;
+import com.sastix.cms.common.cache.exceptions.DataNotFound;
 import com.sastix.cms.common.client.CmsRetryPolicy;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.client.exception.CommonExceptionHandler;
 import com.sastix.cms.common.client.exception.ExceptionHandler;
-import com.sastix.cms.dataobjects.cache.exceptions.CacheValidationException;
-import com.sastix.cms.dataobjects.cache.exceptions.DataNotFound;
-import com.sastix.cms.dataobjects.content.exceptions.*;
-import com.sastix.cms.dataobjects.lock.exceptions.LockNotAllowed;
-import com.sastix.cms.dataobjects.lock.exceptions.LockNotFound;
-import com.sastix.cms.dataobjects.lock.exceptions.LockNotHeld;
-import com.sastix.cms.dataobjects.lock.exceptions.LockValidationException;
+import com.sastix.cms.common.content.exceptions.*;
+import com.sastix.cms.common.lock.exceptions.LockNotAllowed;
+import com.sastix.cms.common.lock.exceptions.LockNotFound;
+import com.sastix.cms.common.lock.exceptions.LockNotHeld;
+import com.sastix.cms.common.lock.exceptions.LockValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

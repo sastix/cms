@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2016 the original author or authors.
+ * Copyright(c) 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.client;
+package com.sastix.cms.common.cache.exceptions;
 
-import com.sastix.cms.common.api.CmsApi;
+import com.sastix.cms.common.exception.BusinessException;
 
-public interface CmsClient extends CmsApi {
+/**
+ * Validation Exception.
+ */
+public class CacheValidationException extends BusinessException {
 
+    private static final long serialVersionUID = -7614905584248712049L;
+
+    /**
+     * Constructor that allows a specific error message to be specified.
+     *
+     * @param message detail message.
+     */
+    public CacheValidationException(String message) {
+        super(message);
+    }
 }

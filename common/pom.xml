@@ -22,5 +22,6 @@
         <module>dataobjects</module>
         <module>services</module>
         <module>client</module>
+        <module>api</module>
     </modules>
 </project>

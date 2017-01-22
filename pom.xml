@@ -20,8 +20,8 @@
     <modules>
         <module>common</module>
         <module>server</module>
-        <module>dataobjects</module>
-        <!--<module>clients</module>-->
+        <!--<module>dataobjects</module>-->
+        <module>client</module>
         <!--<module>integration-tests</module>-->
     </modules>
 	
