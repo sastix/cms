@@ -130,7 +130,7 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
     }
 
     @Override
-    public String getLykioResourceStartPage(Map<String, byte[]> bytesMap) {
+    public String getResourceStartPage(Map<String, byte[]> bytesMap) {
         byte[] dataJson = bytesMap.get(METADATA_JSON_FILE);
         String json ="";
         if (dataJson == null){
@@ -139,7 +139,7 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
         try {
             json = new String(dataJson,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            LOG.error("Error in determining if it is a lykio zip resource: {}", e.getLocalizedMessage());
+            LOG.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
             return null;
         }
 
@@ -180,7 +180,6 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
     public DataMaps replaceRelativePaths(DataMaps dataMaps) throws IOException {
         /**
          * TODO: check performance...
-         * author iskitsas
          * */
         Map<String,byte[]> modifiedBytesMap =new HashMap<>();
         for (Map.Entry<String, byte[]> entry : dataMaps.getBytesMap().entrySet()) {

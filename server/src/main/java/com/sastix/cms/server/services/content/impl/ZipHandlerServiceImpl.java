@@ -97,15 +97,15 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
             final String zipType;
             final String startPage;
 
-            // Check if it is a Lykio file
+            // Check if it is a cms file
             if (map.containsKey(METADATA_JSON_FILE)) {
                 zipType = METADATA_JSON_FILE;
-                LOG.info("Found Lykio Metadata File " + map.get(zipType).toString());
-                startPage = findLykioStartPage(map.get(zipType));
+                LOG.info("Found CMS Metadata File " + map.get(zipType).toString());
+                startPage = findStartPage(map.get(zipType));
                 // Check if it is a Scrom file
             } else if (map.containsKey(METADATA_XML_FILE)) {
                 zipType = METADATA_XML_FILE;
-                LOG.info("Found Lykio Metadata File " + map.get(zipType).toString());
+                LOG.info("Found CMS Metadata File " + map.get(zipType).toString());
                 startPage = findScormStartPage(map.get(zipType));
 
             } else {
@@ -179,12 +179,12 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
         return type.toLowerCase().contains("zip");
     }
 
-    public String findLykioStartPage(final Path metadataPath) {
+    public String findStartPage(final Path metadataPath) {
         final String json;
         try {
             json = new String(Files.readAllBytes(metadataPath), "UTF-8");
         } catch (IOException e) {
-            LOG.error("Error in determining if it is a lykio zip resource: {}", e.getLocalizedMessage());
+            LOG.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
             throw new ResourceAccessError("Zip " + metadataPath.getFileName() + " cannot be read. ");
         }
 

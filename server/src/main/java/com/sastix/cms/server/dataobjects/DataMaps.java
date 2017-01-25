@@ -19,9 +19,6 @@ package com.sastix.cms.server.dataobjects;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by iskitsas on 31/3/2015.
- */
 public class DataMaps {
     Map<String, byte[]> bytesMap;
     Map<String, byte[]> modifiedBytesMap;

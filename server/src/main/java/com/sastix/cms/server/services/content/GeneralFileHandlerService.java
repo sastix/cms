@@ -40,7 +40,7 @@ public interface GeneralFileHandlerService {
     String getMediaType(byte[] bytes) throws IOException;
 
     /**
-     * Find the parent file from the metadata xml provided in the CCS resource
+     * Find the parent file from the metadata xml provided in the unit resource
      *
      * @param xml string content
      * @return the filename of the parent
@@ -49,7 +49,7 @@ public interface GeneralFileHandlerService {
 
     /**
      * Replace all relative paths used in web files (html, htm, js, css)
-     * with CCS UID urls
+     * with resource UID urls
      *
      * */
     void replaceRelativePathsInWebFiles(File file, Map<String, String> paths);

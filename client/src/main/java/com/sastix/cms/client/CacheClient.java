@@ -18,9 +18,6 @@ package com.sastix.cms.client;
 
 import com.sastix.cms.common.api.CacheApi;
 
-/**
- * Created by iskitsas on 1/24/17.
- */
 public interface CacheClient extends CacheApi {
     // Add any additional client interfaces
     String getUID();

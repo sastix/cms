@@ -21,9 +21,6 @@ import com.sastix.cms.server.dataobjects.DataMaps;
 import java.io.IOException;
 import java.util.Map;
 
-/**
- * Created by iskitsas on 29/3/2015.
- */
 public interface ZipFileHandlerService {
 
 
@@ -47,7 +44,7 @@ public interface ZipFileHandlerService {
 
     /**
      * Check if the extracted files from byte array include info.json file with a startpage attribute.
-     * If present, the specified zip is a Lykio resource.
+     * If present, the specified zip is a cms resource.
      *
      * a sample of info.json could be:
      * {
@@ -57,7 +54,7 @@ public interface ZipFileHandlerService {
      *    "totalpages":"1"
      *    }
      * */
-    String getLykioResourceStartPage(Map<String, byte[]> bytesMap);
+    String getResourceStartPage(Map<String, byte[]> bytesMap);
 
     /**
      * Find the parent resource from metadata
@@ -65,7 +62,7 @@ public interface ZipFileHandlerService {
     String findParentResource(Map<String, byte[]> bytesMap);
 
     /**
-     * Replace relative paths in web files with paths from CCS-CMS
+     * Replace relative paths in web files with paths from CMS
      * */
 
     @Deprecated

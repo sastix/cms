@@ -61,7 +61,7 @@ public class CommonResourceServiceImpl {
         resource.setPath(r.getPath());
         resource.setResource(r.getResource());
         resource.setUri(r.getUri());
-        //resource.setResources(r.getResources()); //TODO: check org.hibernate.HibernateException: Found shared references to a collection: com.ccs.lykio.cr.server.domain.Resource.resources
+        //resource.setResources(r.getResources()); //TODO: check org.hibernate.HibernateException: Found shared references to a collection: com.sastix.cms.server.domain.Resource.resources
         resource.setResourceTenantId(r.getResourceTenantId());
         resource.setUid(r.getUid());
         return resource;
@@ -151,7 +151,7 @@ public class CommonResourceServiceImpl {
         String scormLandingPage = null;
         Resource parentResource = null;
         boolean isScormType=false;
-        boolean isLykioResourceWithStartPage = false;
+        boolean isResourceWithStartPage = false;
         try {
             //get the zip bytes inserted
             insertedBytes = hashedDirectoryService.getBytesByURI(resourceURI, zipResource.getResourceTenantId());
@@ -161,10 +161,10 @@ public class CommonResourceServiceImpl {
                 DataMaps dataMaps = zipFileHandlerService.unzip(insertedBytes);
                 //is a scorm type
                 isScormType= zipFileHandlerService.isScormType(dataMaps.getBytesMap());
-                //is a lykio resource with a startpage
-                startPage = zipFileHandlerService.getLykioResourceStartPage(dataMaps.getBytesMap());
-                isLykioResourceWithStartPage=!StringUtils.isEmpty(startPage);
-                if (isScormType || isLykioResourceWithStartPage) {
+                //is a cms resource with a startpage
+                startPage = zipFileHandlerService.getResourceStartPage(dataMaps.getBytesMap());
+                isResourceWithStartPage=!StringUtils.isEmpty(startPage);
+                if (isScormType || isResourceWithStartPage) {
                     /**
                      * Keep uid in a map for each resource found in zip
                      * uid: context (uuid of the zip) + filename
@@ -190,7 +190,7 @@ public class CommonResourceServiceImpl {
 
                 //find parent
                 String parentFilename = zipFileHandlerService.findParentResource(dataMaps.getBytesMap());
-                if(isLykioResourceWithStartPage){
+                if(isResourceWithStartPage){
                     parentFilename = startPage;
                 }
 
