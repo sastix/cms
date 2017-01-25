@@ -22,6 +22,8 @@ public interface Constants {
      * Rest API Version.
      */
     static String REST_API_1_0 = "1.0";
+    String GET_API_VERSION = "/apiversion";
+    String DEFAULT_LANGUAGE = "en";
 
     /**
      * CONTENT API ENDPOINTS
@@ -33,6 +35,10 @@ public interface Constants {
     static String GET_DATA = "getData";
     static String GET_MULTIPART_DATA = "getMultiPartData";
     static String GET_DATA_FROM_UUID = "getDataUuid";
+    static String GET_PARENT_UUID = "getParentUuid";
+    static String LOCK_RESOURCE_DTO = "lockResourceDTO";
+    static String UNLOCK_RESOURCE_DTO = "unlockResourceDTO";
+    static String RENEW_RESOURCE_DTO_LOCK = "renewResourceDtoLock";
 
     /**
      * CACHE API ENDPOINTS

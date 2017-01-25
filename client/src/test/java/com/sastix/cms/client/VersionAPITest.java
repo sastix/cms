@@ -17,14 +17,13 @@
 package com.sastix.cms.client;
 
 import com.sastix.cms.client.config.RestTemplateConfiguration;
-import com.sastix.cms.client.impl.CmsClientImpl;
+import com.sastix.cms.client.impl.CmsClient;
 import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.client.impl.ApiVersionClientImpl;
 import com.sastix.cms.common.dataobjects.VersionDTO;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.mockito.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,9 +38,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,7 +47,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {CmsClient.class, CmsClientImpl.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class})
+@SpringApplicationConfiguration(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class})
 @ActiveProfiles("test")
 @IntegrationTest({
         // cr client properties
@@ -67,7 +64,7 @@ public class VersionAPITest {
             .withVersionContext(1.0, "/cms/v1.0");
 
     @InjectMocks
-    CmsClient cmsClient = new CmsClientImpl();
+    CmsClient cmsClient = new CmsClient();
 
     @Mock
     ApiVersionClientImpl apiVersionClient;

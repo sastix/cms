@@ -16,9 +16,8 @@
 
 package com.sastix.cms.common.services.web;
 
-
+import com.sastix.cms.common.Constants;
 import com.sastix.cms.common.dataobjects.VersionDTO;
-import com.sastix.cms.common.constants.Constants;
 import com.sastix.cms.common.services.api.ApiVersionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

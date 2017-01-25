@@ -17,8 +17,13 @@
 package com.sastix.cms.client.impl;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.sastix.cms.client.CmsClient;
+import com.sastix.cms.client.CacheClient;
+import com.sastix.cms.client.ContentClient;
+import com.sastix.cms.client.LockClient;
 import com.sastix.cms.common.Constants;
+import com.sastix.cms.common.api.CacheApi;
+import com.sastix.cms.common.api.ContentApi;
+import com.sastix.cms.common.api.LockApi;
 import com.sastix.cms.common.cache.CacheDTO;
 import com.sastix.cms.common.cache.QueryCacheDTO;
 import com.sastix.cms.common.cache.RemoveCacheDTO;
@@ -64,8 +69,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class CmsClientImpl implements CmsClient,BeanFactoryAware {
-    private Logger LOG = (Logger) LoggerFactory.getLogger(CmsClientImpl.class);
+public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFactoryAware {
+    private Logger LOG = (Logger) LoggerFactory.getLogger(CmsClient.class);
 
     @Autowired
     @Qualifier("CmsApiVersionClient")
@@ -101,7 +106,7 @@ public class CmsClientImpl implements CmsClient,BeanFactoryAware {
 
     @Override
     public LockedResourceDTO lockResource(ResourceDTO resourceDTO) throws ResourceNotFound, ResourceNotOwned, ResourceAccessError, ContentValidationException {
-        String url = apiVersionClient.getApiUrl() + "/" + Constants.LOCK_RESOURCE;
+        String url = apiVersionClient.getApiUrl() + "/" + Constants.LOCK_RESOURCE_DTO;
         LOG.trace("API call: " + url);
         LOG.trace("Request: " + resourceDTO.toString());
         LockedResourceDTO lockedResourceDTO = retryRestTemplate.postForObject(url, resourceDTO, LockedResourceDTO.class);
@@ -111,7 +116,7 @@ public class CmsClientImpl implements CmsClient,BeanFactoryAware {
 
     @Override
     public void unlockResource(LockedResourceDTO lockedResourceDTO) throws ResourceNotFound, ResourceNotOwned, ContentValidationException {
-        String url = apiVersionClient.getApiUrl() + "/" + Constants.UNLOCK_RESOURCE;
+        String url = apiVersionClient.getApiUrl() + "/" + Constants.UNLOCK_RESOURCE_DTO;
         LOG.trace("API call: " + url);
         LOG.trace("Request: " + lockedResourceDTO.toString());
         retryRestTemplate.postForObject(url, lockedResourceDTO, LockedResourceDTO.class);
@@ -119,7 +124,7 @@ public class CmsClientImpl implements CmsClient,BeanFactoryAware {
 
     @Override
     public LockedResourceDTO renewResourceLock(LockedResourceDTO lockedResourceDTO) throws ResourceNotFound, ResourceNotOwned, ContentValidationException {
-        String url = apiVersionClient.getApiUrl() + "/" + Constants.RENEW_RESOURCE_LOCK;
+        String url = apiVersionClient.getApiUrl() + "/" + Constants.RENEW_RESOURCE_DTO_LOCK;
         LOG.trace("API call: " + url);
         LOG.trace("Request: " + lockedResourceDTO.toString());
         LockedResourceDTO newLockedResourceDTO = retryRestTemplate.postForObject(url, lockedResourceDTO, LockedResourceDTO.class);
@@ -221,6 +226,16 @@ public class CmsClientImpl implements CmsClient,BeanFactoryAware {
     }
 
     @Override
+    public String getParentResource(final String uuid) throws ResourceNotFound {
+        String url = apiVersionClient.getApiUrl() + "/" + Constants.GET_PARENT_UUID;
+        LOG.trace("API call: " + url);
+        LOG.trace("Request of parent uuid of: " + uuid);
+        String ret = retryRestTemplate.postForObject(url, uuid, String.class);
+        LOG.trace("Response: {}", ret);
+        return ret;
+    }
+
+    @Override
     public URL getDataURL(final String uri) throws IOException {
         final String url = apiVersionClient.getApiUrl() + "/" + Constants.GET_DATA + "/" + uri;
         return new URL(url);
@@ -317,6 +332,17 @@ public class CmsClientImpl implements CmsClient,BeanFactoryAware {
         StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.CLEAR_CACHE_ALL_EXCEPT);
         LOG.debug("API call: " + url);
         retryRestTemplate.postForObject(url.toString(), cacheRegions, List.class);
+    }
+
+    @Override
+    public String getUID(String region) {
+        StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.GET_UID);
+        LOG.debug("API call: " + url);
+        if(StringUtils.isEmpty(region)){
+            region = Constants.UID_REGION;
+        }
+        final String UID = retryRestTemplate.postForObject(url.toString(), region, String.class);
+        return UID;
     }
 
     @Override

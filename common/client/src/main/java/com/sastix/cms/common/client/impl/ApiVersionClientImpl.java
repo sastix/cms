@@ -16,10 +16,10 @@
 
 package com.sastix.cms.common.client.impl;
 
+import com.sastix.cms.common.Constants;
 import com.sastix.cms.common.dataobjects.VersionDTO;
 import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
-import com.sastix.cms.common.constants.Constants;
 import com.sastix.cms.common.exception.VersionNotSupportedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import org.springframework.core.env.Environment;
 
 public class ApiVersionClientImpl implements ApiVersionClient {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(ApiVersionClient.class);
+    private Logger LOG = (Logger) LoggerFactory.getLogger(ApiVersionClient.class);
 
     private String host;
     private String port;
@@ -74,9 +74,9 @@ public class ApiVersionClientImpl implements ApiVersionClient {
     @Override
     public VersionDTO getApiVersion() {
         String url = getUrlRoot() + "/" + Constants.GET_API_VERSION;
-        logger.trace("API call: " + url);
+        LOG.trace("API call: " + url);
         VersionDTO versionDTO = retryRestTemplate.getForObject(url, VersionDTO.class);
-        logger.trace("Response: " + versionDTO.toString());
+        LOG.trace("Response: " + versionDTO.toString());
         return versionDTO;
     }
 

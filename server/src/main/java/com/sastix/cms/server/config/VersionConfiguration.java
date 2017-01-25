@@ -16,7 +16,7 @@
 
 package com.sastix.cms.server.config;
 
-import com.sastix.cms.common.constants.Constants;
+import com.sastix.cms.common.Constants;
 import com.sastix.cms.common.dataobjects.VersionDTO;
 import com.sastix.cms.common.services.api.ApiVersionService;
 import com.sastix.cms.common.services.api.ApiVersionServiceImpl;

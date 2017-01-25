@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CommonExceptionHandler implements ResponseErrorHandler {
 
-    private Logger LOGGER = LoggerFactory
+    private Logger LOG = LoggerFactory
             .getLogger(CommonExceptionHandler.class);
 
     /**
@@ -115,13 +115,13 @@ public class CommonExceptionHandler implements ResponseErrorHandler {
                 
                 try {
                     errorDTO = objectMapper.readValue(new String(responseBody, charset), RestErrorDTO.class);
-                    LOGGER.error("Exception: " + errorDTO.toString());
+                    LOG.error("Exception: " + errorDTO.toString());
                 } catch (final Exception e) {
                     //Wasn't able to map String on ErrorDTO.
                     //It is an Unknown Exception
                     //Throw Default Exception
                     final HttpClientErrorException clientErrorException = new HttpClientErrorException(statusCode, statusText, httpHeaders, responseBody, charset);
-                    LOGGER.error("Unknown Exception: " + clientErrorException.getMessage());
+                    LOG.error("Unknown Exception: " + clientErrorException.getMessage());
                     throw clientErrorException;
                 }
 

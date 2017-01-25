@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2016 the original author or authors.
+ * Copyright(c) 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package com.sastix.cms.common.constants;
+package com.sastix.cms.server.services.content;
 
-/**
- * This is a constants interface that is SPECIFIC ONLY to the common package.
- * Other constants (e.g. CR/DL/DC) should be placed to their OWN constants
- * interface, otherwise you risk re-deploying everything just to refer to a new
- * constant.
- * 
- * @author tangelatos
- */
-public interface Constants {
+public interface DistributedCacheService {
 
-    String REST_API_1_0 = "1.0";
+    void cacheIt(String uri, String tenantId);
 
-    String GET_API_VERSION = "/apiversion";
-    
-    String DEFAULT_LANGUAGE = "en";
-
+    void updateCache(String uri, String tenantId);
 }
