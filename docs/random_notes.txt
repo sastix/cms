@@ -1,0 +1,12 @@
+ ---------------------------------
+ - Setting the initial code base -
+ ---------------------------------
+
+ The importance of spring boot profiles
+
+ url:
+ http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/boot-features-profiles.html
+
+ There are scenarios in our case we could use specific profiles for unit or integration tests.
+
+ In Cache/Resource/Lock services we have specific beans initialized based on application properties. This logic could be replaced by using SB profiles
