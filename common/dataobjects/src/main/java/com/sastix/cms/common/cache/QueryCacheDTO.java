@@ -89,4 +89,12 @@ public class QueryCacheDTO implements Serializable {
     public void setCacheRegion(String cacheRegion) {
         this.cacheRegion = cacheRegion;
     }
+
+    @Override
+    public String toString() {
+        return "QueryCacheDTO{" +
+                "cacheKey='" + cacheKey + '\'' +
+                ", cacheRegion='" + cacheRegion + '\'' +
+                '}';
+    }
 }

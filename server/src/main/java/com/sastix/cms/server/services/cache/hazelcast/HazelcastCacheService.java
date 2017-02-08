@@ -114,7 +114,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public CacheDTO getCachedResource(QueryCacheDTO queryCacheDTO) throws DataNotFound, CacheValidationException {
-        LOG.info("HazelcastCacheService->getCachedResource ({},{})", queryCacheDTO.getCacheKey(), queryCacheDTO.getCacheRegion());
+        LOG.info("HazelcastCacheService->getCachedResource ({})", queryCacheDTO!=null?queryCacheDTO.toString():"null");
         nullValidationChecker(queryCacheDTO, QueryCacheDTO.class);
         String cacheKey = queryCacheDTO.getCacheKey();
 
