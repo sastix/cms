@@ -32,9 +32,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/**
- * Created by iskitsas on 6/3/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=CacheFileUtilsServiceImpl.class)
 public class CacheFileUtilsServiceTest {
