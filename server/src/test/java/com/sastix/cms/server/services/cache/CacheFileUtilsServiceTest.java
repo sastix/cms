@@ -57,8 +57,7 @@ public class CacheFileUtilsServiceTest {
         //from online resource
         URL localFile = getClass().getClassLoader().getResource("./logo.png");
         byte[] expected = Files.readAllBytes(Paths.get(localFile.getFile()));
-        System.setProperty("http.agent", "Chrome");
-        byte[] bytesFound = cacheFileUtilsService.downloadResource(new URL("https://www.sastix.com/logo.png"));
+        byte[] bytesFound = cacheFileUtilsService.downloadResource(new URL("https://raw.githubusercontent.com/sastix/cms/master/server/src/test/resources/logo.png"));
         Assert.assertArrayEquals(expected,bytesFound);
     }
 }
