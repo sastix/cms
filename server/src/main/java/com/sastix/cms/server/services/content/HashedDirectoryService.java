@@ -53,6 +53,8 @@ public interface HashedDirectoryService {
 
     String getVolume();
 
+    void setVolume(String value);
+
     void storeChecksum(final String tenantID, final String checksum) throws IOException;
 
     String getChecksum(final String tenantID) throws IOException;
