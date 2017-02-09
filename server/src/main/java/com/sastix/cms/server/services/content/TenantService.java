@@ -18,11 +18,6 @@ package com.sastix.cms.server.services.content;
 
 import java.io.IOException;
 
-/**
- * Interface of Tenant Service.
- *
- * @author: akribopo
- */
 public interface TenantService {
 
     void checkTenants();
