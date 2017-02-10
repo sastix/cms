@@ -30,6 +30,7 @@ import com.sastix.cms.common.lock.exceptions.LockValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.web.client.RestClientException;
@@ -37,6 +38,7 @@ import org.springframework.web.client.RestClientException;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Profile("production")
 @Configuration
 public class RestTemplateConfiguration {
 

@@ -47,9 +47,6 @@ import static org.junit.Assert.fail;
 public class ResourceServiceTest {
 
     @Autowired
-    HashedDirectoryService fileService;
-
-    @Autowired
     ResourceService resourceService;
 
     @Autowired
@@ -63,7 +60,7 @@ public class ResourceServiceTest {
     @Before
     public void setup() throws Exception {
         //set a temporary volume for this test
-        fileService.setVolume(temporaryFolder.getRoot().getAbsolutePath() + "/");
+        hashedDirectoryService.setVolume(temporaryFolder.getRoot().getAbsolutePath() + "/");
     }
 
     @Test

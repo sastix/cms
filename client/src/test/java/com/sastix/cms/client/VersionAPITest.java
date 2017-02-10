@@ -48,7 +48,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class})
-@ActiveProfiles("test")
+@ActiveProfiles({"production", "test"})
 @IntegrationTest({
         // cr client properties
         "cms.server.host:localhost",
