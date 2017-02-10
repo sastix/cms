@@ -76,8 +76,8 @@ public class CacheServiceTest {
         try {
             cacheService.cacheResource(cacheDTO);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("You cannot cache a resource with a null key"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("You cannot cache a resource with a null key"));
         }
     }
 
@@ -98,8 +98,8 @@ public class CacheServiceTest {
         try {
             cacheService.cacheResource(null);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("CacheDTO object cannot be null"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("CacheDTO object cannot be null"));
         }
     }
 
@@ -113,8 +113,8 @@ public class CacheServiceTest {
         try {
             cacheService.cacheResource(cacheDTO);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("Client should NOT be able to send both blob AND URI. Only one of them"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("Client should NOT be able to send both blob AND URI. Only one of them"));
         }
     }
 
@@ -123,8 +123,8 @@ public class CacheServiceTest {
         try {
             cacheService.getCachedResource(new QueryCacheDTO());
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("You cannot get a cache a resource with a null key"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("You cannot get a cache a resource with a null key"));
         }
     }
 
@@ -133,8 +133,8 @@ public class CacheServiceTest {
         try {
             cacheService.getCachedResource(null);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("QueryCacheDTO object cannot be null"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("QueryCacheDTO object cannot be null"));
         }
     }
 
@@ -145,8 +145,8 @@ public class CacheServiceTest {
         try {
             cacheService.getCachedResource(queryCacheDTO);
             fail("Expected DataNotFound exception");
-        }catch(DataNotFound e){
-            assertThat(e.getMessage(),containsString("A cached resource could not be found with the given key: dummy key"));
+        } catch (DataNotFound e) {
+            assertThat(e.getMessage(), containsString("A cached resource could not be found with the given key: dummy key"));
         }
     }
 
@@ -168,8 +168,8 @@ public class CacheServiceTest {
         try {
             cacheService.getCachedResource(new QueryCacheDTO(cacheKey));
             fail("Expected DataNotFound exception");
-        }catch(DataNotFound e){
-            assertThat(e.getMessage(),containsString("A cached resource could not be found with the given key: "+cacheKey));
+        } catch (DataNotFound e) {
+            assertThat(e.getMessage(), containsString("A cached resource could not be found with the given key: " + cacheKey));
         }
     }
 
@@ -178,8 +178,8 @@ public class CacheServiceTest {
         try {
             cacheService.removeCachedResource(new RemoveCacheDTO());
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("You cannot remove a cached a resource with a null cache key"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("You cannot remove a cached a resource with a null cache key"));
         }
     }
 
@@ -188,35 +188,35 @@ public class CacheServiceTest {
         try {
             cacheService.removeCachedResource(null);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("RemoveCacheDTO object cannot be null"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("RemoveCacheDTO object cannot be null"));
         }
     }
 
     @Test
     public void removeCachedResourceWithNonExistingKeyTest() throws IOException {
-        String key="dummy-doom";
+        String key = "dummy-doom";
         RemoveCacheDTO removeCacheDTO = new RemoveCacheDTO();
         removeCacheDTO.setCacheKey(key);
         try {
             cacheService.removeCachedResource(removeCacheDTO);
             fail("Expected DataNotFound exception");
-        }catch(DataNotFound e){
-            assertThat(e.getMessage(),containsString("Nothing to remove. There is no cached resource with the given key: "+key));
+        } catch (DataNotFound e) {
+            assertThat(e.getMessage(), containsString("Nothing to remove. There is no cached resource with the given key: " + key));
         }
     }
 
     @Test
     public void removeCachedResourceFromRegionWithNonExistingKeyTest() throws IOException {
-        String key="dummy-doom";
+        String key = "dummy-doom";
         RemoveCacheDTO removeCacheDTO = new RemoveCacheDTO();
         removeCacheDTO.setCacheKey(key);
         removeCacheDTO.setCacheRegion("custom-region");
         try {
             cacheService.removeCachedResource(removeCacheDTO);
             fail("Expected DataNotFound exception");
-        }catch(DataNotFound e){
-            assertThat(e.getMessage(),containsString("Nothing to remove. There is no cached resource with the given key: "+key));
+        } catch (DataNotFound e) {
+            assertThat(e.getMessage(), containsString("Nothing to remove. There is no cached resource with the given key: " + key));
         }
     }
 
@@ -225,8 +225,8 @@ public class CacheServiceTest {
         try {
             cacheService.clearCache(new RemoveCacheDTO());
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("A cacheRegion was not provided. If you want to clear all caches use the clearCache() without passing any object."));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("A cacheRegion was not provided. If you want to clear all caches use the clearCache() without passing any object."));
         }
     }
 
@@ -237,8 +237,8 @@ public class CacheServiceTest {
         try {
             cacheService.clearCache(removeCacheDTO);
             fail("Expected DataNotFound exception");
-        }catch(DataNotFound e){
-            assertThat(e.getMessage(),containsString("The supplied region was not available – did not exist"));
+        } catch (DataNotFound e) {
+            assertThat(e.getMessage(), containsString("The supplied region was not available – did not exist"));
         }
     }
 
@@ -247,8 +247,8 @@ public class CacheServiceTest {
         try {
             cacheService.clearCache(null);
             fail("Expected CacheValidationException exception");
-        }catch(CacheValidationException e){
-            assertThat(e.getMessage(),containsString("RemoveCacheDTO object cannot be null"));
+        } catch (CacheValidationException e) {
+            assertThat(e.getMessage(), containsString("RemoveCacheDTO object cannot be null"));
         }
     }
 }

@@ -17,7 +17,6 @@
 package com.sastix.cms.server.services.cache;
 
 import com.sastix.cms.server.CmsServer;
-import com.sastix.cms.server.services.lock.dummy.DummyLockService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -41,12 +40,12 @@ import static org.junit.Assert.assertTrue;
 public class UIDServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(UIDServiceTest.class);
-    
+
     @Autowired
     CacheService cacheService;
 
     @Test
-    public void createUIDsTest(){
+    public void createUIDsTest() {
         String region = "region0";
         String uid1 = cacheService.getUID(region);
         String uid2 = cacheService.getUID(region);
@@ -65,26 +64,26 @@ public class UIDServiceTest {
      * from hazelcast. A helper map is used to validate that the service is eventually creating
      * unique ids. If we were using only the hazelcast idGenerator the map should have 250 items
      * because of the duplicates
-     * */
+     */
 
     static final int NTHREDS = 15;
     static final int numberOfTasks = 500;
     CountDownLatch latch = new CountDownLatch(numberOfTasks);
     boolean duplicateFound = false;
-    Map<String,String> ids = new ConcurrentHashMap<>();
-    Map<String,Map<String,String>> regionIdsMap = new ConcurrentHashMap<>();
+    Map<String, String> ids = new ConcurrentHashMap<>();
+    Map<String, Map<String, String>> regionIdsMap = new ConcurrentHashMap<>();
 
     @Test
     public void massiveUIDCreatorTest() throws InterruptedException {
 
-        String region1= "r1";
-        String region2= "r2";
-        regionIdsMap.put(region1,new HashMap<>());
-        regionIdsMap.put(region2,new HashMap<>());
+        String region1 = "r1";
+        String region2 = "r2";
+        regionIdsMap.put(region1, new HashMap<>());
+        regionIdsMap.put(region2, new HashMap<>());
         ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
         for (int i = 0; i < numberOfTasks; i++) {
             String region = region1;
-            if(i%2 == 0){
+            if (i % 2 == 0) {
                 region = region2;
             }
             Runnable worker = new UIDRunnable(region);
@@ -100,16 +99,15 @@ public class UIDServiceTest {
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
         assertEquals(numberOfTasks, ids.size());
-        assertEquals(numberOfTasks/2, regionIdsMap.get(region1).size());
-        assertEquals(numberOfTasks/2, regionIdsMap.get(region2).size());
+        assertEquals(numberOfTasks / 2, regionIdsMap.get(region1).size());
+        assertEquals(numberOfTasks / 2, regionIdsMap.get(region2).size());
         assertTrue(!duplicateFound);
         LOG.info("Finished all threads");
     }
 
-
-
-    class UIDRunnable implements Runnable{
+    class UIDRunnable implements Runnable {
         String region;
+
         public UIDRunnable(String region) {
             this.region = region;
         }
@@ -117,22 +115,22 @@ public class UIDServiceTest {
         @Override
         public void run() {
             String uid = cacheService.getUID(region);
-            if(!ids.containsKey(uid)){
-                ids.put(uid,uid);
-                LOG.info("Adding: "+uid);
+            if (!ids.containsKey(uid)) {
+                ids.put(uid, uid);
+                LOG.info("Adding: " + uid);
 
-            }else{
+            } else {
                 duplicateFound = true;
-                LOG.info("All ready contained (region "+region+"): "+uid);
+                LOG.info("All ready contained (region " + region + "): " + uid);
             }
 
-            Map<String,String> regionMap = regionIdsMap.get(region);
-            if(!regionMap.containsKey(uid)){
+            Map<String, String> regionMap = regionIdsMap.get(region);
+            if (!regionMap.containsKey(uid)) {
                 regionMap.put(uid, uid);
-                LOG.info("Adding (region "+region+"): "+uid);
+                LOG.info("Adding (region " + region + "): " + uid);
 
-            }else{
-                LOG.info("All ready contained (region "+region+"): "+uid);
+            } else {
+                LOG.info("All ready contained (region " + region + "): " + uid);
             }
             latch.countDown();
         }

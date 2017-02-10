@@ -17,7 +17,6 @@
 package com.sastix.cms.server.services.cache;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -35,7 +34,7 @@ import java.nio.file.Paths;
 
 @ActiveProfiles({"production", "test"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=CacheFileUtilsServiceImpl.class)
+@ContextConfiguration(classes = CacheFileUtilsServiceImpl.class)
 public class CacheFileUtilsServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(CacheFileUtilsServiceTest.class);
 
@@ -48,7 +47,7 @@ public class CacheFileUtilsServiceTest {
         URL localFile = getClass().getClassLoader().getResource("./logo.png");
         byte[] bytesFound = cacheFileUtilsService.downloadResource(localFile);
         byte[] expected = Files.readAllBytes(Paths.get(localFile.getFile()));
-        Assert.assertArrayEquals(expected,bytesFound);
+        Assert.assertArrayEquals(expected, bytesFound);
 
     }
 
@@ -58,6 +57,6 @@ public class CacheFileUtilsServiceTest {
         URL localFile = getClass().getClassLoader().getResource("./logo.png");
         byte[] expected = Files.readAllBytes(Paths.get(localFile.getFile()));
         byte[] bytesFound = cacheFileUtilsService.downloadResource(new URL("https://raw.githubusercontent.com/sastix/cms/master/server/src/test/resources/logo.png"));
-        Assert.assertArrayEquals(expected,bytesFound);
+        Assert.assertArrayEquals(expected, bytesFound);
     }
 }

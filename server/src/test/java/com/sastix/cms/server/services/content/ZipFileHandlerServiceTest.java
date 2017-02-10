@@ -33,10 +33,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-@ActiveProfiles({"production","test"})
+@ActiveProfiles({"production", "test"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ZipFileHandlerServiceImpl.class, GeneralFileHandlerServiceImpl.class})
 public class ZipFileHandlerServiceTest {

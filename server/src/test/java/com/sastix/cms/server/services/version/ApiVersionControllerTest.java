@@ -54,7 +54,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
         //server properties
         "cms.retry.maxAttempts:1"
 })
-@ActiveProfiles({"production","test"})
+@ActiveProfiles({"production", "test"})
 public class ApiVersionControllerTest {
     private Logger LOG = LoggerFactory.getLogger(ApiVersionControllerTest.class);
 
@@ -75,9 +75,9 @@ public class ApiVersionControllerTest {
 
         assertNotNull("service should be resolved", service);
         VersionDTO apiVersion = service.getApiVersion();
-        assertEquals("DTO should be the same",apiVersion, VersionConfiguration.CMS_SERVER_VERSION);
+        assertEquals("DTO should be the same", apiVersion, VersionConfiguration.CMS_SERVER_VERSION);
 
-        LOG.info("DTO returned by api call : {} " ,apiVersion);
+        LOG.info("DTO returned by api call : {} ", apiVersion);
 
     }
 
@@ -93,6 +93,6 @@ public class ApiVersionControllerTest {
                 .andReturn();
 
         assertEquals("Status should be 200 - OK", 200, result.getResponse().getStatus());
-        assertEquals("JSON response should be exactly "+TEST_VERSION_JSON, result.getResponse().getContentAsString(), TEST_VERSION_JSON);
+        assertEquals("JSON response should be exactly " + TEST_VERSION_JSON, result.getResponse().getContentAsString(), TEST_VERSION_JSON);
     }
 }

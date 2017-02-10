@@ -72,7 +72,7 @@ public class HashedDirectoryServiceTest {
     }
 
     @After
-    public void clear() {
+    public void cleanup() throws Exception {
         final Path path = Paths.get(VOLUME);
         LOGGER.info("Cleaning temp path {}", path.toString());
         try {
@@ -94,7 +94,7 @@ public class HashedDirectoryServiceTest {
         hashedDirectoryService.storeChecksum("23", checksum);
 
         String newSum = hashedDirectoryService.getChecksum("23");
-        assertEquals("checksum should be the same",checksum,newSum);
+        assertEquals("checksum should be the same", checksum, newSum);
     }
 
 
