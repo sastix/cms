@@ -1,0 +1,28 @@
+series: xenial
+applications: 
+  mariadb: 
+    charm: "cs:trusty/mariadb-7"
+    num_units: 1
+    annotations: 
+      "gui-x": "850"
+      "gui-y": "665"
+    to: 
+      - "0"
+  sastix-cms: 
+    charm: "cs:~sastix/sastix-cms-0"
+    num_units: 1
+    annotations: 
+      "gui-x": "850"
+      "gui-y": "400"
+    to: 
+      - "1"
+relations: 
+  - - "mariadb:db"
+    - "sastix-cms:mysql"
+machines: 
+  "0": 
+    series: trusty
+    constraints: arch=amd64
+  "1": 
+    series: xenial
+    constraints: arch=amd64

@@ -1,0 +1,7 @@
+repo: git@github.com:sastix/cmse-charm-layer.git
+includes: ['layer:basic', 'interface:mysql']
+options:
+  basic:
+    use_venv: true
+    packages:
+      - default-jre
