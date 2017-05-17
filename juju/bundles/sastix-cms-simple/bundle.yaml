@@ -9,11 +9,12 @@ applications:
     to: 
       - "0"
   sastix-cms: 
-    charm: "cs:~sastix/sastix-cms-0"
+    charm: "cs:~sastix/sastix-cms-1"
     num_units: 1
     annotations: 
       "gui-x": "850"
       "gui-y": "400"
+    expose: true
     to: 
       - "1"
 relations: 

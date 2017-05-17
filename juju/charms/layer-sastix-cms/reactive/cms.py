@@ -22,7 +22,8 @@ def setup(mysql):
     cmd = ['java', '-jar', 'resources/jars/cms-server-0.0.1-SNAPSHOT.jar',
           '--spring.datasource.url={}'.format(connectionstr),
           '--spring.datasource.username={}'.format(mysql.user()),
-          '--spring.datasource.password={}'.format(mysql.password())]
+          '--spring.datasource.password={}'.format(mysql.password()),
+          '--security.basic.enabled=false']
     Popen(cmd)
     open_port(9082)
     status_set('active', 'ready')
