@@ -33,8 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
@@ -47,13 +46,14 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class})
-@ActiveProfiles({"production", "test"})
-@IntegrationTest({
+@SpringBootTest(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class},
+properties = {
         // cr client properties
         "cms.server.host:localhost",
         "cms.server.port:8080",
         "api.version:1.0"})
+@ActiveProfiles({"production", "test"})
+
 public class VersionAPITest {
 
     private Logger LOG = (Logger) LoggerFactory.getLogger(VersionAPITest.class);

@@ -1,0 +1,16 @@
+#TODO
+version: '1'
+services:
+  sastix-cms:
+    image: sastix-cms:1.0
+    container_name: sastix-cms-server
+    hostname: sastix-cms
+    env_file:
+        - .env
+    command: java -Xmx512m -D -jar app.jar
+    working_dir: /opt/csp
+    volumes:
+        - /data/content/sastixcms:/opt/sastixcms
+    expose:
+        - 9082:9082
+    network_mode: host

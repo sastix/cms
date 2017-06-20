@@ -28,8 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -45,16 +44,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = CmsServer.class)
-@WebAppConfiguration
-@IntegrationTest({
+@SpringBootTest(classes = CmsServer.class,properties ={
         "spring.profiles.default:test",
         "spring.profiles.active:test",
         "cms.server.host:localhost",
         "cms.server.port:8080",
         //server properties
         "cms.retry.maxAttempts:1"
-})
+} )
+@WebAppConfiguration
 @ActiveProfiles({"production", "test"})
 public class ApiVersionControllerTest {
     private Logger LOG = LoggerFactory.getLogger(ApiVersionControllerTest.class);

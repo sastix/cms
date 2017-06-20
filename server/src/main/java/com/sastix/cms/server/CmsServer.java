@@ -36,7 +36,7 @@ public class CmsServer {
     static final Logger LOG = (Logger) LoggerFactory.getLogger(CmsServer.class);
 
     public static void main(String[] args) {
-        LOG.info("**** Staring Sastix CMS server ****");
+        LOG.info("**** Starting Sastix CMS server ****");
         SpringApplication.run(CmsServer.class, args);
     }
 }
