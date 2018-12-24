@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  sastix-cms:
+    image: sastix/sxcms:1.0
+    container_name: sxcms
+    hostname: sxcms
+    env_file:
+        - env.list
+    command: java -Xmx512m -Dspring.profiles.active=production,docker -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+    working_dir: /opt/csp
+    volumes:
+        - sxcms-data:/opt/sastixcms
+    ports:
+        - 9082:9082
+    network_mode: host
+
+
+volumes:
+  sxcms-data:
