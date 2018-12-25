@@ -10,6 +10,14 @@ and a MySQL instance running. Sastix CMS is using ORM and you can find the relat
 configuration under application.properties. You should define a schema in your database in
 order to be able to run the platform successfully. 
 
+## Features
+- REST APIs
+- Versioning
+- Dictributed Caching
+- Distributed Locking
+- Distributed Unique ID generator
+- Multi-node support for scaling
+
 ## Easy start using docker
 At first you will need to have installed docker and docker-compose. Under ubuntu this can be done using commands:
 ```
@@ -76,15 +84,12 @@ If everything is up and running you will get this response:
 
 TBD
 
-## Features
+### Examples
 
-- Versioning
-- Caching
-- Distributed Unique id generator
-- Clustering
-- REST api
 
 ## Features in pipeline
 - Frontend
+- Archive API (delete 'stale' resources from disk but keep metadata in DB)
 - Graphql 
 - PDF export
+- Support Permalinks
