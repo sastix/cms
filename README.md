@@ -82,7 +82,15 @@ If everything is up and running you will get this response:
 
 ## APIs explained
 
-TBD
+Swagger has been integrated so you can easily find the available APIs and even try them. Follow this url after starting the server:
+- http://localhost:9082/swagger-ui.html
+
+Sastix CMS controllers:
+- [api-version-controller](http://localhost:9082/swagger-ui.html#/api-version-controller)
+- [cache-controller](http://localhost:9082/swagger-ui.html#/api-version-controller)
+- [lock-controller](http://localhost:9082/swagger-ui.html#/lock-controller)
+- [resource-controller](http://localhost:9082/swagger-ui.html#/resource-controller)
+
 
 ### Examples
 
