@@ -5,8 +5,12 @@ services:
     image: sastix/sxcms:1.0
     container_name: sxcms
     hostname: sxcms
-    env_file:
-        - env.list
+    environment:
+      SASTIX_CMS_SERVER_PORT: 9082
+      SASTIX_CMS_VOLUME: /opt/sastixcms
+      SASTIX_CMS_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/sastix_cms_docker
+      SASTIX_CMS_MYSQL_USERNAME: sastixcms
+      SASTIX_CMS_MYSQL_PASSWORD: sastixcms
     command: java -Xmx512m -Dspring.profiles.active=production,docker -Djava.security.egd=file:/dev/./urandom -jar /app.jar
     working_dir: /opt/csp
     volumes:
