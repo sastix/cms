@@ -16,12 +16,14 @@
 
 package com.sastix.cms.common.services.web;
 
+import com.sastix.cms.common.content.exceptions.ResourceNotFound;
 import com.sastix.cms.common.exception.CommonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,5 +46,11 @@ public class ExceptionHandlingController {
                 e.getLocalizedMessage());
 
         response.sendError(HttpStatus.BAD_REQUEST.value(), e.getLocalizedMessage());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)  // 404
+    @ExceptionHandler(ResourceNotFound.class)
+    public void handleNoTFound() {
+        // Nothing to do
     }
 }

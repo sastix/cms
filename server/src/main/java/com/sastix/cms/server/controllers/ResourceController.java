@@ -37,6 +37,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -174,7 +175,9 @@ public class ResourceController implements BeanFactoryAware {
         }
         if (responseEntity == null) {
             LOG.error("resource {} was requested but does not exist", context);
-            throw new ResourceAccessError("Resource " + context + " was requested but does not exist");
+            throw new ResourceNotFound("Resource " + context + " was requested but does not exist");
+            // an alternative way would be to return the ResponseEntity
+            // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         LOG.trace(responseEntity.toString());
@@ -202,7 +205,7 @@ public class ResourceController implements BeanFactoryAware {
 
         if (multipartFileSender == null) {
             LOG.error("resource {} was requested but does not exist", context);
-            throw new ResourceAccessError("Resource " + context + " was requested but does not exist");
+            throw new ResourceNotFound("Resource " + context + " was requested but does not exist");
         }
 
         multipartFileSender.with(req)
