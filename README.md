@@ -19,7 +19,7 @@ order to be able to run the platform successfully.
 - Multi-node support for scaling
 
 ## Easy start using docker
-At first you will need to have installed docker and docker-compose. Under ubuntu this can be done using commands:
+At first you will need to have installed docker and docker-compose. Under ubuntu this can be done using these commands:
 ```
 $ sudo apt  install docker.io
 $ sudo apt install docker-compose
@@ -28,11 +28,11 @@ $ sudo usermod -aG docker ${USER}
 $ su - ${USER}
 $ id -nG
 ```
-You can use two existing docker images to easily start. You will need a MariaDB instance and the Spring Boot CMS. More info for these images can be found here:
+You can use the following docker images to easily start:
 - https://hub.docker.com/r/sastix/cmsmariadb 
 - https://hub.docker.com/r/sastix/sxcms
 
-Checkout Sastix CMS repo locally and locate the folder devops/deployment:
+Checkout Sastix CMS git-repo locally and locate the folder devops/deployment:
 https://github.com/sastix/cms/tree/develop/devops/deployment
 
 You will find two folders, mariadb and sxcms. Inside you will find a docker-compose.yml for each one.
@@ -59,9 +59,9 @@ To test the connection with a mysql client, open a terminal and run:
 mysql -u root -p -h 127.0.0.1
 ```
 
-When asked for a password use the same with before: sastixcms
+When asked for a password use the same with before: `sastixcms`
 
-Now that you hve the DB up and running you can start the Spring Boot app:
+Now that you have the DB up and running you can start the Spring Boot app:
 ```
 $ cd devops/deployment/sxcms
 $ docker-compose pull
@@ -82,7 +82,7 @@ If everything is up and running you will get this response:
 
 ## APIs explained
 
-Swagger has been integrated so you can easily find the available APIs and even try them. Follow this url after starting the server:
+Swagger has been integrated so you can easily find the available APIs and try them. Follow this url after starting the server:
 - http://localhost:9082/swagger-ui.html
 
 Sastix CMS controllers:
