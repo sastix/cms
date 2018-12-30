@@ -94,6 +94,45 @@ Sastix CMS controllers:
 
 ### Examples
 
+#### Create a resource using swagger-ui or curl
+
+Follow this link: http://localhost:9082/swagger-ui.html#/resource-controller and collapse the API menu: POST /cms/v1.0/createResource
+
+Click the button on the right "Try it out".
+
+Under CreateResourceDTO param, insert:
+
+```json
+{
+  "resourceAuthor": "Test Author",
+  "resourceExternalURI": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png",
+  "resourceMediaType": "image/png",
+  "resourceName": "logo.png",
+  "resourceTenantId": "zaq12345"
+}
+```
+
+The curl alternative is:
+```
+curl -X POST "http://localhost:9082/cms/v1.0/createResource" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"resourceAuthor\": \"Test Author\", \"resourceExternalURI\": \"https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png\", \"resourceMediaType\": \"image/png\", \"resourceName\": \"logo.png\", \"resourceTenantId\": \"zaq12345\"}"
+```
+
+Execute and you will get the following response:
+
+```json
+{
+  "resourceUID": "4cab1f51-zaq12345",
+  "author": "Test Author",
+  "resourceURI": "3f3bf0f2-zaq12345/logo.png",
+  "resourcesList": null
+}
+```
+
+In order to test the created resource you can open a browser and follow the link where you include the resourceURI:
+
+```
+http://localhost:9082/cms/v1.0/getData/3f3bf0f2-zaq12345/logo.png
+```
 
 ## Features in pipeline
 - Frontend
