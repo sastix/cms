@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker/docker-compose.yml
+    kompose.version: 1.17.0 (a74acad)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: db
+  name: db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_PASSWORD
+          value: sastixcms
+        - name: MYSQL_ROOT_PASSWORD
+          value: sastixcms
+        - name: MYSQL_USER
+          value: sastixcms
+        image: sastix/cmsmariadb:1.0
+        name: db
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-data
+      restartPolicy: Always
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-data
+status: {}

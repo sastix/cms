@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker/docker-compose.yml
+    kompose.version: 1.17.0 (a74acad)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sastix-cms
+  name: sastix-cms
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sastix-cms
+    spec:
+      containers:
+      - args:
+        - java
+        - -Xmx512m
+        - -Dspring.profiles.active=production,docker
+        - -Djava.security.egd=file:/dev/./urandom
+        - -jar
+        - /app.jar
+        env:
+        - name: SASTIX_CMS_MYSQL_PASSWORD
+          value: sastixcms
+        - name: SASTIX_CMS_MYSQL_URL
+          value: jdbc:mysql://db.default.svc.cluster.local:3306/sastix_cms_docker
+        - name: SASTIX_CMS_MYSQL_USERNAME
+          value: sastixcms
+        - name: SASTIX_CMS_SERVER_PORT
+          value: "9082"
+        - name: SASTIX_CMS_VOLUME
+          value: /opt/sastixcms
+        image: sastix/sxcms:1.0
+        name: sxcms
+        ports:
+        - containerPort: 9082
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/sastixcms
+          name: sxcms-data
+        workingDir: /opt/csp
+      hostname: sxcms
+      restartPolicy: Always
+      volumes:
+      - name: sxcms-data
+        persistentVolumeClaim:
+          claimName: sxcms-data
+status: {}
