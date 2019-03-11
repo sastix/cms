@@ -136,6 +136,7 @@ http://localhost:9082/cms/v1.0/getData/3f3bf0f2-zaq12345/logo.png
 
 ## Features in pipeline
 - Frontend
+- Enable authorized requests and other security features
 - Archive API (delete 'stale' resources from disk but keep metadata in DB)
 - Graphql 
 - PDF export
