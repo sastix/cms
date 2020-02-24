@@ -1,19 +1,25 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -f ../docker/docker-compose.yml
-    kompose.version: 1.17.0 (a74acad)
+    kompose.version: 1.20.0 (f3d54d784)
   creationTimestamp: null
   labels:
     io.kompose.service: db
   name: db
 spec:
+  selector:
+    matchLabels:
+      io.kompose.service: db
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker/docker-compose.yml
+        kompose.version: 1.20.0 (f3d54d784)
       creationTimestamp: null
       labels:
         io.kompose.service: db
