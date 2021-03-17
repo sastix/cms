@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sastix.cms.server.services.content.HashedDirectoryService;
-import com.sun.nio.zipfs.ZipFileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -275,7 +274,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         final Map<String, String> env = new HashMap<>();
         final String resourceUriStr = URLDecoder.decode(resourceURI.toString(), "UTF-8");
         final int indexOfSeparator = resourceUriStr.indexOf("!");
-        final ZipFileSystem fs = (ZipFileSystem) FileSystems.newFileSystem(resourceURI, env);
+        final FileSystem fs = FileSystems.newFileSystem(resourceURI, env);
         final Path path = fs.getPath(resourceUriStr.substring(indexOfSeparator + 1));
         try {
             Files.copy(path, file, StandardCopyOption.REPLACE_EXISTING);

@@ -34,6 +34,11 @@ hs_err_pid*
 .idea/gradle.xml
 .idea/libraries
 
+# Vs Code:
+.vscode/
+.devcontainer/
+**/target/**
+
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 

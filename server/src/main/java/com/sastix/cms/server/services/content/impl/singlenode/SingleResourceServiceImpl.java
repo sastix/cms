@@ -240,7 +240,7 @@ public class SingleResourceServiceImpl implements ResourceService {
         if(latestRevision.getDeletedAt()!=null) {
             throw new ResourceNotFound("The supplied resource UID[" + updateResourceDTO.getResourceUID() + "] does not exist. It has been deleted");
         }else{
-            Resource persistedResource = resourceRepository.findByUidOrderByIdAsc(updateResourceDTO.getResourceUID(), new PageRequest(0, 1)).get(0);
+            Resource persistedResource = resourceRepository.findByUidOrderByIdAsc(updateResourceDTO.getResourceUID(), PageRequest.of(0, 1)).get(0);
             Resource archivedResource = crs.cloneResource(persistedResource);
             byte[] binaryForUpdate = updateResourceDTO.getResourceBinary();
 

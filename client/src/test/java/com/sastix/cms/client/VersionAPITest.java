@@ -22,11 +22,10 @@ import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.client.impl.ApiVersionClientImpl;
 import com.sastix.cms.common.dataobjects.VersionDTO;
-import org.junit.Assert;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +36,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertNotNull;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class},
 properties = {
         // cr client properties
@@ -69,7 +67,7 @@ public class VersionAPITest {
     @Mock
     ApiVersionClientImpl apiVersionClient;
 
-    @Before
+    @BeforeAll
     public void init() throws IOException, URISyntaxException {
         MockitoAnnotations.initMocks(this);
         //spy syntax
@@ -80,9 +78,9 @@ public class VersionAPITest {
     @Test
     public void getApiVersion() {
 
-        assertNotNull("service should be resolved", cmsClient);
+        assertNotNull(cmsClient, "service should be resolved");
         VersionDTO apiVersion = cmsClient.getApiVersion();
-        Assert.assertEquals("DTO should be the same", apiVersion, TEST_VERSION);
+        assertEquals(apiVersion, TEST_VERSION, "DTO should be the same");
 
         LOG.info("DTO returned by api call : {} ", apiVersion);
     }

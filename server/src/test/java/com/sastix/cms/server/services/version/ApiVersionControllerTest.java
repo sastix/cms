@@ -22,8 +22,8 @@ import com.sastix.cms.common.services.api.ApiVersionService;
 import com.sastix.cms.common.services.web.ApiVersionController;
 import com.sastix.cms.server.CmsServer;
 import com.sastix.cms.server.config.VersionConfiguration;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +39,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CmsServer.class,properties ={
         "spring.profiles.default:test",
         "spring.profiles.active:test",
@@ -72,9 +71,9 @@ public class ApiVersionControllerTest {
     @Test
     public final void testApiService() {
 
-        assertNotNull("service should be resolved", service);
+        assertNotNull(service, "service should be resolved");
         VersionDTO apiVersion = service.getApiVersion();
-        assertEquals("DTO should be the same", apiVersion, VersionConfiguration.CMS_SERVER_VERSION);
+        assertEquals(apiVersion, VersionConfiguration.CMS_SERVER_VERSION, "DTO should be the same");
 
         LOG.info("DTO returned by api call : {} ", apiVersion);
 
@@ -91,7 +90,7 @@ public class ApiVersionControllerTest {
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        assertEquals("Status should be 200 - OK", 200, result.getResponse().getStatus());
-        assertEquals("JSON response should be exactly " + TEST_VERSION_JSON, result.getResponse().getContentAsString(), TEST_VERSION_JSON);
+        assertEquals(200, result.getResponse().getStatus(), "Status should be 200 - OK");
+        assertEquals(result.getResponse().getContentAsString(), TEST_VERSION_JSON, "JSON response should be exactly " + TEST_VERSION_JSON);
     }
 }
