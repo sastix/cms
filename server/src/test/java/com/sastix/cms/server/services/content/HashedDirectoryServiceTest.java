@@ -17,12 +17,13 @@
 package com.sastix.cms.server.services.content;
 
 import com.sastix.cms.server.services.content.impl.HashedDirectoryServiceImpl;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -38,6 +39,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.UUID;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
 @ContextConfiguration(classes = HashedDirectoryServiceImpl.class)
 public class HashedDirectoryServiceTest {
@@ -48,14 +50,13 @@ public class HashedDirectoryServiceTest {
 
     public Logger LOGGER = LoggerFactory.getLogger(HashedDirectoryServiceTest.class);
 
-    @Autowired
-    HashedDirectoryService hashedDirectoryService;
+    HashedDirectoryService hashedDirectoryService = new HashedDirectoryServiceImpl();
 
     private URI localUri;
 
     @BeforeAll
     public void init() throws URISyntaxException, IOException {
-        String temporaryFolder = Files.createTempDirectory("temporaryDirectoryPrefix").toFile().getAbsolutePath();
+        String temporaryFolder = Files.createTempDirectory("temp-dir-").toFile().getAbsolutePath();
         VOLUME = temporaryFolder + "/";
         ((HashedDirectoryServiceImpl) hashedDirectoryService).setVolume(VOLUME);
         LOGGER.info("Test volume directory {}", VOLUME);
@@ -63,7 +64,7 @@ public class HashedDirectoryServiceTest {
         localUri = localFile.toURI();
     }
 
-    @AfterAll
+    @AfterEach
     public void cleanup() throws Exception {
         final Path path = Paths.get(VOLUME);
         LOGGER.info("Cleaning temp path {}", path.toString());

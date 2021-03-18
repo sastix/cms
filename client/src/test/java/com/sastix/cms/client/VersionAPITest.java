@@ -25,6 +25,8 @@ import com.sastix.cms.common.dataobjects.VersionDTO;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-
+@TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(classes = {CmsClient.class, CmsClient.class,VersionAPITest.class, RestTemplateConfiguration.class, ApiClientConfig.class},
 properties = {
         // cr client properties
@@ -69,7 +71,6 @@ public class VersionAPITest {
 
     @BeforeAll
     public void init() throws IOException, URISyntaxException {
-        MockitoAnnotations.initMocks(this);
         //spy syntax
         //Mockito.doReturn(TEST_VERSION).when(apiVersionClient).getApiVersion();
         Mockito.when(apiVersionClient.getApiVersion()).thenReturn(TEST_VERSION);

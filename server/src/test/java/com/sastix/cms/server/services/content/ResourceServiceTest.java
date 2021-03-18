@@ -24,6 +24,8 @@ import com.sastix.cms.server.CmsServer;
 import com.sastix.cms.server.services.content.impl.HashedDirectoryServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -38,7 +40,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
 @SpringBootTest(classes = {CmsServer.class})
 public class ResourceServiceTest {
@@ -48,7 +50,6 @@ public class ResourceServiceTest {
 
     @Autowired
     HashedDirectoryService hashedDirectoryService;
-
     
     @BeforeAll
     public void setup() throws Exception {

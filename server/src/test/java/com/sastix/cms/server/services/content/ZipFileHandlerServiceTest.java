@@ -22,6 +22,8 @@ import com.sastix.cms.server.services.content.impl.ZipFileHandlerServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +39,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
 @ContextConfiguration(classes = {ZipFileHandlerServiceImpl.class, GeneralFileHandlerServiceImpl.class})
 public class ZipFileHandlerServiceTest {
 
     private Logger LOG = (Logger) LoggerFactory.getLogger(ZipFileHandlerServiceTest.class);
 
-    @Autowired
-    ZipFileHandlerService zipFileHandlerService;
+    ZipFileHandlerService zipFileHandlerService = new ZipFileHandlerServiceImpl();
 
     URL demoContentZipFile = getClass().getClassLoader().getResource("./demo_content.zip");
     URL demoContentZipFileNoScorm = getClass().getClassLoader().getResource("./demo_content_no_scorm.zip");

@@ -37,8 +37,7 @@ import java.util.Arrays;
 public class CacheFileUtilsServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(CacheFileUtilsServiceTest.class);
 
-    @Autowired
-    CacheFileUtilsService cacheFileUtilsService;
+    CacheFileUtilsService cacheFileUtilsService = new CacheFileUtilsServiceImpl();
 
     @Test
     public void downloadLocalResourceTest() throws IOException, URISyntaxException {
