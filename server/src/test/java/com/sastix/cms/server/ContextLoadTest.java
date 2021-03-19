@@ -16,14 +16,11 @@
 
 package com.sastix.cms.server;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @ActiveProfiles({"production","test"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CmsServer.class)
 public class ContextLoadTest {
     @Test

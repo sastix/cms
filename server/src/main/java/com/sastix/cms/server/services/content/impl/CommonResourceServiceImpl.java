@@ -68,7 +68,7 @@ public class CommonResourceServiceImpl {
     }
 
     public Revision getLatestRevision(String uid){
-        final List<Revision> revisions = revisionRepository.findRevisions(uid, new PageRequest(0, 1));
+        final List<Revision> revisions = revisionRepository.findRevisions(uid, PageRequest.of(0, 1));
         return revisions.isEmpty()?null:revisions.get(0);
     }
 
