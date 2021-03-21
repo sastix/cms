@@ -20,7 +20,6 @@
     <modules>
         <module>common</module>
         <module>server</module>
-        <!--<module>dataobjects</module>-->
         <module>client</module>
         <module>integration-tests</module>
     </modules>
@@ -32,10 +31,10 @@
         <spring.boot.version>1.5.2.RELEASE</spring.boot.version>
         <spring.retry.version>1.1.2.RELEASE</spring.retry.version>
         <logback.version>1.1.2</logback.version>
-        <activiti.version>5.20.0</activiti.version>
         <pdfbox.version>2.0.0</pdfbox.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <tika.core.version>1.23</tika.core.version>
     </properties>
 
     <pluginRepositories>
