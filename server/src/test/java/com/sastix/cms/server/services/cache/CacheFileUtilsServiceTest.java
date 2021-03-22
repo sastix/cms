@@ -16,30 +16,28 @@
 
 package com.sastix.cms.server.services.cache;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 @ActiveProfiles({"production", "test"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CacheFileUtilsServiceImpl.class)
 public class CacheFileUtilsServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(CacheFileUtilsServiceTest.class);
 
-    @Autowired
-    CacheFileUtilsService cacheFileUtilsService;
+    CacheFileUtilsService cacheFileUtilsService = new CacheFileUtilsServiceImpl();
 
     @Test
     public void downloadLocalResourceTest() throws IOException, URISyntaxException {
@@ -47,7 +45,7 @@ public class CacheFileUtilsServiceTest {
         URL localFile = getClass().getClassLoader().getResource("./logo.png");
         byte[] bytesFound = cacheFileUtilsService.downloadResource(localFile);
         byte[] expected = Files.readAllBytes(Paths.get(localFile.getFile()));
-        Assert.assertArrayEquals(expected, bytesFound);
+        assertTrue(Arrays.equals(expected, bytesFound));
 
     }
 
@@ -57,6 +55,6 @@ public class CacheFileUtilsServiceTest {
         URL localFile = getClass().getClassLoader().getResource("./logo.png");
         byte[] expected = Files.readAllBytes(Paths.get(localFile.getFile()));
         byte[] bytesFound = cacheFileUtilsService.downloadResource(new URL("https://raw.githubusercontent.com/sastix/cms/master/server/src/test/resources/logo.png"));
-        Assert.assertArrayEquals(expected, bytesFound);
+        assertTrue(Arrays.equals(expected, bytesFound));
     }
 }

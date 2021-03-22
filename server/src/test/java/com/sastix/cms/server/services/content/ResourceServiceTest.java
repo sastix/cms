@@ -22,27 +22,26 @@ import com.sastix.cms.common.content.exceptions.ResourceAccessError;
 import com.sastix.cms.common.content.exceptions.ResourceNotFound;
 import com.sastix.cms.server.CmsServer;
 import com.sastix.cms.server.services.content.impl.HashedDirectoryServiceImpl;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {CmsServer.class})
 public class ResourceServiceTest {
 
@@ -51,16 +50,12 @@ public class ResourceServiceTest {
 
     @Autowired
     HashedDirectoryService hashedDirectoryService;
-
-
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-
-    @Before
+    
+    @BeforeAll
     public void setup() throws Exception {
         //set a temporary volume for this test
-        hashedDirectoryService.setVolume(temporaryFolder.getRoot().getAbsolutePath() + "/");
+        String temporaryFolder = Files.createTempDirectory("temporaryDirectoryPrefix").toFile().getAbsolutePath();
+        hashedDirectoryService.setVolume(temporaryFolder + "/");
     }
 
     @Test
@@ -85,7 +80,7 @@ public class ResourceServiceTest {
 
         byte[] actualBytes = Files.readAllBytes(file.toPath());
         byte[] expectedBytes = Files.readAllBytes(Paths.get(localFile.getPath()));
-        Assert.assertArrayEquals(expectedBytes, actualBytes);
+        assertTrue(Arrays.equals(expectedBytes, actualBytes));
     }
 
     @Test
@@ -95,7 +90,7 @@ public class ResourceServiceTest {
             resourceService.createResource(createResourceDTO);
             fail("Expected ContentValidationException exception");
         } catch (ContentValidationException e) {
-            assertThat(e.getMessage(), containsString("Field errors: resourceBinary OR resourceExternalURI may not be null"));
+            assertTrue(e.getMessage().contains("Field errors: resourceBinary OR resourceExternalURI may not be null"));
         }
 
     }
@@ -107,7 +102,7 @@ public class ResourceServiceTest {
             resourceService.lockResource(resourceDTO);
             fail("Expected ResourceNotFound exception");
         } catch (ResourceNotFound e) {
-            assertThat(e.getMessage(), containsString("The supplied resource UID[null] does not exist."));
+            assertTrue(e.getMessage().contains("The supplied resource UID[null] does not exist."));
         }
     }
 
@@ -118,7 +113,7 @@ public class ResourceServiceTest {
             resourceService.unlockResource(lockedResourceDTO);
             fail("Expected ResourceNotFound exception");
         } catch (ResourceNotFound e) {
-            assertThat(e.getMessage(), containsString("The supplied resource UID[null] does not exist."));
+            assertTrue(e.getMessage().contains("The supplied resource UID[null] does not exist."));
         }
     }
 
@@ -129,7 +124,7 @@ public class ResourceServiceTest {
             resourceService.renewResourceLock(lockedResourceDTO);
             fail("Expected ResourceNotFound exception");
         } catch (ResourceNotFound e) {
-            assertThat(e.getMessage(), containsString("The supplied resource UID[null] does not exist."));
+            assertTrue(e.getMessage().contains("The supplied resource UID[null] does not exist."));
         }
     }
 
@@ -140,7 +135,7 @@ public class ResourceServiceTest {
             resourceService.updateResource(updateResourceDTO);
             fail("Expected ResourceNotFound exception");
         } catch (ResourceNotFound e) {
-            assertThat(e.getMessage(), containsString("The supplied resource UID[null] does not exist."));
+            assertTrue(e.getMessage().contains("The supplied resource UID[null] does not exist."));
         }
     }
 
@@ -151,7 +146,7 @@ public class ResourceServiceTest {
             resourceService.queryResource(resourceQueryDTO);
             fail("Expected ResourceAccessError exception");
         } catch (ResourceAccessError e) {
-            assertThat(e.getMessage(), containsString("The supplied resource data are invalid and the resource cannot be retrieved."));
+            assertTrue(e.getMessage().contains("The supplied resource data are invalid and the resource cannot be retrieved."));
         }
 
     }
@@ -163,13 +158,13 @@ public class ResourceServiceTest {
             resourceService.deleteResource(lockedResourceDTO);
             fail("Expected ResourceAccessError exception");
         } catch (ResourceAccessError e) {
-            assertThat(e.getMessage(), containsString("The supplied resource UID[null] does not exist."));
+            assertTrue(e.getMessage().contains("The supplied resource UID[null] does not exist."));
         }
     }
 
-    private String getAbsolutePath(final String relativePath) {
+    private String getAbsolutePath(final String temporaryFolderPath, final String relativePath) {
         final Path volumeIdentifier = Paths.get(HashedDirectoryServiceImpl.VOLUME_IDENTIFIER);
         final Path relative = Paths.get(relativePath);
-        return new StringBuilder().append(temporaryFolder.getRoot().getAbsolutePath()).append("/").append("/").append(volumeIdentifier.relativize(relative).toString()).toString();
+        return new StringBuilder().append(temporaryFolderPath).append("/").append("/").append(volumeIdentifier.relativize(relative).toString()).toString();
     }
 }

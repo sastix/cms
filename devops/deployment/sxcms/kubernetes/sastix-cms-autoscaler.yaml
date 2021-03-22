@@ -1,0 +1,27 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: sastix-cms-hpa
+  labels:
+    app:  sastix-cms
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sastix-cms
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50 # Target cpu utilization. 100 is one cpu core
+    type: Resource
+  - object:
+      target:
+        kind: Service
+        name: sastix-cms
+      metricName: net.http.request.count
+      targetValue: 10
+    type: Object

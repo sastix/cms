@@ -20,32 +20,33 @@ import com.sastix.cms.server.dataobjects.DataMaps;
 import com.sastix.cms.server.services.content.impl.GeneralFileHandlerServiceImpl;
 import com.sastix.cms.server.services.content.impl.ZipFileHandlerServiceImpl;
 import org.apache.commons.io.FileUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ZipFileHandlerServiceImpl.class, GeneralFileHandlerServiceImpl.class})
 public class ZipFileHandlerServiceTest {
 
     private Logger LOG = (Logger) LoggerFactory.getLogger(ZipFileHandlerServiceTest.class);
 
-    @Autowired
-    ZipFileHandlerService zipFileHandlerService;
+    ZipFileHandlerService zipFileHandlerService = new ZipFileHandlerServiceImpl();
 
     URL demoContentZipFile = getClass().getClassLoader().getResource("./demo_content.zip");
     URL demoContentZipFileNoScorm = getClass().getClassLoader().getResource("./demo_content_no_scorm.zip");
@@ -53,7 +54,7 @@ public class ZipFileHandlerServiceTest {
     byte[] bytesDemoContentZipFile;
     byte[] bytesDemoContentZipFileNoScorm;
 
-    @Before
+    @BeforeAll
     public void setUp() throws IOException {
         bytesDemoContentZipFile = FileUtils.readFileToByteArray(Paths.get(demoContentZipFile.getFile()).toFile());
         bytesDemoContentZipFileNoScorm = FileUtils.readFileToByteArray(Paths.get(demoContentZipFileNoScorm.getFile()).toFile());
@@ -72,8 +73,8 @@ public class ZipFileHandlerServiceTest {
     public void unzipTest() throws IOException {
         DataMaps map = zipFileHandlerService.unzip(bytesDemoContentZipFile);
         LOG.info(map.getBytesMap().size() + "");
-        assertThat(map.getBytesMap().size(), is(4));
-        assertThat(map.getFoldersMap().size(), is(1));
+        assertEquals(map.getBytesMap().size(), 4);
+        assertEquals(map.getFoldersMap().size(), 1);
     }
 
     @Test
@@ -103,7 +104,7 @@ public class ZipFileHandlerServiceTest {
     public void findParentResourceTest() throws IOException {
         DataMaps map = zipFileHandlerService.unzip(bytesDemoContentZipFile);
         String resource = zipFileHandlerService.findParentResource(map.getBytesMap());
-        assertThat(resource, is("index.html"));
+        assertEquals(resource, "index.html");
     }
 
     @Test
