@@ -17,13 +17,6 @@
 package com.sastix.cms.server.services.cache;
 
 import com.sastix.cms.common.api.CacheApi;
-import com.sastix.cms.common.cache.CacheDTO;
-import com.sastix.cms.common.cache.QueryCacheDTO;
-import com.sastix.cms.common.cache.RemoveCacheDTO;
-import com.sastix.cms.common.cache.exceptions.CacheValidationException;
-import com.sastix.cms.common.cache.exceptions.DataNotFound;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Distributed Cache interface.

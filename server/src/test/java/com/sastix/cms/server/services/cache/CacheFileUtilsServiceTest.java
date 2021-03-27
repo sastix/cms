@@ -17,9 +17,6 @@
 package com.sastix.cms.server.services.cache;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -35,7 +32,6 @@ import java.util.Arrays;
 @ActiveProfiles({"production", "test"})
 @ContextConfiguration(classes = CacheFileUtilsServiceImpl.class)
 public class CacheFileUtilsServiceTest {
-    private static final Logger LOG = LoggerFactory.getLogger(CacheFileUtilsServiceTest.class);
 
     CacheFileUtilsService cacheFileUtilsService = new CacheFileUtilsServiceImpl();
 

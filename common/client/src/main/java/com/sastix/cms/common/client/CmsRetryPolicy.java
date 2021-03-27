@@ -26,6 +26,7 @@ import java.util.Map;
 
 public class CmsRetryPolicy extends SimpleRetryPolicy {
 
+    private static final long serialVersionUID = 1L;
 
     private BinaryExceptionClassifier businessExceptionClassifier = new BinaryExceptionClassifier(false);
 

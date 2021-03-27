@@ -26,12 +26,13 @@ import com.sastix.cms.server.domain.repositories.ResourceRepository;
 import com.sastix.cms.server.domain.repositories.RevisionRepository;
 import com.sastix.cms.server.services.content.HashedDirectoryService;
 import com.sastix.cms.server.services.content.ZipFileHandlerService;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -145,10 +146,8 @@ public class CommonResourceServiceImpl {
 
     public AnalyzedZipResource analyzeZipFile(String context, String resourceURI, Resource zipResource) {
         byte[] insertedBytes;
-        DataMaps modifiedDataMaps = null;
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         String startPage = null;
-        String scormLandingPage = null;
         Resource parentResource = null;
         boolean isScormType=false;
         boolean isResourceWithStartPage = false;

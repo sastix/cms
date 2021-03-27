@@ -32,8 +32,6 @@ import com.sastix.cms.server.services.content.impl.CommonResourceServiceImpl;
 import com.sastix.cms.server.utils.MultipartFileSender;
 import org.apache.tika.Tika;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.InputStreamResource;
@@ -51,7 +49,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @Profile("single")
 public class SingleResourceServiceImpl implements ResourceService {
-    private Logger LOG = (Logger) LoggerFactory.getLogger(SingleResourceServiceImpl.class);
 
     @Autowired
     ResourceRepository resourceRepository;
@@ -269,7 +266,7 @@ public class SingleResourceServiceImpl implements ResourceService {
             archivedResource.setPath(relativePath);
             archivedResource.setUid(UID);
             //insert archived entry
-            Resource insertedArchivedResource = resourceRepository.save(archivedResource);
+            resourceRepository.save(archivedResource);
 
 
             /**

@@ -167,6 +167,7 @@ public class HazelcastLockService implements LockService,BeanFactoryAware {
         }
 
         if(savedLockedDTO == null){
+            //TODO: this is dead code
             throw new LockNotHeld("The lock is not held anymore.This is not expected..");
         }
 

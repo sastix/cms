@@ -23,7 +23,6 @@ import com.sastix.cms.common.cache.exceptions.CacheValidationException;
 import com.sastix.cms.common.cache.exceptions.DataNotFound;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 public interface CacheApi {

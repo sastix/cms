@@ -258,24 +258,26 @@ public class MultipartFileSender {
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT); // 206.
 
                 // Cast back to ServletOutputStream to get the easy println methods.
-                ServletOutputStream sos = (ServletOutputStream) output;
+                try (ServletOutputStream sos = (ServletOutputStream) output){
 
-                // Copy multi part range.
-                for (Range r : ranges) {
-                    LOG.debug("Return multi part of file : from ({}) to ({})", r.start, r.end);
-                    // Add multipart boundary and header fields for every range.
+                    // Copy multi part range.
+                    for (Range r : ranges) {
+                        LOG.debug("Return multi part of file : from ({}) to ({})", r.start, r.end);
+                        // Add multipart boundary and header fields for every range.
+                        sos.println();
+                        sos.println("--" + MULTIPART_BOUNDARY);
+                        sos.println("Content-Type: " + contentType);
+                        sos.println("Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
+    
+                        // Copy single part range of multi part range.
+                        Range.copy(input, output, length, r.start, r.length);
+                    }
+    
+                    // End with multipart boundary.
                     sos.println();
-                    sos.println("--" + MULTIPART_BOUNDARY);
-                    sos.println("Content-Type: " + contentType);
-                    sos.println("Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
-
-                    // Copy single part range of multi part range.
-                    Range.copy(input, output, length, r.start, r.length);
+                    sos.println("--" + MULTIPART_BOUNDARY + "--");
                 }
 
-                // End with multipart boundary.
-                sos.println();
-                sos.println("--" + MULTIPART_BOUNDARY + "--");
             }
         }
 
