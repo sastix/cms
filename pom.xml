@@ -20,7 +20,6 @@
     <modules>
         <module>common</module>
         <module>server</module>
-        <!--<module>dataobjects</module>-->
         <module>client</module>
         <module>integration-tests</module>
     </modules>
@@ -34,6 +33,7 @@
         <logback.version>1.2.3</logback.version>
         <activiti.version>7.1.0</activiti.version>
         <pdfbox.version>2.0.22</pdfbox.version>
+        <tika.core.version>1.23</tika.core.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
