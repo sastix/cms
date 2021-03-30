@@ -20,10 +20,11 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sastix.cms.server.services.content.HashedDirectoryService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -40,10 +41,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.CRC32;
 
+@Slf4j
 @Service
 public class HashedDirectoryServiceImpl implements HashedDirectoryService {
-
-    private Logger LOG = LoggerFactory.getLogger(HashedDirectoryServiceImpl.class);
 
     @Value("${cms.volume:/var/tmp}")
     private String VOLUME;
@@ -74,7 +74,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         final String hash = hashText(UURI);
         if (hash == null) {
             //TODO: Throw exception
-            LOG.error("Unable to create HASH for UID {}", UURI);
+            log.error("Unable to create HASH for UID {}", UURI);
         }
 
         //Get Filename (including directories)
@@ -99,7 +99,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         final String hash = hashText(UURI);
         if (hash == null) {
             //TODO: Throw exception
-            LOG.error("Unable to create HASH for UID {}", UURI);
+            log.error("Unable to create HASH for UID {}", UURI);
         }
 
         //Get Filename (including directories)
@@ -121,7 +121,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         final String hash = hashText(UURI);
         if (hash == null) {
             //TODO: Throw exception
-            LOG.error("Unable to create HASH for UID {}", UURI);
+            log.error("Unable to create HASH for UID {}", UURI);
         }
 
         //Get Filename (including directories)
@@ -148,7 +148,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         final String hash = hashText(UURI);
         if (hash == null) {
             //TODO: Throw exception
-            LOG.error("Unable to create HASH for UID {}", UURI);
+            log.error("Unable to create HASH for UID {}", UURI);
         }
 
         //Get Filename (including directories)
@@ -389,7 +389,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
         //Create Unique hash
         final String hash = hashText(UURI);
         if (hash == null) {
-            LOG.error("Unable to create HASH for UID {}", UURI);
+            log.error("Unable to create HASH for UID {}", UURI);
         }
 
         //Get Filename (including directories)
@@ -464,7 +464,7 @@ public class HashedDirectoryServiceImpl implements HashedDirectoryService {
 
             return map.get("checksum");
         } catch (IOException ioe) {
-            LOG.warn("IOException reading checksum (" + fileName + "), cause " + ioe.getMessage(), ioe);
+            log.warn("IOException reading checksum (" + fileName + "), cause " + ioe.getMessage(), ioe);
             throw ioe;
         }
     }

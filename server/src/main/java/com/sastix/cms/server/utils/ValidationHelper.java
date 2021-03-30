@@ -18,19 +18,18 @@ package com.sastix.cms.server.utils;
 
 import com.google.common.base.Joiner;
 import com.sastix.cms.common.content.exceptions.ContentValidationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class ValidationHelper {
-    
-    private Logger LOG = (Logger) LoggerFactory.getLogger(ValidationHelper.class);
     
     public String createMessage(List<FieldError> errors) {
         String message = null;
@@ -53,7 +52,7 @@ public class ValidationHelper {
             return;
         }
         String message = createMessage(result.getFieldErrors());
-        LOG.trace("Field errors: " + message);
+        log.trace("Field errors: " + message);
         throw new ContentValidationException(message);
     }
 }

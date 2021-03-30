@@ -39,8 +39,6 @@ import com.sastix.cms.server.services.lock.LockService;
 import com.sastix.cms.server.utils.MultipartFileSender;
 import org.apache.tika.Tika;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.InputStreamResource;
@@ -50,6 +48,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,11 +58,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+@Slf4j
 @Service
 @Profile("production")
 public class HazelcastResourceServiceImpl implements ResourceService {
-
-    private Logger LOG = (Logger) LoggerFactory.getLogger(HazelcastResourceServiceImpl.class);
 
     @Autowired
     LockService lockService;
@@ -325,7 +324,7 @@ public class HazelcastResourceServiceImpl implements ResourceService {
                 distributedCacheService.updateCache(persistedResource.getUri(), persistedResource.getResourceTenantId());
             }catch (DataNotFound e){
                 //eat it and warn
-                LOG.warn("DataNotFound in cache for uri:{}, uid:{} "+persistedResource.getUri(),persistedResource.getUid());
+                log.warn("DataNotFound in cache for uri:{}, uid:{} "+persistedResource.getUri(),persistedResource.getUid());
             }
         }
 
@@ -437,12 +436,12 @@ public class HazelcastResourceServiceImpl implements ResourceService {
         try {
             cacheDTO = cacheService.getCachedResource(queryCacheDTO);
         } catch (DataNotFound e) {
-            LOG.warn("Resource '{}' is not cached.", resource.getUri());
+            log.warn("Resource '{}' is not cached.", resource.getUri());
         } catch (Exception e) {
-            LOG.error("Exception: {}", e.getLocalizedMessage());
+            log.error("Exception: {}", e.getLocalizedMessage());
         }
         if (cacheDTO != null && cacheDTO.getCacheBlobBinary() != null) {
-            LOG.info("Getting resource {} from cache", resource.getUri());
+            log.info("Getting resource {} from cache", resource.getUri());
             inputStream = new ByteArrayInputStream(cacheDTO.getCacheBlobBinary());
             size = cacheDTO.getCacheBlobBinary().length;
         } else {
@@ -454,7 +453,7 @@ public class HazelcastResourceServiceImpl implements ResourceService {
                 // Adding resource to cache
                 distributedCacheService.cacheIt(resource.getUri(), resource.getResourceTenantId());
             } catch (IOException ex) {
-                LOG.info("Error writing file to output stream. Filename was '{}'", resource.getUri(), ex);
+                log.info("Error writing file to output stream. Filename was '{}'", resource.getUri(), ex);
                 throw new RuntimeException("IOError writing file to output stream");
             } catch (URISyntaxException e) {
                 e.printStackTrace();

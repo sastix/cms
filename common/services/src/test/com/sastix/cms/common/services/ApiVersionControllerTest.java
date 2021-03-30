@@ -23,8 +23,6 @@ import com.sastix.cms.common.services.api.ApiVersionServiceImpl;
 import com.sastix.cms.common.services.web.ApiVersionController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -38,16 +36,19 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.sastix.cms.common.services.ApiVersionControllerTest.TestConfig;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+@Slf4j
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
-@WebAppConfiguration
 public class ApiVersionControllerTest {
-    private Logger LOG = LoggerFactory.getLogger(ApiVersionControllerTest.class);
 
 	static VersionDTO TEST_VERSION = new VersionDTO()
 		.withMinVersion(1.0)
@@ -71,7 +72,7 @@ public class ApiVersionControllerTest {
 		VersionDTO apiVersion = service.getApiVersion();
 		assertEquals("DTO should be the same",apiVersion, TEST_VERSION);
 		
-		LOG.info("DTO returned by api call : {} " ,apiVersion);
+		log.info("DTO returned by api call : {} " ,apiVersion);
 		
 	}
 	

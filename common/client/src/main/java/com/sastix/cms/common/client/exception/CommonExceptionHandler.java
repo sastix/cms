@@ -20,14 +20,14 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sastix.cms.common.dataobjects.RestErrorDTO;
 import com.sastix.cms.common.exception.BusinessException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.client.*;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,10 +37,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * RestTemplate Custom Exception Handler.
  */
+@Slf4j
 public class CommonExceptionHandler implements ResponseErrorHandler {
-
-    private Logger LOG = LoggerFactory
-            .getLogger(CommonExceptionHandler.class);
 
     /**
      * Json factory instance.
@@ -115,13 +113,13 @@ public class CommonExceptionHandler implements ResponseErrorHandler {
                 
                 try {
                     errorDTO = objectMapper.readValue(new String(responseBody, charset), RestErrorDTO.class);
-                    LOG.error("Exception: " + errorDTO.toString());
+                    log.error("Exception: " + errorDTO.toString());
                 } catch (final Exception e) {
                     //Wasn't able to map String on ErrorDTO.
                     //It is an Unknown Exception
                     //Throw Default Exception
                     final HttpClientErrorException clientErrorException = new HttpClientErrorException(statusCode, statusText, httpHeaders, responseBody, charset);
-                    LOG.error("Unknown Exception: " + clientErrorException.getMessage());
+                    log.error("Unknown Exception: " + clientErrorException.getMessage());
                     throw clientErrorException;
                 }
 

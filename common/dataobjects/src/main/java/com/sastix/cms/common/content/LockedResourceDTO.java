@@ -18,11 +18,17 @@ package com.sastix.cms.common.content;
 
 import org.joda.time.DateTime;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 
 /**
  * The specific object holds all the information related to Locked Resource.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class LockedResourceDTO extends ResourceDTO {
 
     /**
@@ -44,13 +50,6 @@ public class LockedResourceDTO extends ResourceDTO {
      */
     //@NotNull //TODO: when trying to lock you could get an object with resourceName (v0.15 of api specs)
     private String resourceName;
-
-    /**
-     * Default Constructor.
-     */
-    public LockedResourceDTO() {
-        //Empty
-    }
 
     /**
      * Constructor with mandatory fields.
@@ -89,67 +88,4 @@ public class LockedResourceDTO extends ResourceDTO {
         this.resourceName = resourceName;
     }
 
-    /**
-     * Returns the lock ID.
-     *
-     * @return a String with lock id.
-     */
-    public String getLockID() {
-        return lockID;
-    }
-
-    /**
-     * Set the lock id.
-     *
-     * @param lockID a String with lock id.
-     */
-    public void setLockID(final String lockID) {
-        this.lockID = lockID;
-    }
-
-    /**
-     * Returns the Expiration Date of this lock.
-     *
-     * @return a Datetime object
-     */
-    public DateTime getLockExpirationDate() {
-        return lockExpirationDate;
-    }
-
-    /**
-     * Set the expiration date of this lock.
-     *
-     * @param lockExpirationDate a Datetime object.
-     */
-    public void setLockExpirationDate(final DateTime lockExpirationDate) {
-        this.lockExpirationDate = lockExpirationDate;
-    }
-
-    /**
-     * Return the resource name.
-     *
-     * @return a String with the resource name.
-     */
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    /**
-     * Set the resource name.
-     *
-     * @param resourceName a String with the resource name
-     */
-    public void setResourceName(final String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    @Override
-    public String toString() {
-        return "LockedResourceDTO{" +
-                "lockID='" + lockID + '\'' +
-                ", lockExpirationDate=" + lockExpirationDate +
-                ", resourceName='" + resourceName + '\'' +
-                '}';
-    }
 }
-

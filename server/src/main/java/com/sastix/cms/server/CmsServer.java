@@ -17,25 +17,24 @@
 
 package com.sastix.cms.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@EnableTransactionManagement
 @ComponentScan("com.sastix.cms")
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-@EnableTransactionManagement
 public class CmsServer {
 
     public static final String CONTEXT = "cms";
 
-    static final Logger LOG = (Logger) LoggerFactory.getLogger(CmsServer.class);
-
     public static void main(String[] args) {
-        LOG.info("**** Starting Sastix CMS server ****");
+        log.info("**** Starting Sastix CMS server ****");
         SpringApplication.run(CmsServer.class, args);
     }
 }

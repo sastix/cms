@@ -18,12 +18,18 @@ package com.sastix.cms.common.content;
 
 import org.joda.time.DateTime;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 /**
  * The specific object all the information related to Update Resource.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class UpdateResourceDTO extends LockedResourceDTO {
 
     /**
@@ -47,13 +53,6 @@ public class UpdateResourceDTO extends LockedResourceDTO {
      */
     @NotNull
     private String resourceName;
-
-    /**
-     * Default Constructor.
-     */
-    public UpdateResourceDTO() {
-        //Empty
-    }
 
     /**
      * Constructor with mandatory fields.
@@ -93,85 +92,4 @@ public class UpdateResourceDTO extends LockedResourceDTO {
         this.resourceName = newResourceName;
     }
 
-    /**
-     * Return the author of this resource.
-     *
-     * @return a String with the author
-     */
-    public String getResourceAuthor() {
-        return resourceAuthor;
-    }
-
-    /**
-     * Set the author of the resource
-     *
-     * @param resourceAuthor a String with the author
-     */
-    public void setResourceAuthor(final String resourceAuthor) {
-        this.resourceAuthor = resourceAuthor;
-    }
-
-    /**
-     * Returns a byte array of this resource.
-     *
-     * @return a byte[] of this resource
-     */
-    public byte[] getResourceBinary() {
-        return resourceBinary;
-    }
-
-    /**
-     * Set the byte array of the resource.
-     *
-     * @param resourceBinary a byte[] of this resource
-     */
-    public void setResourceBinary(final byte[] resourceBinary) {
-        this.resourceBinary = resourceBinary;
-    }
-
-    /**
-     * Returns the URI holding this resource.
-     *
-     * @return A String with the URI
-     */
-    public String getResourceExternalURI() {
-        return resourceExternalURI;
-    }
-
-    /**
-     * Set the URI of this resource.
-     *
-     * @param resourceExternalURI a String with the URI
-     */
-    public void setResourceExternalURI(final String resourceExternalURI) {
-        this.resourceExternalURI = resourceExternalURI;
-    }
-
-    /**
-     * Returns the name of this resource.
-     *
-     * @return a String with the name
-     */
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    /**
-     * Set the name of this resource.
-     *
-     * @param resourceName a String with the name
-     */
-    public void setResourceName(final String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    @Override
-    public String toString() {
-        return "UpdateResourceDTO{" +
-                "resourceAuthor='" + resourceAuthor + '\'' +
-                ", resourceBinary=" + Arrays.toString(resourceBinary) +
-                ", resourceExternalURI='" + resourceExternalURI + '\'' +
-                ", resourceName='" + resourceName + '\'' +
-                '}';
-    }
 }

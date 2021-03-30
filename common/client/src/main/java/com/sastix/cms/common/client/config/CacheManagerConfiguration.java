@@ -18,8 +18,6 @@ package com.sastix.cms.common.client.config;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -27,12 +25,13 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableCaching
 @ConditionalOnBean(name = "hazelcastConfiguration")
 public class CacheManagerConfiguration {
-
-    private Logger LOG = (Logger) LoggerFactory.getLogger(CacheManagerConfiguration.class);
 
     @Autowired
     @Qualifier(value = "hazelcastInstance")
@@ -40,7 +39,7 @@ public class CacheManagerConfiguration {
 
     @Bean
     HazelcastCacheManager hazelcastcacheManager() throws Exception {
-        LOG.info("Hazelcast Instance was found. Configuring HazelcastCacheManager");
+        log.info("Hazelcast Instance was found. Configuring HazelcastCacheManager");
         return new HazelcastCacheManager(hazelcastInstance);
     }
 }

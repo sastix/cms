@@ -18,6 +18,11 @@
 package com.sastix.cms.server.domain.entities;
 
 import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +42,7 @@ import java.util.Set;
         , @NamedQuery(name = "Resource.findByUid", query = "SELECT resource FROM Resource resource WHERE resource.uid = :uid")
         , @NamedQuery(name = "Resource.findByUidContaining", query = "SELECT resource FROM Resource resource WHERE resource.uid like :uid")
 })
-
+@Getter @Setter @NoArgsConstructor
 public class Resource implements Serializable {
 
     public static final String FIND_ALL = "Resource.findAll";
@@ -89,94 +94,4 @@ public class Resource implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "resource")
     private Set<Revision> revisions = new HashSet<Revision>(0);
 
-    public Resource() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public Resource getResource() {
-        return resource;
-    }
-
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
-    public Set<Resource> getResources() {
-        return resources;
-    }
-
-    public void setResources(Set<Resource> resources) {
-        this.resources = resources;
-    }
-
-    public Set<Revision> getRevisions() {
-        return revisions;
-    }
-
-    public void setRevisions(Set<Revision> revisions) {
-        this.revisions = revisions;
-    }
-
-    public String getResourceTenantId() {
-        return resourceTenantId;
-    }
-
-    public void setResourceTenantId(String resourceTenantId) {
-        this.resourceTenantId = resourceTenantId;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
 }
