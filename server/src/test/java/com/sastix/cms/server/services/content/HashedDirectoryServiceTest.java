@@ -17,16 +17,18 @@
 package com.sastix.cms.server.services.content;
 
 import com.sastix.cms.server.services.content.impl.HashedDirectoryServiceImpl;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -37,41 +39,32 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HashedDirectoryServiceImpl.class)
 public class HashedDirectoryServiceTest {
 
     private static final String TENANT_ID = "test_tenant";
 
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
     private String VOLUME;
-
 
     public Logger LOGGER = LoggerFactory.getLogger(HashedDirectoryServiceTest.class);
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
-    @Autowired
-    HashedDirectoryService hashedDirectoryService;
+    HashedDirectoryService hashedDirectoryService = new HashedDirectoryServiceImpl();
 
     private URI localUri;
 
-    @Before
-    public void init() throws URISyntaxException {
-        VOLUME = temporaryFolder.getRoot() + "/";
+    @BeforeAll
+    public void init() throws URISyntaxException, IOException {
+        String temporaryFolder = Files.createTempDirectory("temp-dir-").toFile().getAbsolutePath();
+        VOLUME = temporaryFolder + "/";
         ((HashedDirectoryServiceImpl) hashedDirectoryService).setVolume(VOLUME);
         LOGGER.info("Test volume directory {}", VOLUME);
         final URL localFile = getClass().getClassLoader().getResource("./logo.png");
         localUri = localFile.toURI();
     }
 
-    @After
+    @AfterEach
     public void cleanup() throws Exception {
         final Path path = Paths.get(VOLUME);
         LOGGER.info("Cleaning temp path {}", path.toString());
@@ -94,7 +87,7 @@ public class HashedDirectoryServiceTest {
         hashedDirectoryService.storeChecksum("23", checksum);
 
         String newSum = hashedDirectoryService.getChecksum("23");
-        assertEquals("checksum should be the same", checksum, newSum);
+        assertEquals(checksum, newSum, "checksum should be the same");
     }
 
 
@@ -102,20 +95,18 @@ public class HashedDirectoryServiceTest {
     public void testFileAlreadyExistsException() throws IOException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/demo.txt";
 
-        String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes());
+        hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes());
 
-        exception.expect(FileAlreadyExistsException.class);
-        String path2 = hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes());
+        assertThrows(FileAlreadyExistsException.class, () -> hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes()));
     }
 
     @Test
     public void testURIFileAlreadyExistsException() throws IOException, URISyntaxException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/logo.png";
 
-        String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri);
+        hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri);
 
-        exception.expect(FileAlreadyExistsException.class);
-        String path2 = hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri);
+        assertThrows(FileAlreadyExistsException.class, () -> hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri));
     }
 
     @Test
@@ -141,7 +132,7 @@ public class HashedDirectoryServiceTest {
             hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes());
         }
         final Path path = Paths.get(VOLUME);
-        assertEquals("Number of files should be the same", iterations, listRecursive(path));
+        assertEquals(iterations, listRecursive(path), "Number of files should be the same");
     }
 
     @Test
@@ -152,7 +143,7 @@ public class HashedDirectoryServiceTest {
             hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri);
         }
         final Path path = Paths.get(VOLUME);
-        assertEquals("Number of files should be the same", iterations, listRecursive(path));
+        assertEquals(iterations, listRecursive(path), "Number of files should be the same");
     }
 
 
@@ -175,21 +166,21 @@ public class HashedDirectoryServiceTest {
     @Test
     public void testGetDataByUID() throws IOException, URISyntaxException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/demo.txt";
-        final String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO Data".getBytes());
+        hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO Data".getBytes());
 
         final Path content = hashedDirectoryService.getDataByUID(hashedDirectoryService.hashText(UURI), TENANT_ID);
 
-        Assert.assertEquals(new String(Files.readAllBytes(content)), "HELLO Data");
+        assertEquals(new String(Files.readAllBytes(content)), "HELLO Data");
     }
 
 
     @Test
     public void testGetDataByURI() throws IOException, URISyntaxException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/demo.txt";
-        final String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO Data".getBytes());
+        hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO Data".getBytes());
 
         Path content = hashedDirectoryService.getDataByURI(UURI, TENANT_ID);
-        Assert.assertEquals(new String(Files.readAllBytes(content)), "HELLO Data");
+        assertEquals(new String(Files.readAllBytes(content)), "HELLO Data");
     }
 
     @Test
@@ -199,9 +190,7 @@ public class HashedDirectoryServiceTest {
         final URI externalURI = remoteURL.toURI();
         final String uuid = UUID.randomUUID().toString();
 
-        exception.expect(IOException.class);
-        final String path = hashedDirectoryService.storeFile(uuid, TENANT_ID, externalURI);
-        LOGGER.info(path);
+        assertThrows(IOException.class, () -> hashedDirectoryService.storeFile(uuid, TENANT_ID, externalURI));
     }
 
     private int checkIfUrlExists(final URL url) {

@@ -27,6 +27,8 @@ import com.sastix.cms.common.cache.exceptions.DataNotFound;
 import com.sastix.cms.server.services.cache.CacheFileUtilsService;
 import com.sastix.cms.server.services.cache.CacheService;
 import com.sastix.cms.server.services.cache.manager.DistributedCacheManager;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -37,7 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -91,7 +92,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
         byte[] blob;
         String blobURI = cacheDTO.getCacheBlobURI();
 
-        if(!StringUtils.isEmpty(blobURI) && !StringUtils.isEmpty(cacheDTO.getCacheBlobBinary())){
+        if(!StringUtils.isEmpty(blobURI) && cacheDTO.getCacheBlobBinary().length > 0){
             throw new CacheValidationException("Client should NOT be able to send both blob AND URI. Only one of them");
         }
 

@@ -17,13 +17,6 @@
 package com.sastix.cms.server.services.lock;
 
 import com.sastix.cms.common.api.LockApi;
-import com.sastix.cms.common.lock.LockDTO;
-import com.sastix.cms.common.lock.NewLockDTO;
-import com.sastix.cms.common.lock.QueryLockDTO;
-import com.sastix.cms.common.lock.exceptions.LockNotAllowed;
-import com.sastix.cms.common.lock.exceptions.LockNotFound;
-import com.sastix.cms.common.lock.exceptions.LockNotHeld;
-import com.sastix.cms.common.lock.exceptions.LockValidationException;
 
 /**
  * Distributed Lock interface.
