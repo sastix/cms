@@ -105,7 +105,7 @@ Under CreateResourceDTO param, insert:
 ```json
 {
   "resourceAuthor": "Test Author",
-  "resourceExternalURI": "https://commons.wikimedia.org/wiki/Category:PNG_files#/media/File:Flederspekrp.png",
+  "resourceExternalURI": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png",
   "resourceMediaType": "image/png",
   "resourceName": "logo.png",
   "resourceTenantId": "zaq12345"
@@ -114,16 +114,16 @@ Under CreateResourceDTO param, insert:
 
 The curl alternative is:
 ```
-curl -X POST "http://localhost:9082/cms/v1.0/createResource" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"resourceAuthor\": \"Test Author\", \"resourceExternalURI\": \"https://commons.wikimedia.org/wiki/Category:PNG_files#/media/File:Flederspekrp.png\", \"resourceMediaType\": \"image/png\", \"resourceName\": \"logo.png\", \"resourceTenantId\": \"zaq12345\"}"
+curl -X POST "http://localhost:9082/cms/v1.0/createResource" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"resourceAuthor\": \"Test Author\", \"resourceExternalURI\": \"https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png\", \"resourceMediaType\": \"image/png\", \"resourceName\": \"logo.png\", \"resourceTenantId\": \"zaq12345\"}"
 ```
 
 Execute and you will get the following response:
 
 ```json
 {
-  "resourceUID": "d6b4a0c8-zaq12345",
+  "resourceUID": "4cab1f51-zaq12345",
   "author": "Test Author",
-  "resourceURI": "a28d4846-zaq12345/logo.png",
+  "resourceURI": "3f3bf0f2-zaq12345/logo.png",
   "resourcesList": null
 }
 ```
@@ -131,7 +131,7 @@ Execute and you will get the following response:
 In order to test the created resource you can open a browser and follow the link where you include the resourceURI:
 
 ```
-http://localhost:9082/cms/v1.0/getData/a28d4846-zaq12345/logo.png
+http://localhost:9082/cms/v1.0/getData/3f3bf0f2-zaq12345/logo.png
 ```
 
 ## Features in pipeline
