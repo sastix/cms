@@ -7,13 +7,13 @@
     <parent>
         <groupId>com.sastix.cms</groupId>
         <artifactId>cms-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.sastix.cms</groupId>
     <artifactId>common-client</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>Common Client</name>
 
     <dependencies>

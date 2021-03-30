@@ -12,7 +12,7 @@
 
     <groupId>com.sastix.cms</groupId>
     <artifactId>cms-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
     <inceptionYear>2016</inceptionYear>
     <name>SASTIX CMS</name>
