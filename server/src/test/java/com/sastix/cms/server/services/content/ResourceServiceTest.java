@@ -21,7 +21,6 @@ import com.sastix.cms.common.content.exceptions.ContentValidationException;
 import com.sastix.cms.common.content.exceptions.ResourceAccessError;
 import com.sastix.cms.common.content.exceptions.ResourceNotFound;
 import com.sastix.cms.server.CmsServer;
-import com.sastix.cms.server.services.content.impl.HashedDirectoryServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -162,9 +161,4 @@ public class ResourceServiceTest {
         }
     }
 
-    private String getAbsolutePath(final String temporaryFolderPath, final String relativePath) {
-        final Path volumeIdentifier = Paths.get(HashedDirectoryServiceImpl.VOLUME_IDENTIFIER);
-        final Path relative = Paths.get(relativePath);
-        return new StringBuilder().append(temporaryFolderPath).append("/").append("/").append(volumeIdentifier.relativize(relative).toString()).toString();
-    }
 }

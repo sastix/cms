@@ -47,7 +47,6 @@ import java.util.List;
 @RestController
 @Lazy
 @RequestMapping("/" + CmsServer.CONTEXT)
-@SuppressWarnings("unchecked")
 public class CacheController implements BeanFactoryAware {
 
     /**

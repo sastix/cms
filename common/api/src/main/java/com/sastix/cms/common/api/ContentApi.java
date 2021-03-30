@@ -16,30 +16,13 @@
 
 package com.sastix.cms.common.api;
 
-import com.sastix.cms.common.cache.CacheDTO;
-import com.sastix.cms.common.cache.QueryCacheDTO;
-import com.sastix.cms.common.cache.RemoveCacheDTO;
-import com.sastix.cms.common.cache.exceptions.CacheValidationException;
-import com.sastix.cms.common.cache.exceptions.DataNotFound;
 import com.sastix.cms.common.content.*;
 import com.sastix.cms.common.content.exceptions.ContentValidationException;
 import com.sastix.cms.common.content.exceptions.ResourceAccessError;
 import com.sastix.cms.common.content.exceptions.ResourceNotFound;
 import com.sastix.cms.common.content.exceptions.ResourceNotOwned;
-import com.sastix.cms.common.dataobjects.ResponseDTO;
-import com.sastix.cms.common.dataobjects.VersionDTO;
-import com.sastix.cms.common.lock.LockDTO;
-import com.sastix.cms.common.lock.NewLockDTO;
-import com.sastix.cms.common.lock.QueryLockDTO;
-import com.sastix.cms.common.lock.exceptions.LockNotAllowed;
-import com.sastix.cms.common.lock.exceptions.LockNotFound;
-import com.sastix.cms.common.lock.exceptions.LockNotHeld;
-import com.sastix.cms.common.lock.exceptions.LockValidationException;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 public interface ContentApi {
 

@@ -265,7 +265,7 @@ public class HazelcastResourceServiceImpl implements ResourceService {
             archivedResource.setPath(relativePath);
             archivedResource.setUid(UID);
             //insert archived entry
-            Resource insertedArchivedResource = resourceRepository.save(archivedResource);
+            resourceRepository.save(archivedResource);
 
 
             /**

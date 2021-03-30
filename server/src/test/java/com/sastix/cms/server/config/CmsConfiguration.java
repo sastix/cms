@@ -16,9 +16,6 @@
 
 package com.sastix.cms.server.config;
 
-import com.sastix.cms.server.services.cache.CacheService;
-import com.sastix.cms.server.services.cache.hazelcast.HazelcastCacheService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
