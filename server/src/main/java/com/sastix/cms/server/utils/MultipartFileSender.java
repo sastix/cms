@@ -17,8 +17,8 @@
 package com.sastix.cms.server.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -38,9 +38,8 @@ import java.util.List;
 /**
  * See full code here : https://github.com/davinkevin/Podcast-Server/blob/d927d9b8cb9ea1268af74316cd20b7192ca92da7/src/main/java/lan/dk/podcastserver/utils/multipart/MultipartFileSender.java
  */
+@Slf4j
 public class MultipartFileSender {
-
-    protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     private static final int DEFAULT_BUFFER_SIZE = 20480; // ..bytes = 20KB.
     private static final long DEFAULT_EXPIRE_TIME = 604800000L; // ..ms = 1 week.
@@ -211,13 +210,13 @@ public class MultipartFileSender {
             String accept = request.getHeader("Accept");
             disposition = accept != null && HttpUtils.accepts(accept, contentType) ? "inline" : "attachment";
         }
-        LOG.debug("Content-Type : {}", contentType);
+        log.debug("Content-Type : {}", contentType);
         // Initialize response.
         response.reset();
         response.setBufferSize(DEFAULT_BUFFER_SIZE);
         response.setHeader("Content-Type", contentType);
         response.setHeader("Content-Disposition", disposition + ";filename=\"" + fileName + "\"");
-        LOG.debug("Content-Disposition : {}", disposition);
+        log.debug("Content-Disposition : {}", disposition);
         response.setHeader("Accept-Ranges", "bytes");
         response.setHeader("ETag", fileName);
         response.setDateHeader("Last-Modified", lastModified);
@@ -232,7 +231,7 @@ public class MultipartFileSender {
             if (ranges.isEmpty() || ranges.get(0) == full) {
 
                 // Return full file.
-                LOG.debug("Return full file");
+                log.debug("Return full file");
                 response.setContentType(contentType);
                 response.setHeader("Content-Range", "bytes " + full.start + "-" + full.end + "/" + full.total);
                 response.setHeader("Content-Length", String.valueOf(full.length));
@@ -242,7 +241,7 @@ public class MultipartFileSender {
 
                 // Return single part of file.
                 Range r = ranges.get(0);
-                LOG.debug("Return 1 part of file : from ({}) to ({})", r.start, r.end);
+                log.debug("Return 1 part of file : from ({}) to ({})", r.start, r.end);
                 response.setContentType(contentType);
                 response.setHeader("Content-Range", "bytes " + r.start + "-" + r.end + "/" + r.total);
                 response.setHeader("Content-Length", String.valueOf(r.length));
@@ -262,7 +261,7 @@ public class MultipartFileSender {
 
                     // Copy multi part range.
                     for (Range r : ranges) {
-                        LOG.debug("Return multi part of file : from ({}) to ({})", r.start, r.end);
+                        log.debug("Return multi part of file : from ({}) to ({})", r.start, r.end);
                         // Add multipart boundary and header fields for every range.
                         sos.println();
                         sos.println("--" + MULTIPART_BOUNDARY);

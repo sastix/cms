@@ -18,9 +18,15 @@ package com.sastix.cms.common.cache;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * The specific object holds all the information related to a QueryCacheDTO.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class QueryCacheDTO implements Serializable {
 
     /**
@@ -40,12 +46,6 @@ public class QueryCacheDTO implements Serializable {
     String cacheRegion;
 
     /**
-     * Default Constructor.
-     */
-    public QueryCacheDTO() {
-    }
-
-    /**
      * Constructor with mandatory fields
      *
      * @param cacheKey
@@ -54,47 +54,4 @@ public class QueryCacheDTO implements Serializable {
         this.cacheKey = cacheKey;
     }
 
-    /**
-     * Returns the cache key
-     *
-     * @return a String with the cache key
-     * */
-    public String getCacheKey() {
-        return cacheKey;
-    }
-
-    /**
-     * Set the cache key
-     *
-     * @param cacheKey
-     * */
-    public void setCacheKey(String cacheKey) {
-        this.cacheKey = cacheKey;
-    }
-
-    /**
-     * Returns the cache region
-     *
-     * @return a String with the cache region value
-     * */
-    public String getCacheRegion() {
-        return cacheRegion;
-    }
-
-    /**
-     * Set the cache region
-     *
-     * @param cacheRegion a String with the region
-     * */
-    public void setCacheRegion(String cacheRegion) {
-        this.cacheRegion = cacheRegion;
-    }
-
-    @Override
-    public String toString() {
-        return "QueryCacheDTO{" +
-                "cacheKey='" + cacheKey + '\'' +
-                ", cacheRegion='" + cacheRegion + '\'' +
-                '}';
-    }
 }

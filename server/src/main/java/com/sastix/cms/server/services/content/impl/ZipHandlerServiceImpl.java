@@ -29,11 +29,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -44,10 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ZipHandlerServiceImpl implements ZipHandlerService {
-
-    private Logger LOG = (Logger) LoggerFactory.getLogger(ZipHandlerServiceImpl.class);
 
     public static final String METADATA_XML_FILE = "imsmanifest.xml";
     public static final String METADATA_JSON_FILE = "info.json";
@@ -100,12 +99,12 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
             // Check if it is a cms file
             if (map.containsKey(METADATA_JSON_FILE)) {
                 zipType = METADATA_JSON_FILE;
-                LOG.info("Found CMS Metadata File " + map.get(zipType).toString());
+                log.info("Found CMS Metadata File " + map.get(zipType).toString());
                 startPage = findStartPage(map.get(zipType));
                 // Check if it is a Scrom file
             } else if (map.containsKey(METADATA_XML_FILE)) {
                 zipType = METADATA_XML_FILE;
-                LOG.info("Found CMS Metadata File " + map.get(zipType).toString());
+                log.info("Found CMS Metadata File " + map.get(zipType).toString());
                 startPage = findScormStartPage(map.get(zipType));
 
             } else {
@@ -114,7 +113,7 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
             }
 
 
-            LOG.trace(startPage);
+            log.trace(startPage);
 
 
             final List<ResourceDTO> resourceDTOs = new LinkedList<>();
@@ -162,10 +161,10 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
         } finally {
             if (zipfs != null && zipfs.isOpen()) {
                 try {
-                    LOG.info("Closing FileSystem");
+                    log.info("Closing FileSystem");
                     zipfs.close();
                 } catch (IOException e) {
-                    LOG.error(e.getMessage());
+                    log.error(e.getMessage());
                     e.printStackTrace();
                     throw new ResourceAccessError("Error while analyzing " + zipResource.toString());
                 }
@@ -184,7 +183,7 @@ public class ZipHandlerServiceImpl implements ZipHandlerService {
         try {
             json = new String(Files.readAllBytes(metadataPath), "UTF-8");
         } catch (IOException e) {
-            LOG.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
+            log.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
             throw new ResourceAccessError("Zip " + metadataPath.getFileName() + " cannot be read. ");
         }
 

@@ -19,6 +19,10 @@ package com.sastix.cms.server.dataobjects;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class DataMaps {
     Map<String, byte[]> bytesMap;
     Map<String, byte[]> modifiedBytesMap;
@@ -26,43 +30,8 @@ public class DataMaps {
     Map<String, String> uidMap = new HashMap<>();
     Map<String, String> uidPathMap = new HashMap<>();
 
-    public Map<String, byte[]> getBytesMap() {
-        return bytesMap;
-    }
-
-    public void setBytesMap(Map<String, byte[]> bytesMap) {
-        this.bytesMap = bytesMap;
-    }
-
-    public Map<String, String> getFoldersMap() {
-        return foldersMap;
-    }
-
-    public void setFoldersMap(Map<String, String> foldersMap) {
-        this.foldersMap = foldersMap;
-    }
-
     public Map<String, String> getUriMap() {
         return uidMap;
     }
 
-    public void setUidMap(Map<String, String> uidMap) {
-        this.uidMap = uidMap;
-    }
-
-    public Map<String, byte[]> getModifiedBytesMap() {
-        return modifiedBytesMap;
-    }
-
-    public void setModifiedBytesMap(Map<String, byte[]> modifiedBytesMap) {
-        this.modifiedBytesMap = modifiedBytesMap;
-    }
-
-    public Map<String, String> getUidPathMap() {
-        return uidPathMap;
-    }
-
-    public void setUidPathMap(Map<String, String> uidPathMap) {
-        this.uidPathMap = uidPathMap;
-    }
 }

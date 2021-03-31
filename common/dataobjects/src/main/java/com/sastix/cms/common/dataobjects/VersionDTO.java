@@ -19,10 +19,14 @@ package com.sastix.cms.common.dataobjects;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The specific object holds all the information related to Version.
  */
+@Getter @Setter @NoArgsConstructor
 public class VersionDTO {
 
     /**
@@ -36,12 +40,6 @@ public class VersionDTO {
     private double maxVersion;
 
     private Map<String, String> versionContexts;
-    
-    /**
-     * Default Constructor.
-     */
-    public VersionDTO() {
-    }
     
     public VersionDTO withMinVersion(double min) {
     	minVersion = min;
@@ -61,54 +59,6 @@ public class VersionDTO {
     	return this;
     }
     
-    /**
-     * Returns the minimum supported Version.
-     *
-     * @return A double with the Version
-     */
-    public double getMinVersion() {
-        return minVersion;
-    }
-
-    /**
-     * Set the minimum supported Version.
-     *
-     * @param minVersion a double with the Version
-     */
-    public void setMinVersion(final double minVersion) {
-        this.minVersion = minVersion;
-    }
-
-    /**
-     * Returns the maximum supported Version.
-     *
-     * @return a double with maximum supported Version
-     */
-    public double getMaxVersion() {
-        return maxVersion;
-    }
-
-    /**
-     * Set the maximum supported Version.
-     *
-     * @param maxVersion a double with the maximum supported Version
-     */
-    public void setMaxVersion(final double maxVersion) {
-        this.maxVersion = maxVersion;
-    }
-
-
-	public Map<String, String> getVersionContexts() {
-		return versionContexts;
-	}
-
-	public void setVersionContexts(Map<String, String> versionContexts) {
-		this.versionContexts = versionContexts;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -119,9 +69,6 @@ public class VersionDTO {
 		return builder.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -136,9 +83,6 @@ public class VersionDTO {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -161,7 +105,5 @@ public class VersionDTO {
 			return false;
 		return true;
 	}
-	
-	
 	
 }

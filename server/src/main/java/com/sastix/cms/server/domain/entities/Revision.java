@@ -18,6 +18,11 @@
 package com.sastix.cms.server.domain.entities;
 
 import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,7 +36,7 @@ import java.util.Date;
         , @NamedQuery(name = "Revision.findByUpdatedAt", query = "SELECT revision FROM Revision revision WHERE revision.updatedAt = :updatedAt")
         , @NamedQuery(name = "Revision.findByDeletedAt", query = "SELECT revision FROM Revision revision WHERE revision.deletedAt = :deletedAt")
 })
-
+@Getter @Setter @NoArgsConstructor
 public class Revision implements Serializable {
 
 
@@ -75,70 +80,4 @@ public class Revision implements Serializable {
     @JoinColumn(name = "parent_resource_id", nullable = false)
     private Resource parentResource;
 
-    public Revision() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Resource getResource() {
-        return resource;
-    }
-
-    public Resource getArchivedResource() {
-        return archivedResource;
-    }
-
-    public void setArchivedResource(Resource archivedResource) {
-        this.archivedResource = archivedResource;
-    }
-
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
-    public Resource getParentResource() {
-        return parentResource;
-    }
-
-    public void setParentResource(Resource parentResource) {
-        this.parentResource = parentResource;
-    }
 }

@@ -26,8 +26,6 @@ import com.sastix.cms.common.lock.exceptions.LockValidationException;
 import com.sastix.cms.server.services.lock.LockService;
 import com.sastix.cms.server.services.lock.manager.DistributedLockManager;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -36,16 +34,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.ConcurrentMap;
 
-@Profile("production")
+@Slf4j
 @Service
+@Profile("production")
 public class HazelcastLockService implements LockService,BeanFactoryAware {
-
-    /**
-     * Static LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(HazelcastLockService.class);
 
     private static final String DEFAULT_HAZELCAST_MANAGER = "hazelcastDistributedLockManager";
 
@@ -70,7 +66,7 @@ public class HazelcastLockService implements LockService,BeanFactoryAware {
 
     @Override
     public LockDTO lockResource(final NewLockDTO newLockDTO) throws LockNotAllowed,LockValidationException {
-        LOG.info("hazelcastLockService->lockResource");
+        log.info("hazelcastLockService->lockResource");
         nullValidationChecker(newLockDTO,NewLockDTO.class);
 
         if(newLockDTO.getUID() == null){
@@ -107,7 +103,7 @@ public class HazelcastLockService implements LockService,BeanFactoryAware {
 
     @Override
     public void unlockResource(final LockDTO lockDTO) throws LockNotHeld,LockValidationException {
-        LOG.info("hazelcastLockService->unlockResource");
+        log.info("hazelcastLockService->unlockResource");
         nullValidationChecker(lockDTO, LockDTO.class);
         if(lockDTO.getUID() == null){
             throw new LockValidationException("Resource UID was not set in LockDTO.");
@@ -135,7 +131,7 @@ public class HazelcastLockService implements LockService,BeanFactoryAware {
 
     @Override
     public LockDTO renewResourceLock(final LockDTO lockDTO) throws LockNotHeld, LockNotAllowed,LockValidationException {
-        LOG.info("hazelcastLockService->renewResourceLock");
+        log.info("hazelcastLockService->renewResourceLock");
         nullValidationChecker(lockDTO, LockDTO.class);
         if(lockDTO.getUID() == null){
             throw new LockValidationException("Resource UID was not set in LockDTO.");
@@ -176,7 +172,7 @@ public class HazelcastLockService implements LockService,BeanFactoryAware {
 
     @Override
     public LockDTO queryResourceLock(final QueryLockDTO queryLockDTO) throws LockNotFound,LockValidationException{
-        LOG.info("hazelcastLockService->queryResourceLock");
+        log.info("hazelcastLockService->queryResourceLock");
         nullValidationChecker(queryLockDTO, QueryLockDTO.class);
         if(queryLockDTO.getUID() == null){
             throw new LockValidationException("Resource UID was not set in QueryLockDTO.");

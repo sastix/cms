@@ -19,6 +19,10 @@ package com.sastix.cms.common.dataobjects;
 import java.io.InputStream;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class ResponseDTO {
 
     public static final String CONTENT_TYPE = "Content-Type";
@@ -47,35 +51,4 @@ public class ResponseDTO {
         this.statusCode = statusCode;
     }
 
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public Integer getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public byte[] getResponse() {
-        return response;
-    }
-
-    public void setResponse(byte[] response) {
-        this.response = response;
-    }
 }

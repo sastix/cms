@@ -18,10 +18,16 @@
 package com.sastix.cms.server.domain.entities;
 
 import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 @Entity
 @Table(name = "tenant")
+@Getter @Setter @NoArgsConstructor
 public class Tenant implements Serializable {
 
     private static final long serialVersionUID = -2275542617850965462L;
@@ -40,39 +46,4 @@ public class Tenant implements Serializable {
     @Column(name = "checksum", columnDefinition = "Text")
     private String checksum;
 
-    public Tenant() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(final String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(final String volume) {
-        this.volume = volume;
-    }
-
-    public String getChecksum() {
-        return checksum;
-    }
-
-    public void setChecksum(final String checksum) {
-        this.checksum = checksum;
-    }
 }
-

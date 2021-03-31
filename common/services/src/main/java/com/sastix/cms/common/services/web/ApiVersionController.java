@@ -19,19 +19,17 @@ package com.sastix.cms.common.services.web;
 import com.sastix.cms.common.Constants;
 import com.sastix.cms.common.dataobjects.VersionDTO;
 import com.sastix.cms.common.services.api.ApiVersionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class ApiVersionController {
-
-    private Logger LOG = LoggerFactory.getLogger(ApiVersionController.class);
 
     @Autowired
     ApiVersionService apiVersionService;
@@ -39,7 +37,7 @@ public class ApiVersionController {
     @RequestMapping(value = Constants.GET_API_VERSION, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
     public VersionDTO getApiVersion() {
         VersionDTO versionDTO = apiVersionService.getApiVersion();
-        LOG.trace("REST: Called {}, will return {}", Constants.GET_API_VERSION, versionDTO);
+        log.trace("REST: Called {}, will return {}", Constants.GET_API_VERSION, versionDTO);
         return versionDTO;
     }
 }

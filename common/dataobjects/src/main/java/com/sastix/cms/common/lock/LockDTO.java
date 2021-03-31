@@ -18,11 +18,17 @@ package com.sastix.cms.common.lock;
 
 import org.joda.time.DateTime;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
  * The specific object holds all the information related to a Lock.
  */
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class LockDTO implements Serializable {
 
     /**
@@ -50,99 +56,4 @@ public class LockDTO implements Serializable {
      */
     private DateTime lockExpiration;
 
-    /**
-     * Default Constructor.
-     */
-    public LockDTO() {
-    }
-
-    /**
-     * Constructor with Mandatory fields.
-     *
-     * @param UID            a String with the UID
-     * @param lockID         a String with the lock ID
-     * @param lockOwner      a String with owner of this lock
-     * @param lockExpiration a Datetime with the expiration time
-     */
-    public LockDTO(final String UID,
-                   final String lockID,
-                   final String lockOwner, final
-                   DateTime lockExpiration) {
-        this.UID = UID;
-        this.lockID = lockID;
-        this.lockOwner = lockOwner;
-        this.lockExpiration = lockExpiration;
-    }
-
-    /**
-     * Returns the UID.
-     *
-     * @return a String with the UID.
-     */
-    public String getUID() {
-        return UID;
-    }
-
-    /**
-     * Set the UID.
-     *
-     * @param UID a String with the UID.
-     */
-    public void setUID(final String UID) {
-        this.UID = UID;
-    }
-
-    /**
-     * Returns the lock ID.
-     *
-     * @return a String wiht the lock id
-     */
-    public String getLockID() {
-        return lockID;
-    }
-
-    /**
-     * Set the lock id.
-     *
-     * @param lockID a String with the lock id.
-     */
-    public void setLockID(final String lockID) {
-        this.lockID = lockID;
-    }
-
-    /**
-     * Returns the owner of this lock.
-     *
-     * @return a String with the owner
-     */
-    public String getLockOwner() {
-        return lockOwner;
-    }
-
-    /**
-     * Set the owner of this lock.
-     *
-     * @param lockOwner a String with the owner
-     */
-    public void setLockOwner(final String lockOwner) {
-        this.lockOwner = lockOwner;
-    }
-
-    /**
-     * Returns the lock expiration.
-     *
-     * @return a Datetime with the expiration of the lock
-     */
-    public DateTime getLockExpiration() {
-        return lockExpiration;
-    }
-
-    /**
-     * Set the expiration of this lock.
-     *
-     * @param lockExpiration a Datetime with the expiration
-     */
-    public void setLockExpiration(final DateTime lockExpiration) {
-        this.lockExpiration = lockExpiration;
-    }
 }

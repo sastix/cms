@@ -19,11 +19,11 @@ package com.sastix.cms.server.services.cache;
 import com.sastix.cms.server.CmsServer;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import lombok.extern.slf4j.Slf4j;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,11 +33,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 
+@Slf4j
 @ActiveProfiles({"production", "test"})
 @SpringBootTest(classes = CmsServer.class)
 public class UIDServiceTest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(UIDServiceTest.class);
 
     @Autowired
     CacheService cacheService;
@@ -100,7 +99,7 @@ public class UIDServiceTest {
         assertEquals(numberOfTasks / 2, regionIdsMap.get(region1).size());
         assertEquals(numberOfTasks / 2, regionIdsMap.get(region2).size());
         assertTrue(!duplicateFound);
-        LOG.info("Finished all threads");
+        log.info("Finished all threads");
     }
 
     class UIDRunnable implements Runnable {
@@ -115,20 +114,20 @@ public class UIDServiceTest {
             String uid = cacheService.getUID(region);
             if (!ids.containsKey(uid)) {
                 ids.put(uid, uid);
-                LOG.info("Adding: " + uid);
+                log.info("Adding: " + uid);
 
             } else {
                 duplicateFound = true;
-                LOG.info("All ready contained (region " + region + "): " + uid);
+                log.info("All ready contained (region " + region + "): " + uid);
             }
 
             Map<String, String> regionMap = regionIdsMap.get(region);
             if (!regionMap.containsKey(uid)) {
                 regionMap.put(uid, uid);
-                LOG.info("Adding (region " + region + "): " + uid);
+                log.info("Adding (region " + region + "): " + uid);
 
             } else {
-                LOG.info("All ready contained (region " + region + "): " + uid);
+                log.info("All ready contained (region " + region + "): " + uid);
             }
             latch.countDown();
         }

@@ -21,46 +21,43 @@ import com.sastix.cms.common.cache.QueryCacheDTO;
 import com.sastix.cms.common.cache.RemoveCacheDTO;
 import com.sastix.cms.common.cache.exceptions.DataNotFound;
 import com.sastix.cms.server.services.cache.CacheService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
-@Profile("dummy")
+@Slf4j
 @Service
+@Profile("dummy")
 public class DummyCacheService implements CacheService {
-    /**
-     * Static LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(DummyCacheService.class);
 
     @Override
     public void cacheResource(CacheDTO cacheDTO) throws DataNotFound {
-        LOG.info("DummyCacheService->cacheResource");
+        log.info("DummyCacheService->cacheResource");
     }
 
     @Override
     public CacheDTO getCachedResource(QueryCacheDTO queryCacheDTO) throws DataNotFound {
-        LOG.info("DummyCacheService->getCachedResource");
+        log.info("DummyCacheService->getCachedResource");
         return null;
     }
 
     @Override
     public void removeCachedResource(RemoveCacheDTO removeCacheDTO) throws DataNotFound {
-        LOG.info("DummyCacheService->removeCachedResource");
+        log.info("DummyCacheService->removeCachedResource");
     }
 
     @Override
     public void clearCache(RemoveCacheDTO removeCacheDTO) throws DataNotFound {
-        LOG.info("DummyCacheService->CLEAR_CACHE_REGION");
+        log.info("DummyCacheService->CLEAR_CACHE_REGION");
 
     }
 
     @Override
     public void clearCache() {
-        LOG.info("DummyCacheService->CLEAR_CACHE_ALL");
+        log.info("DummyCacheService->CLEAR_CACHE_ALL");
     }
 
     @Override

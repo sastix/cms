@@ -24,8 +24,6 @@ import com.sastix.cms.server.CmsServer;
 import com.sastix.cms.server.config.VersionConfiguration;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,10 +35,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import lombok.extern.slf4j.Slf4j;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+@Slf4j
 @SpringBootTest(classes = CmsServer.class,properties ={
         "spring.profiles.default:test",
         "spring.profiles.active:test",
@@ -52,7 +53,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebAppConfiguration
 @ActiveProfiles({"production", "test"})
 public class ApiVersionControllerTest {
-    private Logger LOG = LoggerFactory.getLogger(ApiVersionControllerTest.class);
 
     static String TEST_VERSION_JSON = "{\"minVersion\":1.0,\"maxVersion\":1.0,\"versionContexts\":{\"1.0\":\"/cms/v1.0\"}}";
 
@@ -73,7 +73,7 @@ public class ApiVersionControllerTest {
         VersionDTO apiVersion = service.getApiVersion();
         assertEquals(apiVersion, VersionConfiguration.CMS_SERVER_VERSION, "DTO should be the same");
 
-        LOG.info("DTO returned by api call : {} ", apiVersion);
+        log.info("DTO returned by api call : {} ", apiVersion);
 
     }
 

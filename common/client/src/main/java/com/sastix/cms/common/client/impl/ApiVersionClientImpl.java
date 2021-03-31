@@ -21,14 +21,13 @@ import com.sastix.cms.common.dataobjects.VersionDTO;
 import com.sastix.cms.common.client.ApiVersionClient;
 import com.sastix.cms.common.client.RetryRestTemplate;
 import com.sastix.cms.common.exception.VersionNotSupportedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-public class ApiVersionClientImpl implements ApiVersionClient {
+import lombok.extern.slf4j.Slf4j;
 
-    private Logger LOG = (Logger) LoggerFactory.getLogger(ApiVersionClient.class);
+@Slf4j
+public class ApiVersionClientImpl implements ApiVersionClient {
 
     private String host;
     private String port;
@@ -74,9 +73,9 @@ public class ApiVersionClientImpl implements ApiVersionClient {
     @Override
     public VersionDTO getApiVersion() {
         String url = getUrlRoot() + "/" + Constants.GET_API_VERSION;
-        LOG.trace("API call: " + url);
+        log.trace("API call: " + url);
         VersionDTO versionDTO = retryRestTemplate.getForObject(url, VersionDTO.class);
-        LOG.trace("Response: " + versionDTO.toString());
+        log.trace("Response: " + versionDTO.toString());
         return versionDTO;
     }
 

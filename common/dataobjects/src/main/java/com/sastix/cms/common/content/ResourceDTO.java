@@ -17,11 +17,18 @@
 package com.sastix.cms.common.content;
 
 import javax.validation.constraints.NotNull;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
 /**
  * The specific object holds all the information related to a Resource.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class ResourceDTO {
 
     /**
@@ -47,13 +54,6 @@ public class ResourceDTO {
     private List<ResourceDTO> resourcesList;
 
     /**
-     * Default Constructor.
-     */
-    public ResourceDTO() {
-        //Empty
-    }
-
-    /**
      * Constructor with the mandatory fields.
      *
      * @param resourceUID a String with the resource UID
@@ -64,85 +64,4 @@ public class ResourceDTO {
         this.author = author;
     }
 
-    /**
-     * Returns the resource UID.
-     *
-     * @return a String with the UID
-     */
-    public String getResourceUID() {
-        return resourceUID;
-    }
-
-    /**
-     * Set the resource UID.
-     *
-     * @param resourceUID the String with UID
-     */
-    public void setResourceUID(final String resourceUID) {
-        this.resourceUID = resourceUID;
-    }
-
-    /**
-     * Returns the author requesting this lock.
-     *
-     * @return a String with the author
-     */
-    public String getAuthor() {
-        return author;
-    }
-
-    /**
-     * Set the author.
-     *
-     * @param author A String with author.
-     */
-    public void setAuthor(final String author) {
-        this.author = author;
-    }
-
-    /**
-     * Return the Resource URI, if available.
-     *
-     * @return a String with the resource URI.
-     */
-    public String getResourceURI() {
-        return resourceURI;
-    }
-
-    /**
-     * Set the resource URI.
-     *
-     * @param resourceURI a String with the resource URI
-     */
-    public void setResourceURI(final String resourceURI) {
-        this.resourceURI = resourceURI;
-    }
-
-    /**
-     * Returns a List of linked resources for this UID.
-     *
-     * @return a List with ResourceDTOs
-     */
-    public List<ResourceDTO> getResourcesList() {
-        return resourcesList;
-    }
-
-    /**
-     * Set the list of linked resources for this UID.
-     *
-     * @param resourcesList a list with ResourceDTOs
-     */
-    public void setResourcesList(final List<ResourceDTO> resourcesList) {
-        this.resourcesList = resourcesList;
-    }
-
-    @Override
-    public String toString() {
-        return "ResourceDTO{" +
-                "resourceUID='" + resourceUID + '\'' +
-                ", author='" + author + '\'' +
-                ", resourceURI='" + resourceURI + '\'' +
-                ", resourcesList=" + resourcesList +
-                '}';
-    }
 }
