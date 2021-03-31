@@ -7,14 +7,14 @@
     <parent>
         <groupId>com.sastix.cms</groupId>
         <artifactId>cms-common</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
 
     <groupId>com.sastix.cms</groupId>
     <artifactId>common-services</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>jar</packaging>
     <name>Common Services</name>
 

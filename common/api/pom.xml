@@ -23,13 +23,13 @@
     <parent>
         <groupId>com.sastix.cms</groupId>
         <artifactId>cms-common</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.sastix.cms</groupId>
     <artifactId>common-api</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <name>Common Api</name>
 
     <dependencies>
