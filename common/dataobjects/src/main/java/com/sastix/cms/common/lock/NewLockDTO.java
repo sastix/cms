@@ -18,11 +18,16 @@ package com.sastix.cms.common.lock;
 
 import org.joda.time.DateTime;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
  * The specific object holds all the information related to a new Lock.
  */
+@Getter @Setter @NoArgsConstructor
 public class NewLockDTO implements Serializable {
 
     /**
@@ -48,12 +53,6 @@ public class NewLockDTO implements Serializable {
     private DateTime lockExpiration;
 
     /**
-     * Default Constructor.
-     */
-    public NewLockDTO() {
-    }
-
-    /**
      * Constructor with Mandatory fields.
      *
      * @param UID            a String with the UID
@@ -65,57 +64,4 @@ public class NewLockDTO implements Serializable {
         lockExpiration = new DateTime().plusMinutes(30);
     }
 
-    /**
-     * Returns the UID.
-     *
-     * @return a String with the UID.
-     */
-    public String getUID() {
-        return UID;
-    }
-
-    /**
-     * Set the UID.
-     *
-     * @param UID a String with the UID.
-     */
-    public void setUID(final String UID) {
-        this.UID = UID;
-    }
-
-    /**
-     * Returns the owner of this lock.
-     *
-     * @return a String with the owner
-     */
-    public String getLockOwner() {
-        return lockOwner;
-    }
-
-    /**
-     * Set the owner of this lock.
-     *
-     * @param lockOwner a String with the owner
-     */
-    public void setLockOwner(final String lockOwner) {
-        this.lockOwner = lockOwner;
-    }
-
-    /**
-     * Returns the lock expiration.
-     *
-     * @return a Datetime with the expiration of the lock
-     */
-    public DateTime getLockExpiration() {
-        return lockExpiration;
-    }
-
-    /**
-     * Set the expiration of this lock.
-     *
-     * @param lockExpiration a Datetime with the expiration
-     */
-    public void setLockExpiration(final DateTime lockExpiration) {
-        this.lockExpiration = lockExpiration;
-    }
 }

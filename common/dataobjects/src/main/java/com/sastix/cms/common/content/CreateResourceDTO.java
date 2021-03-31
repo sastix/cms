@@ -18,9 +18,15 @@ package com.sastix.cms.common.content;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * The specific object holds all the information related to a CreateResource.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class CreateResourceDTO {
 
     /**
@@ -60,12 +66,6 @@ public class CreateResourceDTO {
     // TODO: Should we add a parentResourceUID?
     
     /**
-     * Default Constructor.
-     */
-    public CreateResourceDTO() {
-    }
-
-    /**
      * Constructor with mandatory fields.
      *
      * @param resourceMediaType a String with the media type
@@ -83,128 +83,4 @@ public class CreateResourceDTO {
         this.resourceTenantId = resourceTenantId;
     }
 
-    /**
-     * Returns the Resource Media Type.
-     *
-     * @return a String with the Media type
-     */
-    public String getResourceMediaType() {
-        return resourceMediaType;
-    }
-
-    /**
-     * Set the media type of the resource.
-     *
-     * @param resourceMediaType a String with the media type
-     */
-    public void setResourceMediaType(final String resourceMediaType) {
-        this.resourceMediaType = resourceMediaType;
-    }
-
-    /**
-     * Return the author of this resource.
-     *
-     * @return a String with the author
-     */
-    public String getResourceAuthor() {
-        return resourceAuthor;
-    }
-
-    /**
-     * Set the author of the resource
-     *
-     * @param resourceAuthor a String with the author
-     */
-    public void setResourceAuthor(final String resourceAuthor) {
-        this.resourceAuthor = resourceAuthor;
-    }
-
-    /**
-     * Returns a byte array of this resource.
-     *
-     * @return a byte[] of this resource
-     */
-    public byte[] getResourceBinary() {
-        return resourceBinary;
-    }
-
-    /**
-     * Set the byte array of the resource.
-     *
-     * @param resourceBinary a byte[] of this resource
-     */
-    public void setResourceBinary(final byte[] resourceBinary) {
-        this.resourceBinary = resourceBinary;
-    }
-
-    /**
-     * Returns the URI holding this resource.
-     *
-     * @return A String with the URI
-     */
-    public String getResourceExternalURI() {
-        return resourceExternalURI;
-    }
-
-    /**
-     * Set the URI of this resource.
-     *
-     * @param resourceExternalURI a String with the URI
-     */
-    public void setResourceExternalURI(final String resourceExternalURI) {
-        this.resourceExternalURI = resourceExternalURI;
-    }
-
-    /**
-     * Returns the name of this resource.
-     *
-     * @return a String with the name
-     */
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    /**
-     * Set the name of this resource.
-     *
-     * @param resourceName a String with the name
-     */
-    public void setResourceName(final String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    /**
-     * Returns the tenant id of this resource.
-     *
-     * @return a String with the tenant id.
-     */
-    public String getResourceTenantId() {
-        return resourceTenantId;
-    }
-
-    /**
-     * Returns the tenant id of this resource.
-     *
-     * @param resourceTenantId a String with the tenant id
-     */
-    public void setResourceTenantId(final String resourceTenantId) {
-        this.resourceTenantId = resourceTenantId;
-    }
-
-    @Override
-    public String toString() {
-        return "CreateResourceDTO{" +
-                "resourceMediaType='" + resourceMediaType + '\'' +
-                ", resourceAuthor='" + resourceAuthor + '\'' +
-                ", resourceBinary=" + (resourceBinary == null ? "empty" : Integer.toString(resourceBinary.length)) +
-                ", resourceExternalURI='" + resourceExternalURI + '\'' +
-                ", resourceName='" + resourceName + '\'' +
-                ", resourceTenantId='" + resourceTenantId + '\'' +
-                '}';
-    }
-
-//    @AssertTrue(message="passVerify field should be equal than pass field")
-//    public boolean isValid() {
-//        return !(resourceExternalURI == null && resourceBinary == null);
-//    }
 }

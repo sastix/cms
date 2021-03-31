@@ -22,40 +22,36 @@ import com.sastix.cms.common.lock.QueryLockDTO;
 import com.sastix.cms.common.lock.exceptions.LockNotAllowed;
 import com.sastix.cms.common.lock.exceptions.LockNotHeld;
 import com.sastix.cms.server.services.lock.LockService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-@Profile("dummy")
-@Service
-public class DummyLockService implements LockService {
+import lombok.extern.slf4j.Slf4j;
 
-    /**
-     * Static LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(DummyLockService.class);
+@Slf4j
+@Service
+@Profile("dummy")
+public class DummyLockService implements LockService {
 
     @Override
     public LockDTO lockResource(final NewLockDTO newLockDTO) throws LockNotAllowed {
-        LOG.info("DummyLockService->lockResource");
+        log.info("DummyLockService->lockResource");
         return null;
     }
 
     @Override
     public void unlockResource(final LockDTO lockDTO) throws LockNotHeld {
-        LOG.info("DummyLockService->unlockResource");
+        log.info("DummyLockService->unlockResource");
     }
 
     @Override
     public LockDTO renewResourceLock(final LockDTO lockDTO) throws LockNotHeld, LockNotAllowed {
-        LOG.info("DummyLockService->renewResourceLock");
+        log.info("DummyLockService->renewResourceLock");
         return null;
     }
 
     @Override
     public LockDTO queryResourceLock(QueryLockDTO queryLockDTO) {
-        LOG.info("DummyLockService->queryResourceLock");
+        log.info("DummyLockService->queryResourceLock");
         return null;
     }
 }

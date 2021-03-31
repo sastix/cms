@@ -16,23 +16,24 @@
 
 package com.sastix.cms.common.services.htmltopdf.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @ComponentScan({"com.sastix.cms.common.services.htmltopdf.config"})
 public class HtmlToPdfSetup {
-    private static final Logger LOG = LoggerFactory.getLogger(HtmlToPdfConfig.class);
+
     @Value("${wkhtmltopdf.path.to.exec:/data/common/wkhtmltopdf/wkhtmltopdf}")
     private String wkhtmltopdf;
 
     @Bean
     HtmlToPdfConfig htmlToPdfConfig(){
-        LOG.info("wkhtmltopdf.path.to.exec="+wkhtmltopdf);
+        log.info("wkhtmltopdf.path.to.exec="+wkhtmltopdf);
         return new HtmlToPdfConfig(wkhtmltopdf);
     }
 }

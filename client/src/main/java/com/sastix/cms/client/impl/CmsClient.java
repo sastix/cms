@@ -44,8 +44,6 @@ import com.sastix.cms.common.lock.exceptions.LockNotHeld;
 import com.sastix.cms.common.lock.exceptions.LockValidationException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -57,6 +55,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -67,8 +67,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFactoryAware {
-    private Logger LOG = (Logger) LoggerFactory.getLogger(CmsClient.class);
 
     @Autowired
     @Qualifier("CmsApiVersionClient")
@@ -90,9 +90,9 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
         try {
             HazelcastInstance hz = beanFactory.getBean(HazelcastInstance.class);
             hazelcastInstance = Optional.of(hz);
-            LOG.info("A local HZ instance (uid={}) can be found/used on this service.", hazelcastInstance.get().getLocalEndpoint().getUuid());
+            log.info("A local HZ instance (uid={}) can be found/used on this service.", hazelcastInstance.get().getLocalEndpoint().getUuid());
         } catch (final Exception e) {
-            LOG.warn("Hazelcast Instance not found on this Server");
+            log.warn("Hazelcast Instance not found on this Server");
             hazelcastInstance = Optional.empty();
         }
     }
@@ -105,76 +105,76 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     @Override
     public LockedResourceDTO lockResource(ResourceDTO resourceDTO) throws ResourceNotFound, ResourceNotOwned, ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.LOCK_RESOURCE_DTO;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + resourceDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + resourceDTO.toString());
         LockedResourceDTO lockedResourceDTO = retryRestTemplate.postForObject(url, resourceDTO, LockedResourceDTO.class);
-        LOG.trace("Response: " + lockedResourceDTO.toString());
+        log.trace("Response: " + lockedResourceDTO.toString());
         return lockedResourceDTO;
     }
 
     @Override
     public void unlockResource(LockedResourceDTO lockedResourceDTO) throws ResourceNotFound, ResourceNotOwned, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.UNLOCK_RESOURCE_DTO;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + lockedResourceDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + lockedResourceDTO.toString());
         retryRestTemplate.postForObject(url, lockedResourceDTO, LockedResourceDTO.class);
     }
 
     @Override
     public LockedResourceDTO renewResourceLock(LockedResourceDTO lockedResourceDTO) throws ResourceNotFound, ResourceNotOwned, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.RENEW_RESOURCE_DTO_LOCK;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + lockedResourceDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + lockedResourceDTO.toString());
         LockedResourceDTO newLockedResourceDTO = retryRestTemplate.postForObject(url, lockedResourceDTO, LockedResourceDTO.class);
-        LOG.trace("Response: " + newLockedResourceDTO.toString());
+        log.trace("Response: " + newLockedResourceDTO.toString());
         return newLockedResourceDTO;
     }
 
     @Override
     public ResourceDTO createResource(CreateResourceDTO createResourceDTO) throws ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.CREATE_RESOURCE;
-        LOG.trace("API call: " + url);
-        //LOG.trace("Request: " + createResourceDTO.toString());
+        log.trace("API call: " + url);
+        //log.trace("Request: " + createResourceDTO.toString());
         ResourceDTO resourceDTO = retryRestTemplate.postForObject(url, createResourceDTO, ResourceDTO.class);
-        //LOG.trace("Response: " + resourceDTO.toString());
+        //log.trace("Response: " + resourceDTO.toString());
         return resourceDTO;
     }
 
     @Override
     public LockedResourceDTO updateResource(UpdateResourceDTO updateResourceDTO) throws ResourceNotOwned, ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.UPDATE_RESOURCE;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + updateResourceDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + updateResourceDTO.toString());
         LockedResourceDTO lockedResourceDTO = retryRestTemplate.postForObject(url, updateResourceDTO, LockedResourceDTO.class);
-        LOG.trace("Response: " + lockedResourceDTO.toString());
+        log.trace("Response: " + lockedResourceDTO.toString());
         return lockedResourceDTO;
     }
 
     @Override
     public ResourceDTO queryResource(ResourceQueryDTO resourceQueryDTO) throws ResourceAccessError, ResourceNotFound, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.QUERY_RESOURCE;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + resourceQueryDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + resourceQueryDTO.toString());
         ResourceDTO resourceDTO = retryRestTemplate.postForObject(url, resourceQueryDTO, ResourceDTO.class);
-        LOG.trace("Response: {}", resourceDTO);
+        log.trace("Response: {}", resourceDTO);
         return resourceDTO;
     }
 
     @Override
     public ResourceDTO deleteResource(LockedResourceDTO lockedResourceDTO) throws ResourceNotOwned, ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.DELETE_RESOURCE;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + lockedResourceDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + lockedResourceDTO.toString());
         ResourceDTO resourceDTO = retryRestTemplate.postForObject(url, lockedResourceDTO, ResourceDTO.class);
-        LOG.trace("Response: " + resourceDTO.toString());
+        log.trace("Response: " + resourceDTO.toString());
         return resourceDTO;
     }
 
     @Override
     public byte[] getData(DataDTO dataDTO) throws ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.GET_DATA;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request: " + dataDTO.toString());
+        log.trace("API call: " + url);
+        log.trace("Request: " + dataDTO.toString());
         return retryRestTemplate.postForObject(url, dataDTO, byte[].class);
     }
 
@@ -226,10 +226,10 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     @Override
     public String getParentResource(final String uuid) throws ResourceNotFound {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.GET_PARENT_UUID;
-        LOG.trace("API call: " + url);
-        LOG.trace("Request of parent uuid of: " + uuid);
+        log.trace("API call: " + url);
+        log.trace("Request of parent uuid of: " + uuid);
         String ret = retryRestTemplate.postForObject(url, uuid, String.class);
-        LOG.trace("Response: {}", ret);
+        log.trace("Response: {}", ret);
         return ret;
     }
 
@@ -247,8 +247,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
             throw new CacheValidationException("CacheDTO object is missing mandatory fields");
         } else {
             StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.PUT_CACHE);
-            LOG.debug("API call: " + url);
-            LOG.debug("Request DTO: " + cacheDTO.toString());
+            log.debug("API call: " + url);
+            log.debug("Request DTO: " + cacheDTO.toString());
             retryRestTemplate.postForObject(url.toString(), cacheDTO, CacheDTO.class);
         }
     }
@@ -261,8 +261,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
             throw new CacheValidationException("RemoveCacheDTO object is missing the cacheKey");
         } else {
             StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.REMOVE_CACHE);
-            LOG.debug("API call: " + url);
-            LOG.debug("Request DTO: " + removeCacheDTO.toString());
+            log.debug("API call: " + url);
+            log.debug("Request DTO: " + removeCacheDTO.toString());
             retryRestTemplate.postForObject(url.toString(), removeCacheDTO, RemoveCacheDTO.class);
         }
     }
@@ -277,7 +277,7 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
         } else {
             if (hazelcastInstance.isPresent()) {
                 final String cache = StringUtils.isEmpty(queryCacheDTO.getCacheRegion()) ? Constants.DEFAULT_CACHE_NAME : queryCacheDTO.getCacheRegion();
-                LOG.debug("Trying to find resource ({},{}) in local HZ instance", queryCacheDTO.getCacheKey(), cache);
+                log.debug("Trying to find resource ({},{}) in local HZ instance", queryCacheDTO.getCacheKey(), cache);
                 if (hazelcastInstance.get().getMap(cache).containsKey(queryCacheDTO.getCacheKey())) {
                     try {
                         cacheDTO = (CacheDTO) hazelcastInstance.get().getMap(cache).get(queryCacheDTO.getCacheKey());
@@ -287,22 +287,22 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
                             removeCacheDTO.setCacheRegion(queryCacheDTO.getCacheRegion());
                             removeCachedResource(removeCacheDTO);
                         } else {
-                            LOG.debug("Resource ({},{}) found in local HZ instance", queryCacheDTO.getCacheKey(), cache);
+                            log.debug("Resource ({},{}) found in local HZ instance", queryCacheDTO.getCacheKey(), cache);
                             return cacheDTO;
                         }
                     } catch (Exception e) {
-                        LOG.debug("QueryCacheDTO with key={} was not found in region={}", queryCacheDTO.getCacheKey(), queryCacheDTO.getCacheRegion());
+                        log.debug("QueryCacheDTO with key={} was not found in region={}", queryCacheDTO.getCacheKey(), queryCacheDTO.getCacheRegion());
                     }
                 }
             }
 
             StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.GET_CACHE);
-            LOG.debug("API call: " + url);
-            LOG.debug("Request DTO: " + queryCacheDTO.toString());
+            log.debug("API call: " + url);
+            log.debug("Request DTO: " + queryCacheDTO.toString());
 
             cacheDTO = retryRestTemplate.postForObject(url.toString(), queryCacheDTO, CacheDTO.class);
 
-            LOG.debug("Response DTO: {}", cacheDTO);
+            log.debug("Response DTO: {}", cacheDTO);
 
         }
         return cacheDTO;
@@ -312,30 +312,30 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     public void clearCache(RemoveCacheDTO removeCacheDTO) throws DataNotFound, CacheValidationException {
         nullValidationChecker(removeCacheDTO, RemoveCacheDTO.class);
         StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.CLEAR_CACHE_REGION);
-        LOG.debug("API call: " + url);
+        log.debug("API call: " + url);
         if (removeCacheDTO != null)
-            LOG.debug("Request DTO: " + removeCacheDTO.toString());
+            log.debug("Request DTO: " + removeCacheDTO.toString());
         retryRestTemplate.postForObject(url.toString(), removeCacheDTO, RemoveCacheDTO.class);
     }
 
     @Override
     public void clearCache() {
         StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.CLEAR_CACHE_ALL);
-        LOG.debug("API call: " + url);
+        log.debug("API call: " + url);
         retryRestTemplate.postForObject(url.toString(), true, Boolean.class);
     }
 
     @Override
     public void clearCacheExcept(List<String> cacheRegions) {
         StringBuffer url = new StringBuffer(getUrlRoot()).append(Constants.CLEAR_CACHE_ALL_EXCEPT);
-        LOG.debug("API call: " + url);
+        log.debug("API call: " + url);
         retryRestTemplate.postForObject(url.toString(), cacheRegions, List.class);
     }
 
     @Override
     public String getUID(String region) {
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.GET_UID);
-        LOG.debug("API call: " + url);
+        log.debug("API call: " + url);
         if(StringUtils.isEmpty(region)){
             region = Constants.UID_REGION;
         }
@@ -346,7 +346,7 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     @Override
     public String getUID() {
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.GET_UID);
-        LOG.debug("API call: " + url);
+        log.debug("API call: " + url);
         final String UID = retryRestTemplate.postForObject(url.toString(), Constants.UID_REGION, String.class);
         return UID;
     }
@@ -355,8 +355,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     public LockDTO lockResource(NewLockDTO newLockDTO) throws LockNotAllowed,LockValidationException {
         nullValidationChecker(newLockDTO,NewLockDTO.class);
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.LOCK_RESOURCE);
-        LOG.debug("API call: " + url);
-        LOG.debug("NewLockDTO: " + newLockDTO.toString());
+        log.debug("API call: " + url);
+        log.debug("NewLockDTO: " + newLockDTO.toString());
         LockDTO lockDTO = retryRestTemplate.postForObject(url.toString(), newLockDTO, LockDTO.class);
         return lockDTO;
     }
@@ -365,8 +365,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     public void unlockResource(LockDTO lockDTO) throws LockNotHeld,LockValidationException{
         nullValidationChecker(lockDTO,LockDTO.class);
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.UNLOCK_RESOURCE);
-        LOG.debug("API call: " + url);
-        LOG.debug("LockDTO: " + lockDTO.toString());
+        log.debug("API call: " + url);
+        log.debug("LockDTO: " + lockDTO.toString());
         retryRestTemplate.postForObject(url.toString(), lockDTO, LockDTO.class);
     }
 
@@ -374,8 +374,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     public LockDTO renewResourceLock(LockDTO lockDTO) throws LockNotAllowed, LockNotHeld,LockValidationException {
         nullValidationChecker(lockDTO,LockDTO.class);
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.RENEW_RESOURCE_LOCK);
-        LOG.debug("API call: " + url);
-        LOG.debug("LockDTO: " + lockDTO.toString());
+        log.debug("API call: " + url);
+        log.debug("LockDTO: " + lockDTO.toString());
         LockDTO retLockDTO = retryRestTemplate.postForObject(url.toString(), lockDTO, LockDTO.class);
         return retLockDTO;
     }
@@ -384,8 +384,8 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     public LockDTO queryResourceLock(QueryLockDTO queryLockDTO) throws LockNotFound, LockValidationException{
         nullValidationChecker(queryLockDTO,QueryLockDTO.class);
         StringBuilder url = new StringBuilder(getUrlRoot()).append(Constants.QUERY_RESOURCE_LOCK);
-        LOG.debug("API call: " + url);
-        LOG.debug("QueryDTO: " + queryLockDTO.toString());
+        log.debug("API call: " + url);
+        log.debug("QueryDTO: " + queryLockDTO.toString());
         LockDTO retLockDTO = retryRestTemplate.postForObject(url.toString(), queryLockDTO, LockDTO.class);
         return retLockDTO;
     }

@@ -19,9 +19,15 @@ package com.sastix.cms.common.content;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sastix.cms.common.content.exceptions.ContentValidationException;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * The specific object holds all the information related to a DataDTO.
  */
+@Getter @Setter @NoArgsConstructor @ToString
 public class DataDTO {
 
     /**
@@ -34,57 +40,6 @@ public class DataDTO {
      */
     private String resourceURI;
 
-    /**
-     * Default Constructor.
-     */
-    public DataDTO() {
-        //Empty
-    }
-
-    /**
-     * Returns the resource UID.
-     *
-     * @return a String with the UID
-     */
-    public String getResourceUID() {
-        return resourceUID;
-    }
-
-    /**
-     * Set the resource UID.
-     *
-     * @param resourceUID the String with UID
-     */
-    public void setResourceUID(final String resourceUID) {
-        this.resourceUID = resourceUID;
-    }
-
-    /**
-     * Return the Resource URI.
-     *
-     * @return a String with the resource URI.
-     */
-    public String getResourceURI() {
-        return resourceURI;
-    }
-
-    /**
-     * Set the resource URI.
-     *
-     * @param resourceURI a String with the resource URI
-     */
-    public void setResourceURI(final String resourceURI) {
-        this.resourceURI = resourceURI;
-    }
-
-    @Override
-    public String toString() {
-        return "DataDTO{" +
-                "resourceUID='" + resourceUID + '\'' +
-                ", resourceURI='" + resourceURI + '\'' +
-                '}';
-    }
-
     @JsonIgnore
     public String getTenantID() throws ContentValidationException {
         final String tenantID;
@@ -95,7 +50,6 @@ public class DataDTO {
                 final String context = resourceURI.substring(0, resourceURI.indexOf("/"));
                 tenantID = context.substring(context.lastIndexOf('-') + 1);
             } else {
-                //Something went wrong
                 throw new RuntimeException("Something went wrong");
             }
         } catch (Exception e) {

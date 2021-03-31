@@ -24,11 +24,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -37,10 +37,10 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Slf4j
 @Service
 public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
 
-    private Logger LOG = (Logger) LoggerFactory.getLogger(ZipFileHandlerServiceImpl.class);
     String acceptedExtensions = "html, htm, js, css";
 
     private final Tika tika = new Tika();
@@ -119,7 +119,7 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
             try {
                 xml = new String(dataXml, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                LOG.error("Error in determining if it is a scorm type: {}", e.getLocalizedMessage());
+                log.error("Error in determining if it is a scorm type: {}", e.getLocalizedMessage());
             }
             Document doc = Jsoup.parse(xml, "", Parser.xmlParser());
             for (Element e : doc.select("resources")) {
@@ -139,7 +139,7 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
         try {
             json = new String(dataJson,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            LOG.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
+            log.error("Error in determining if it is a cms zip resource: {}", e.getLocalizedMessage());
             return null;
         }
 
@@ -166,7 +166,7 @@ public class ZipFileHandlerServiceImpl implements ZipFileHandlerService {
         try {
             xml = new String(dataXml,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            LOG.error("Error in finding parent resource name: {}", e.getLocalizedMessage());
+            log.error("Error in finding parent resource name: {}", e.getLocalizedMessage());
         }
         Document doc = Jsoup.parse(xml, "", Parser.xmlParser());
         for (Element e : doc.select("resources")) {

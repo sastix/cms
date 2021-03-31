@@ -29,8 +29,6 @@ import com.sastix.cms.server.services.cache.CacheService;
 import com.sastix.cms.server.services.cache.manager.DistributedCacheManager;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -40,6 +38,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -48,13 +48,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 import java.util.zip.CRC32;
 
-@Profile("production")
+@Slf4j
 @Service
+@Profile("production")
 public class HazelcastCacheService implements CacheService, BeanFactoryAware {
-    /**
-     * Static LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(HazelcastCacheService.class);
 
     private static final String DEFAULT_HAZELCAST_MANAGER = "hazelcastDistributedCacheManager";
 
@@ -85,7 +82,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public void cacheResource(CacheDTO cacheDTO) throws DataNotFound, CacheValidationException, IOException {
-        LOG.info("HazelcastCacheService->cacheResource");
+        log.info("HazelcastCacheService->cacheResource");
         nullValidationChecker(cacheDTO,CacheDTO.class);
         String cacheKey = cacheDTO.getCacheKey();
         String cacheRegion = cacheDTO.getCacheRegion();
@@ -115,7 +112,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public CacheDTO getCachedResource(QueryCacheDTO queryCacheDTO) throws DataNotFound, CacheValidationException {
-        LOG.info("HazelcastCacheService->getCachedResource ({})", queryCacheDTO!=null?queryCacheDTO.toString():"null");
+        log.info("HazelcastCacheService->getCachedResource ({})", queryCacheDTO!=null?queryCacheDTO.toString():"null");
         nullValidationChecker(queryCacheDTO, QueryCacheDTO.class);
         String cacheKey = queryCacheDTO.getCacheKey();
 
@@ -151,7 +148,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public void removeCachedResource(RemoveCacheDTO removeCacheDTO) throws DataNotFound,CacheValidationException {
-        LOG.info("HazelcastCacheService->removeCachedResource");
+        log.info("HazelcastCacheService->removeCachedResource");
         nullValidationChecker(removeCacheDTO, RemoveCacheDTO.class);
         String cacheKey = removeCacheDTO.getCacheKey();
         String cacheRegion = removeCacheDTO.getCacheRegion();
@@ -178,7 +175,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public void clearCache(RemoveCacheDTO removeCacheDTO) throws DataNotFound, CacheValidationException {
-        LOG.info("HazelcastCacheService->CLEAR_CACHE_REGION");
+        log.info("HazelcastCacheService->CLEAR_CACHE_REGION");
         nullValidationChecker(removeCacheDTO, RemoveCacheDTO.class);
         String cacheRegion = removeCacheDTO != null ? removeCacheDTO.getCacheRegion() : null;
 
@@ -197,7 +194,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public void clearCache() {
-        LOG.info("HazelcastCacheService->CLEAR_ALL_CACHE_REGIONS_AND_MAIN_CACHE");
+        log.info("HazelcastCacheService->CLEAR_ALL_CACHE_REGIONS_AND_MAIN_CACHE");
         ConcurrentMap<String, IMap> caches = cm.getCaches();
         for (Map.Entry<String, IMap> entry : caches.entrySet()) {
             entry.getValue().clear();
@@ -208,7 +205,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
 
     @Override
     public void clearCacheExcept(List<String> cacheRegions) {
-        LOG.info("HazelcastCacheService->CLEAR_ALL_CACHE_REGIONS_AND_MAIN_CACHE Except for specific values");
+        log.info("HazelcastCacheService->CLEAR_ALL_CACHE_REGIONS_AND_MAIN_CACHE Except for specific values");
         ConcurrentMap<String, IMap> caches = cm.getCaches();
         for (Map.Entry<String, IMap> entry : caches.entrySet()) {
             String region = entry.getValue().getName();
@@ -224,7 +221,7 @@ public class HazelcastCacheService implements CacheService, BeanFactoryAware {
     @Override
     public String getUID(String region) {
         CRC32 CRC_32 = new CRC32();
-        LOG.info("HazelcastCacheService->GET_UID");
+        log.info("HazelcastCacheService->GET_UID");
         IdGenerator idGenerator = cm.getIdGenerator(region);
         final String uid = String.valueOf(idGenerator.newId()); //assures uniqueness during the life cycle of the cluster
         final String uuid = UUID.randomUUID().toString();

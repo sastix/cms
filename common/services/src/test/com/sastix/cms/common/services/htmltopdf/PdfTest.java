@@ -30,11 +30,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -45,11 +45,10 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {HtmlToPdfConfiguration.class,PdfBuilder.class})
-
 public class PdfTest {
-    private static final Logger LOG = LoggerFactory.getLogger(PdfTest.class);
 
     @Autowired
     PdfBuilder pdfBuilder;
@@ -120,8 +119,8 @@ public class PdfTest {
         executor.awaitTermination(5, TimeUnit.SECONDS);
         assertEquals(cmap.size(), numberOfTasks);
         long passed = DateTime.now().getMillis() - start;
-        LOG.info("Millis passed: "+passed);
-        LOG.info("Seconds passed: "+(double)passed/1000);
+        log.info("Millis passed: "+passed);
+        log.info("Seconds passed: "+(double)passed/1000);
     }
 
     class PdfRunnable implements Runnable{

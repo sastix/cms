@@ -26,8 +26,6 @@ import com.sastix.cms.common.lock.exceptions.LockNotHeld;
 import com.sastix.cms.common.lock.exceptions.LockValidationException;
 import com.sastix.cms.server.CmsServer;
 import com.sastix.cms.server.services.lock.LockService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -37,15 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/" + CmsServer.CONTEXT)
 public class LockController implements BeanFactoryAware {
 
-    /**
-     * Static LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(LockController.class);
-    
     private static final String DEFAULT_LOCK_SERVICE = "hazelcastLockService";
 
     @Value("${cms.lock.service:hazelcastLockService}")
@@ -64,35 +60,35 @@ public class LockController implements BeanFactoryAware {
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.LOCK_RESOURCE, method = RequestMethod.POST)
     public LockDTO lockResource(@RequestBody NewLockDTO newLockDTO) throws LockNotAllowed {
-        LOG.debug(Constants.LOCK_RESOURCE);
+        log.debug(Constants.LOCK_RESOURCE);
         //validationHelper.validate(result);
         LockDTO lockedResourceDTO = lockService.lockResource(newLockDTO);
-        LOG.debug(lockedResourceDTO.toString());
+        log.debug(lockedResourceDTO.toString());
         return lockedResourceDTO;
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.UNLOCK_RESOURCE, method = RequestMethod.POST)
     public void unlockResource(@RequestBody LockDTO lockDTO) throws LockNotHeld,LockNotAllowed {
-        LOG.debug(Constants.UNLOCK_RESOURCE);
+        log.debug(Constants.UNLOCK_RESOURCE);
         //validationHelper.validate(result);
         lockService.unlockResource(lockDTO);
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.RENEW_RESOURCE_LOCK, method = RequestMethod.POST)
     public LockDTO renewResourceLock(@RequestBody LockDTO lockDTO) throws LockNotHeld, LockNotAllowed {
-        LOG.debug(Constants.RENEW_RESOURCE_LOCK);
+        log.debug(Constants.RENEW_RESOURCE_LOCK);
         //validationHelper.validate(result);
         final LockDTO newLockedResourceDTO = lockService.renewResourceLock(lockDTO);
-        LOG.debug(newLockedResourceDTO.toString());
+        log.debug(newLockedResourceDTO.toString());
         return newLockedResourceDTO;
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.QUERY_RESOURCE_LOCK, method = RequestMethod.POST)
     public LockDTO queryResourceLock(@RequestBody QueryLockDTO queryLockDTO) throws LockNotFound, LockValidationException {
-        LOG.debug(Constants.QUERY_RESOURCE_LOCK);
+        log.debug(Constants.QUERY_RESOURCE_LOCK);
         //validationHelper.validate(result);
         final LockDTO newLockedResourceDTO = lockService.queryResourceLock(queryLockDTO);
-        LOG.debug(newLockedResourceDTO != null ? newLockedResourceDTO.toString() : "queryResourceLock: NULL");
+        log.debug(newLockedResourceDTO != null ? newLockedResourceDTO.toString() : "queryResourceLock: NULL");
         return newLockedResourceDTO;
     }
 }

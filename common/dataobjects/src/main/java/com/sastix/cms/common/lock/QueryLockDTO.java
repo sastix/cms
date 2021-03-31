@@ -17,11 +17,18 @@
 package com.sastix.cms.common.lock;
 
 import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
  * The specific object holds all the information related to a Query Lock.
  */
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class QueryLockDTO implements Serializable {
 
     /**
@@ -34,38 +41,5 @@ public class QueryLockDTO implements Serializable {
      */
     @NotNull
     private String UID;
-
-    /**
-     * Default Constructor.
-     */
-    public QueryLockDTO() {
-    }
-
-    /**
-     * Constructor with Mandatory fields.
-     *
-     * @param UID a String with the UID
-     */
-    public QueryLockDTO(final String UID) {
-        this.UID = UID;
-    }
-
-    /**
-     * Returns the UID.
-     *
-     * @return a String with the UID.
-     */
-    public String getUID() {
-        return UID;
-    }
-
-    /**
-     * Set the UID.
-     *
-     * @param UID a String with the UID.
-     */
-    public void setUID(final String UID) {
-        this.UID = UID;
-    }
 
 }

@@ -19,14 +19,15 @@ package com.sastix.cms.common.services.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 
+@Slf4j
 @Aspect
 @Component
 @Configuration
@@ -37,27 +38,25 @@ public class MethodMonitor {
         System.setProperty("spring.aop.proxy-target-class","true");
     }
 
-    private static final Logger LOG = LoggerFactory.getLogger(MethodMonitor.class);
-
     @Around("execution(* com.sastix..services..*.*(..))")
     public Object logServiceAccess(ProceedingJoinPoint joinPoint) throws Throwable {
-        if (!LOG.isDebugEnabled()) {
+        if (!log.isDebugEnabled()) {
             return joinPoint.proceed(); // if not on DEBUG, no point in writing anything
         }
 
         String name = joinPoint.getSignature().getName();
-        LOG.debug("==> {}({})", name, argsAsStrings(joinPoint.getArgs()));
+        log.debug("==> {}({})", name, argsAsStrings(joinPoint.getArgs()));
 
         try {
             Object obj = joinPoint.proceed(); //continue on the intercepted method
-            LOG.debug("<==  {}(...) = {}", name, argsAsStrings(obj));
+            log.debug("<==  {}(...) = {}", name, argsAsStrings(obj));
             return obj;
         } catch (Throwable t) {
-            LOG.error("<==! {}(...) => EXCEPTION {}", new Object[]{name,t.getMessage()});
+            log.error("<==! {}(...) => EXCEPTION {}", new Object[]{name,t.getMessage()});
             if (t.getCause() != null) {
-                LOG.error("<==! caused by: {} - message: {}", t.getCause(), t.getCause().getMessage());
+                log.error("<==! caused by: {} - message: {}", t.getCause(), t.getCause().getMessage());
             }
-            LOG.error("<==! exception log: ", t);
+            log.error("<==! exception log: ", t);
             throw t;
         }
 

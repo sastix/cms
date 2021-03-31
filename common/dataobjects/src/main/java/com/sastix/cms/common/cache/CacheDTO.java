@@ -19,11 +19,16 @@ package com.sastix.cms.common.cache;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.*;
 
 /**
  * The specific object holds all the information related to a CacheDTO.
  */
+@Getter @Setter @NoArgsConstructor
 public class CacheDTO implements Serializable {
 
     /**
@@ -58,12 +63,6 @@ public class CacheDTO implements Serializable {
      * the expiration time and silently removes them from the cache
      */
     DateTime cacheExpirationTime;
-
-    /**
-     * Default Constructor.
-     */
-    public CacheDTO() {
-    }
 
     /**
      * Constructor with mandatory fields
@@ -133,34 +132,6 @@ public class CacheDTO implements Serializable {
     }
 
     /**
-     * Returns the cache key
-     *
-     * @return a String with the cache key
-     */
-    public String getCacheKey() {
-        return cacheKey;
-    }
-
-    /**
-     * Set the cache key
-     *
-     * @param cacheKey
-     */
-    public void setCacheKey(String cacheKey) {
-        this.cacheKey = cacheKey;
-    }
-
-    /**
-     * Returns the cache blob binary
-     *
-     * @return byte array of the blob
-     */
-    public byte[] getCacheBlobBinary() {
-        return cacheBlobBinary;
-    }
-
-
-    /**
      * A more generic method to retrieve the object directly from the carrier byte[]
      *
      * @param <T> the object type required
@@ -193,67 +164,4 @@ public class CacheDTO implements Serializable {
         }
     }
 
-    /**
-     * Set the cache blob binary
-     *
-     * @param cacheBlobBinary a byte array object
-     */
-    public void setCacheBlobBinary(byte[] cacheBlobBinary) {
-        this.cacheBlobBinary = cacheBlobBinary;
-    }
-
-    /**
-     * Returns the uri of the cache blob
-     *
-     * @return a String with the uri
-     */
-    public String getCacheBlobURI() {
-        return cacheBlobURI;
-    }
-
-    /**
-     * Set the uri of the blob to be cached
-     *
-     * @param cacheBlobURI a String with the uri
-     */
-    public void setCacheBlobURI(String cacheBlobURI) {
-        this.cacheBlobURI = cacheBlobURI;
-    }
-
-    /**
-     * Returns the cache region
-     *
-     * @return a String with the cache region value
-     */
-    public String getCacheRegion() {
-        return cacheRegion;
-    }
-
-    /**
-     * Set the cache region
-     *
-     * @param cacheRegion a String with the region
-     */
-    public void setCacheRegion(String cacheRegion) {
-        this.cacheRegion = cacheRegion;
-    }
-
-    /**
-     * Returns the cache expiration time
-     *
-     * @return a DateTime with the cache expiration time
-     */
-    public DateTime getCacheExpirationTime() {
-        return cacheExpirationTime;
-    }
-
-    /**
-     * Set the cache expiration time
-     *
-     * @param cacheExpirationTime a DateTime with the cache expiration time
-     */
-    public void setCacheExpirationTime(DateTime cacheExpirationTime) {
-        this.cacheExpirationTime = cacheExpirationTime;
-    }
 }
-

@@ -24,10 +24,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,12 +38,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
 @ContextConfiguration(classes = {ZipFileHandlerServiceImpl.class, GeneralFileHandlerServiceImpl.class})
 public class ZipFileHandlerServiceTest {
-
-    private Logger LOG = (Logger) LoggerFactory.getLogger(ZipFileHandlerServiceTest.class);
 
     ZipFileHandlerService zipFileHandlerService = new ZipFileHandlerServiceImpl();
 
@@ -71,7 +70,7 @@ public class ZipFileHandlerServiceTest {
     @Test
     public void unzipTest() throws IOException {
         DataMaps map = zipFileHandlerService.unzip(bytesDemoContentZipFile);
-        LOG.info(map.getBytesMap().size() + "");
+        log.info(map.getBytesMap().size() + "");
         assertEquals(map.getBytesMap().size(), 4);
         assertEquals(map.getFoldersMap().size(), 1);
     }

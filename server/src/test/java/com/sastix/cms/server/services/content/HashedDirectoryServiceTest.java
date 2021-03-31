@@ -22,10 +22,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+
+import lombok.extern.slf4j.Slf4j;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,6 +39,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.UUID;
 
+@Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles({"production", "test"})
 @ContextConfiguration(classes = HashedDirectoryServiceImpl.class)
@@ -47,8 +48,6 @@ public class HashedDirectoryServiceTest {
     private static final String TENANT_ID = "test_tenant";
 
     private String VOLUME;
-
-    public Logger LOGGER = LoggerFactory.getLogger(HashedDirectoryServiceTest.class);
 
     HashedDirectoryService hashedDirectoryService = new HashedDirectoryServiceImpl();
 
@@ -59,7 +58,7 @@ public class HashedDirectoryServiceTest {
         String temporaryFolder = Files.createTempDirectory("temp-dir-").toFile().getAbsolutePath();
         VOLUME = temporaryFolder + "/";
         ((HashedDirectoryServiceImpl) hashedDirectoryService).setVolume(VOLUME);
-        LOGGER.info("Test volume directory {}", VOLUME);
+        log.info("Test volume directory {}", VOLUME);
         final URL localFile = getClass().getClassLoader().getResource("./logo.png");
         localUri = localFile.toURI();
     }
@@ -67,7 +66,7 @@ public class HashedDirectoryServiceTest {
     @AfterEach
     public void cleanup() throws Exception {
         final Path path = Paths.get(VOLUME);
-        LOGGER.info("Cleaning temp path {}", path.toString());
+        log.info("Cleaning temp path {}", path.toString());
         try {
             deleteRecursive(path);
         } catch (IOException e) {
@@ -113,7 +112,7 @@ public class HashedDirectoryServiceTest {
     public void testStoreFile() throws IOException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/demo.txt";
         final String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, "HELLO".getBytes());
-        LOGGER.info(path);
+        log.info(path);
     }
 
 
@@ -121,7 +120,7 @@ public class HashedDirectoryServiceTest {
     public void testURIStoreFileWithoutCreationTime() throws IOException {
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/logo.png";
         final String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, localUri);
-        LOGGER.info(path);
+        log.info(path);
     }
 
     @Test
@@ -152,14 +151,14 @@ public class HashedDirectoryServiceTest {
         URL remoteURL = new URL("http://localhost/index.html");
         int response = checkIfUrlExists(remoteURL);
         if (response != 200) {
-            LOGGER.error("URL {} does not exists", remoteURL.toString());
+            log.error("URL {} does not exists", remoteURL.toString());
             return;
         }
         final URI externalURI = remoteURL.toURI();
         final String UURI = UUID.randomUUID().toString() + "-" + TENANT_ID + "/index.html";
 
         final String path = hashedDirectoryService.storeFile(UURI, TENANT_ID, externalURI);
-        LOGGER.info(path);
+        log.info(path);
     }
 
 
@@ -211,7 +210,7 @@ public class HashedDirectoryServiceTest {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 counter[0]++;
-                LOGGER.trace("Listing: [" + counter[0] + "]\t" + file.getParent() + "/" + file.getFileName());
+                log.trace("Listing: [" + counter[0] + "]\t" + file.getParent() + "/" + file.getFileName());
                 return FileVisitResult.CONTINUE;
             }
 

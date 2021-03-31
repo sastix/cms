@@ -13,7 +13,7 @@ order to be able to run the platform successfully.
 ## Features
 - REST APIs
 - Versioning
-- Dictributed Caching
+- Distributed Caching
 - Distributed Locking
 - Distributed Unique ID generator
 - Multi-node support for scaling
