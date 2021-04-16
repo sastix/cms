@@ -1,0 +1,10 @@
+.header{
+    background-color: rgba(44, 27, 64, 0.98);
+    object-fit: contain;
+    padding-left: 20px;
+    border-bottom: 1px solid green;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    margin-bottom: 20px;
+}
