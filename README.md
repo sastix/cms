@@ -134,6 +134,80 @@ In order to test the created resource you can open a browser and follow the link
 http://localhost:9082/cms/v1.0/getData/a28d4846-zaq12345/logo.png
 ```
 
+## Use of Keycloak
+
+The default installation sets Keycloak security disabled. To enable Keycloak security:
+
+- Set ```keycloak.enabled=true``` at the application.properties file.
+- Configure the other keycloak properties as needed.
+
+Afterwards, the calls get authenticated using the Authentication header in the form of:
+
+```
+Authentication: Bearer $JWT_ACCESS_TOKEN
+```
+
+### Use of the development environment
+
+A ready to go solution is provided for ease of use during experimenting and developing.
+
+The setup of the mariadb and keycloak for the development environment is done with docker-compose.
+
+```
+cd devops/dev-environment
+docker-compose up -d
+```
+
+This will bring up two containers, one for MariaDB and one for Keycloak which are already provisioned.
+
+!!! Caution
+You can change the values of the ports used in the .env file to avoid any conflicts. Default Keycloak and MariaDB passwords can be customized there, too.
+
+Change the required configuration to the server properties (application.properties).
+
+```
+cd server
+```
+
+You probably want to change the following configuration:
+
+- server.port : the development server's port (default is 9082)
+- cms.volume: the folder where the cms will save the resources (you should avoid permission denied issues by specifying a user owned folder)
+- spring.datasource.url: by default MariaDB is initialized in docker with a database named sastix_cms_docker. So if the docker-compose instructions are followed as described above the value provided should be jdbc:mysql://localhost:3306/sastix_cms_docker
+
+Spin up the spring-boot development server using:
+
+```
+mvn spring-boot:run
+```
+
+### Examples
+
+An access and a refresh token is provided by using the corresponding Keycloak endpoint, for example:
+
+```
+curl -d "client_id=cms-server" -d "client_secret=6bdcbcb3-457c-4d86-b5c3-5b9cda7198da" -d "username=cms-admin" -d "password=cms-admin" -d "grant_type=password" "http://localhost:8080/auth/realms/CMS/protocol/openid-connect/token"
+```
+will return as a response body a JSON object with an access and a refresh token.
+
+After the grant of the access and the refresh token, the access token can be used to make authenticated calls:
+
+```
+export TOKEN=<access_token>
+```
+
+- Check the API version information:
+
+```
+curl -X 'GET'   'http://localhost:9082/apiversion'   -H 'accept: application/json' -v -H "Authorization: Bearer $TOKEN"
+```
+
+- Create a resource:
+
+```
+curl -v -X POST "http://localhost:9082/cms/v1.0/createResource" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"resourceAuthor\": \"Test Author\", \"resourceExternalURI\": \"https://commons.wikimedia.org/wiki/Category:PNG_files#/media/File:Flederspekrp.png\", \"resourceMediaType\": \"image/png\", \"resourceName\": \"logo.png\", \"resourceTenantId\": \"zaq12345\"}" -H "Authorization: Bearer $TOKEN"
+```
+
 ## Features in pipeline
 - Frontend
 - Enable authorized requests and other security features

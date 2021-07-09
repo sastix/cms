@@ -1,0 +1,46 @@
+version: '3'
+
+volumes:
+  mysql_dev_data:
+      driver: local
+
+services:
+
+  mariadb:
+    image: mariadb
+    container_name: sastix-cms-mariadb
+    ports:
+      - "127.0.0.1:${MARIADB_PORT}:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "127.0.0.1:${ADMINER_PORT}:8080"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: sastix-cms-keycloak
+    command: "-b 0.0.0.0 -Dkeycloak.import=/tmp/cms-realm.json"
+    ports:
+      - "127.0.0.1:${KEYCLOAK_PORT}:8080"
+    volumes:
+      - "./keycloak/realms-export-single-file.json:/tmp/cms-realm.json"
+    environment:
+      DB_VENDOR: mariadb
+      DB_ADDR: sastix-cms-mariadb
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
+    depends_on:
+      - mariadb

@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+spec:
+  ports:
+  - name: https
+    port: 443
+    targetPort: 8443
+  selector:
+    app: keycloak
+  type: ClusterIP
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak
+        env:
+        - name: KEYCLOAK_USER
+          value: "admin"
+        - name: KEYCLOAK_PASSWORD
+          value: "admin"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: DB_ADDR
+          value: mariadb-svc
+        - name: DB_DATABASE
+          value: keycloak
+        - name: DB_USER
+          value: keycloak
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-mariadb-password
+              key: keycloak-mariadb-password
+        - name: DB_SCHEMA
+          value: public
+        - name: DB_VENDOR
+          value: mariadb
+        - name: JGROUPS_DISCOVERY_PROTOCOL
+          value: dns.DNS_PING
+        - name: JGROUPS_DISCOVERY_PROPERTIES
+          value: 'dns_query=keycloak'
+        - name: CACHE_OWNERS_COUNT
+          value: "3"
+        - name: CACHE_OWNERS_AUTH_SESSIONS_COUNT
+          value: "3"
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        readinessProbe:
+          httpGet:
+            path: /auth/realms/master
+            port: 8080
