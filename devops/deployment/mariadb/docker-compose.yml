@@ -1,24 +1,24 @@
 version: '3'
 
+networks:
+  sxcms:
+    name: sxcms
+    driver: bridge
+
+volumes:
+  db-data:
+
 services:
 
   db:
     image: sastix/cmsmariadb:1.0
+    container_name: sxcms-mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: sastixcms
       MYSQL_PASSWORD: sastixcms
       MYSQL_USER: sastixcms
-    ports:
-      - 3306:3306
     volumes:
       - db-data:/var/lib/mysql
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
-volumes:
-  db-data:
+    networks:
+      - sxcms

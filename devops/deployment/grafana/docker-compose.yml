@@ -1,0 +1,24 @@
+version: '3.7'
+
+volumes:
+    grafana_data: {}
+
+networks:
+  monitoring:
+    external: true
+    name: sxcms-monitoring
+
+services:
+
+  grafana:
+    image: grafana/grafana
+    container_name: sxcms-grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_SERVER_ROOT_URL=/grafana
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    networks:
+      - monitoring
+    restart: always

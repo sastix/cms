@@ -1,24 +1,36 @@
 version: '3'
 
+networks:
+  sxcms-monitoring:
+    name: sxcms-monitoring
+    driver: bridge
+  sxcms:
+    external: true
+    name: sxcms
+    
+volumes:
+  sxcms-data:
+
 services:
   sastix-cms:
     image: sastix/sxcms:1.0
     container_name: sxcms
+    restart: always
     hostname: sxcms
     environment:
-      SASTIX_CMS_SERVER_PORT: 9082
-      SASTIX_CMS_VOLUME: /opt/sastixcms
-      SASTIX_CMS_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/sastix_cms_docker
-      SASTIX_CMS_MYSQL_USERNAME: sastixcms
-      SASTIX_CMS_MYSQL_PASSWORD: sastixcms
+      server.port: ${SASTIX_CMS_SERVER_PORT}
+      cms.volume: ${SASTIX_CMS_VOLUME}
+      spring.datasource.url: ${SASTIX_CMS_MYSQL_URL}
+      spring.datasource.username: ${SASTIX_CMS_MYSQL_USERNAME}
+      spring.datasource.password: ${SASTIX_CMS_MYSQL_PASSWORD}
+      keycloak.enabled: ${KEYCLOAK_ENABLED}
+      keycloak.auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
+      keycloak.realm: ${KEYCLOAK_REALM}
+      keycloak.resource: ${KEYCLOAK_RESOURCE}
+      keycloak.credentials.secret: ${KEYCLOAK_CREDENTIALS_SECRET}
     command: java -Xmx512m -Dspring.profiles.active=production,docker -Djava.security.egd=file:/dev/./urandom -jar /app.jar
-    working_dir: /opt/csp
     volumes:
-        - sxcms-data:/opt/sastixcms
-    ports:
-        - 9082:9082
-    network_mode: host
-
-
-volumes:
-  sxcms-data:
+        - sxcms-data:${SASTIX_CMS_VOLUME}
+    networks: 
+      - sxcms
+      - sxcms-monitoring

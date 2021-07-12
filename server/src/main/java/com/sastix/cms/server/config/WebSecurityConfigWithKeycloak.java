@@ -53,6 +53,7 @@ class WebSecurityConfigWithKeycloak extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.cors().and().csrf().disable()
           .authorizeRequests()
+          .antMatchers("/actuator/**").permitAll()
           .anyRequest().authenticated();
     }
 }

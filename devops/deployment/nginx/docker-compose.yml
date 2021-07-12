@@ -1,0 +1,25 @@
+version: '3'
+
+networks:
+  sxcms-monitoring:
+    external: true
+    name: sxcms-monitoring
+  sxcms:
+    external: true
+    name: sxcms
+
+services:
+
+  nginx:
+    image: sxcms-nginx
+    container_name: sxcms-nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - sxcms
+      - sxcms-monitoring

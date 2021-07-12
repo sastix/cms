@@ -1,5 +1,5 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM adoptopenjdk/openjdk11:alpine-jre
 VOLUME /tmp
-ADD target/cms-server-0.0.1-SNAPSHOT.jar app.jar
-RUN sh -c 'touch /app.jar'
-RUN mkdir -p /opt/sastixcms
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
