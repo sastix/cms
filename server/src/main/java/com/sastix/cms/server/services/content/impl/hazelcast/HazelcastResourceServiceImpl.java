@@ -594,5 +594,43 @@ public class HazelcastResourceServiceImpl implements ResourceService {
         final byte[] responseData = Files.readAllBytes(responseFile);
         return responseData;
     }
+    
+    @Override
+    public List<ResourceDTO> getResources() {
+        List<ResourceDTO> resources = new ArrayList<>();
+        List<Revision> revisions =  crs.getAllRevisions();
+        if(!revisions.isEmpty()){
+            for (Revision rev : revisions){
+                boolean isNotDeleted = rev.getDeletedAt() == null;
+                if(isNotDeleted){
+                    resources.add(crs.convertToDTO(rev.getResource()));
+                }
+            }
+        }
+        return resources;
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<ResourceDTO> queryResourceByFields(ResourceFieldsQueryDTO resourceFieldsQueryDTO)
+            throws ResourceAccessError, ResourceNotFound {
+        //find a non deleted resource
+        List<Revision> revisions = crs.getRevisionsByResourceFields(resourceFieldsQueryDTO, PageRequest.of(
+            resourceFieldsQueryDTO.getPage(),
+            resourceFieldsQueryDTO.getSize()
+        ));
+        List<ResourceDTO> result = new ArrayList<>();
+        if (revisions != null) {
+            for (Revision revision : revisions){
+                boolean isNotDeleted = revision.getDeletedAt() == null;
+                if (isNotDeleted) {
+                    result.add(crs.convertToDTO(revision.getResource()));
+                }
+            }
+        } else {
+            throw new ResourceAccessError("The supplied resource data are invalid and the resource cannot be retrieved.");
+        }
+        return result;
+    }
 
 }

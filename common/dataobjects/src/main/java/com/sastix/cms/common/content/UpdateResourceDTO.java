@@ -24,7 +24,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 
 /**
  * The specific object all the information related to Update Resource.

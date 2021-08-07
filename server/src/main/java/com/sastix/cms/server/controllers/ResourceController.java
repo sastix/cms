@@ -36,6 +36,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +52,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -56,6 +61,9 @@ public class ResourceController implements BeanFactoryAware {
 
     @Value("${cms.resource.service:singleResourceService}")
     private String cmsResourceName;
+
+    @Value("${keycloak.enabled:false}")
+    private boolean keycloakEnabled;
 
     private ResourceService resourceService;
 
@@ -81,6 +89,7 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.LOCK_RESOURCE_DTO, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or #resourceDTO.author == authentication.principal.name")
     public LockedResourceDTO lockResource(@Valid @RequestBody ResourceDTO resourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceNotFound, ResourceAccessError {
         log.trace(Constants.LOCK_RESOURCE);
         validationHelper.validate(result);
@@ -91,6 +100,7 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.UNLOCK_RESOURCE_DTO, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or #lockedResourceDTO.author == authentication.principal.name")
     public void unlockResource(@Valid @RequestBody LockedResourceDTO lockedResourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceNotFound {
         log.trace(Constants.UNLOCK_RESOURCE);
         validationHelper.validate(result);
@@ -98,6 +108,7 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.RENEW_RESOURCE_DTO_LOCK, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or #lockedResourceDTO.author == authentication.principal.name")
     public LockedResourceDTO renewResourceDtoLock(@Valid @RequestBody LockedResourceDTO lockedResourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceNotFound {
         log.trace(Constants.RENEW_RESOURCE_LOCK);
         validationHelper.validate(result);
@@ -107,7 +118,12 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.CREATE_RESOURCE, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or hasRole('creator')")
     public ResourceDTO createResource(@Valid @RequestBody CreateResourceDTO createResourceDTO, BindingResult result) throws ContentValidationException, ResourceAccessError {
+        if (keycloakEnabled){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            createResourceDTO.setResourceAuthor(authentication.getPrincipal().toString());
+        }
         log.trace(Constants.CREATE_RESOURCE);
         validationHelper.validate(result);
         final ResourceDTO resourceDTO = resourceService.createResource(createResourceDTO);
@@ -116,6 +132,7 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.UPDATE_RESOURCE, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or #updateResourceDTO.resourceAuthor == authentication.principal.name")
     public LockedResourceDTO updateResource(@Valid @RequestBody UpdateResourceDTO updateResourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceAccessError {
         log.trace(Constants.UPDATE_RESOURCE);
         validationHelper.validate(result);
@@ -125,6 +142,7 @@ public class ResourceController implements BeanFactoryAware {
     }
 
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.QUERY_RESOURCE, method = RequestMethod.POST)
+    @PostFilter("hasRole('admin') or filterObject.author == authentication.principal.name")
     public ResourceDTO queryResource(@Valid @RequestBody ResourceQueryDTO resourceQueryDTO, BindingResult result) throws ContentValidationException, ResourceNotFound, ResourceAccessError {
         log.trace(Constants.QUERY_RESOURCE);
         validationHelper.validate(result);
@@ -133,7 +151,17 @@ public class ResourceController implements BeanFactoryAware {
         return resourceDTO;
     }
 
+    @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.QUERY_RESOURCE_BY_FIELDS, method = RequestMethod.POST)
+    @PostFilter("hasRole('admin') or filterObject.author == authentication.principal.name")
+    public List<ResourceDTO> queryResourceByFields(@Valid @RequestBody ResourceFieldsQueryDTO resourceFieldsQueryDTO, BindingResult result) throws ContentValidationException, ResourceNotFound, ResourceAccessError {
+        log.trace(Constants.QUERY_RESOURCE);
+        validationHelper.validate(result);
+        List<ResourceDTO> resourceDTOs = resourceService.queryResourceByFields(resourceFieldsQueryDTO);
+        return resourceDTOs;
+    }
+
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.DELETE_RESOURCE, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or #LockedResourceDTO.author == authentication.principal.name")
     public ResourceDTO deleteResource(@Valid @RequestBody LockedResourceDTO lockedResourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceAccessError {
         log.trace(Constants.DELETE_RESOURCE);
         validationHelper.validate(result);

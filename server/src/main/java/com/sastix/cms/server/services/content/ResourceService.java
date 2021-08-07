@@ -19,6 +19,7 @@ package com.sastix.cms.server.services.content;
 import com.sastix.cms.common.api.ContentApi;
 import com.sastix.cms.common.content.CreateResourceDTO;
 import com.sastix.cms.common.content.DataDTO;
+import com.sastix.cms.common.content.ResourceDTO;
 import com.sastix.cms.common.content.exceptions.ResourceAccessError;
 import com.sastix.cms.server.domain.entities.Resource;
 import com.sastix.cms.server.utils.MultipartFileSender;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 public interface ResourceService extends ContentApi {
 
@@ -40,5 +42,5 @@ public interface ResourceService extends ContentApi {
 
     Resource insertChildResource(final CreateResourceDTO createResourceDTO, final String parentUid, final Resource parentResource);
 
-
+    List<ResourceDTO> getResources();
 }

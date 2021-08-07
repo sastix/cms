@@ -25,8 +25,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 @TestInstance(Lifecycle.PER_CLASS)
+@EnabledIfSystemProperty(named = "integration.tests.enabled", matches = "true")
 public class AuthenticationTests {
     
     CloseableHttpClient httpclient = HttpClients.createMinimal();

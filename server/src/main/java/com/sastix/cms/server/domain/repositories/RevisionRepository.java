@@ -34,6 +34,18 @@ public interface RevisionRepository extends CrudRepository<Revision, Long> {
 
     List<Revision> findByParentResourceUidOrderByIdDesc(@Param("uid") String uid);
 
+    @Query("SELECT r FROM Revision r ORDER BY r.id desc")
+    List<Revision> findRevisions();
+
+    @Query("SELECT r FROM Revision r ORDER BY r.id desc")
+    List<Revision> findRevisions(Pageable pageable);
+
     @Query("SELECT r FROM Revision r, Resource res WHERE r.resource.id = res.id AND res.uid = :uid ORDER BY r.id desc")
     List<Revision> findRevisions(@Param("uid") String uid, Pageable pageable);
+
+    @Query("SELECT r FROM Revision r, Resource res WHERE r.resource.id = res.id AND res.name = :name ORDER BY r.id desc")
+    List<Revision> findRevisionsByResourceName(@Param("name") String name, Pageable pageable);
+
+    @Query("SELECT r FROM Revision r, Resource res WHERE r.resource.id = res.id AND res.author = :author ORDER BY r.id desc")
+    List<Revision> findRevisionsByResourceAuthor(@Param("author") String author, Pageable pageable);
 }

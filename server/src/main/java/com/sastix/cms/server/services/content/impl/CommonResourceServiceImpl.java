@@ -17,6 +17,7 @@
 package com.sastix.cms.server.services.content.impl;
 
 import com.sastix.cms.common.content.ResourceDTO;
+import com.sastix.cms.common.content.ResourceFieldsQueryDTO;
 import com.sastix.cms.common.content.exceptions.ContentValidationException;
 import com.sastix.cms.common.content.exceptions.ResourceAccessError;
 import com.sastix.cms.server.dataobjects.DataMaps;
@@ -32,6 +33,7 @@ import org.apache.tika.Tika;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -68,9 +70,49 @@ public class CommonResourceServiceImpl {
         return resource;
     }
 
+    public List<Revision> getAllRevisions(){
+        return revisionRepository.findRevisions();
+    }
+
     public Revision getLatestRevision(String uid){
         final List<Revision> revisions = revisionRepository.findRevisions(uid, PageRequest.of(0, 1));
         return revisions.isEmpty()?null:revisions.get(0);
+    }
+
+    public Revision getLatestRevisionByResourceFields(ResourceFieldsQueryDTO resourceFieldsQueryDTO){
+        List<Revision> revisions = new ArrayList<>();
+        if (resourceFieldsQueryDTO.getQueryResourceName() != null){
+            revisions = revisionRepository.findRevisionsByResourceName(
+                resourceFieldsQueryDTO.getQueryResourceName(),
+                PageRequest.of(0, 1)
+            );
+        }
+        if (resourceFieldsQueryDTO.getQueryResourceAuthor() != null){
+            revisions = revisionRepository.findRevisionsByResourceAuthor(
+                resourceFieldsQueryDTO.getQueryResourceAuthor(),
+                PageRequest.of(0, 1)
+            );
+        }
+        return revisions.isEmpty() ? null : revisions.get(0);
+    }
+
+    public List<Revision> getRevisionsByResourceFields(ResourceFieldsQueryDTO resourceFieldsQueryDTO, Pageable pageable){
+        //TODO: expand for complex resource queries
+        List<Revision> revisions = new ArrayList<>();
+        if (resourceFieldsQueryDTO.getQueryResourceName() != null){
+            revisions = revisionRepository.findRevisionsByResourceName(
+                resourceFieldsQueryDTO.getQueryResourceName(),
+                pageable
+            );
+        }else if (resourceFieldsQueryDTO.getQueryResourceAuthor() != null){
+            revisions = revisionRepository.findRevisionsByResourceAuthor(
+                resourceFieldsQueryDTO.getQueryResourceAuthor(),
+                pageable
+            );
+        }else{
+            revisions = revisionRepository.findRevisions(pageable);
+        }
+        return revisions;
     }
 
     public ResourceDTO convertToDTO(Resource resource) {

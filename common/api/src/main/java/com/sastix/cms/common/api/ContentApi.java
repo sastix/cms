@@ -23,6 +23,7 @@ import com.sastix.cms.common.content.exceptions.ResourceNotFound;
 import com.sastix.cms.common.content.exceptions.ResourceNotOwned;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ContentApi {
 
@@ -38,11 +39,12 @@ public interface ContentApi {
 
     ResourceDTO queryResource(ResourceQueryDTO resourceQueryDTO) throws ResourceAccessError, ResourceNotFound, ContentValidationException;
 
+    List<ResourceDTO> queryResourceByFields(ResourceFieldsQueryDTO resourceQueryDTO) throws ResourceAccessError, ResourceNotFound, ContentValidationException;
+
     ResourceDTO deleteResource(LockedResourceDTO lockedResourceDTO) throws ResourceNotOwned, ResourceAccessError, ContentValidationException;
 
     String getParentResource(String uuid);
 
     byte[] getData(DataDTO dataDTO) throws ResourceAccessError, ContentValidationException, IOException;
-
 
 }

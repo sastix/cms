@@ -31,6 +31,7 @@ public interface Constants {
     static String CREATE_RESOURCE = "createResource";
     static String UPDATE_RESOURCE = "updateResource";
     static String QUERY_RESOURCE = "queryResource";
+    static String QUERY_RESOURCE_BY_FIELDS = "queryResourceByFields";
     static String DELETE_RESOURCE = "deleteResource";
     static String GET_DATA = "getData";
     static String GET_MULTIPART_DATA = "getMultiPartData";

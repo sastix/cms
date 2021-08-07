@@ -390,6 +390,11 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
         return retLockDTO;
     }
 
+    @Override
+    public List<ResourceDTO> queryResourceByFields(ResourceFieldsQueryDTO resourceQueryDTO) throws ResourceAccessError, ResourceNotFound, ContentValidationException {
+        return null;
+    }
+
     private void nullValidationChecker(Object obj, Class aClass) {
         if (obj == null) {
             throw new CacheValidationException(aClass + " object cannot be null!");
