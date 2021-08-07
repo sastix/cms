@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    benchmarking:
+        build: .
+        working_dir: /work
+        command: /work/execute_test.sh urls.txt
+        volumes:
+            - "$PWD:/work"
