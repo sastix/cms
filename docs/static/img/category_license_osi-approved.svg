@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--part of the category icon pack by sixsixfive released under CC0 (https://creativecommons.org/publicdomain/zero/1.0/) on openclipart-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+ <defs id="0">
+  <linearGradient id="6">
+   <stop id="F" stop-color="#c6c6c0"/>
+   <stop id="G" offset="1" stop-color="#fff"/>
+  </linearGradient>
+  <linearGradient id="7">
+   <stop id="H" stop-color="#4e9a06"/>
+   <stop id="I" offset="1" stop-color="#73d216"/>
+  </linearGradient>
+  <linearGradient id="8">
+   <stop id="J" stop-color="#fff"/>
+   <stop id="K" offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient x1="31.02" y1="1051.78" x2="31.11" y2="1028.17" id="9" xlink:href="#8" gradientUnits="userSpaceOnUse" gradientTransform="translate(0,-1020.3622)"/>
+  <linearGradient x1="31.02" y1="1021.04" x2="31.18" y2="1025.18" id="A" xlink:href="#8" gradientUnits="userSpaceOnUse" gradientTransform="translate(0,-1020.3622)"/>
+  <radialGradient cx="13.531" cy="1049.88" r="16" id="B" xlink:href="#7" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.4329786,-1.4036705,1.3587115,1.387081,-1430.5122,-1405.3484)"/>
+  <radialGradient cx="60.48" cy="46.4" r="10.5" id="C" xlink:href="#6" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.4582936,-1.4349333,1.339204,1.361006,-134.01175,53.836205)"/>
+ </defs>
+ <rect width="32" height="32" rx="5" id="1" fill="url(#B)"/>
+ <path d="m 5,0.4816 c -2.5134381,0 -4.53125,2.0178 -4.53125,4.5312 l 0,22 c 0,2.5134 2.0178119,4.5312 4.53125,4.5312 l 22,0 c 2.513438,0 4.53125,-2.0178 4.53125,-4.5312 l 0,-22 C 31.53125,2.4994 29.513438,0.4816 27,0.4816 l -22,0 z" id="2" opacity="0.4" fill="none" stroke="#000"/>
+ <path d="m 5,1.4816 c -1.9834933,0 -3.53125,1.5477 -3.53125,3.5312 l 0,22 c 0,1.9835 1.5477567,3.5312 3.53125,3.5312 l 22,0 c 1.983493,0 3.53125,-1.5477 3.53125,-3.5312 l 0,-22 C 30.53125,3.0293 28.983493,1.4815 27,1.4816 l -22,0 z" id="3" opacity="0.5" fill="none" stroke="url(#A)"/>
+ <path d="m 5,1.4816 c -1.9834933,0 -3.53125,1.5477 -3.53125,3.5312 l 0,22 c 0,1.9835 1.5477567,3.5312 3.53125,3.5312 l 22,0 c 1.983493,0 3.53125,-1.5477 3.53125,-3.5312 l 0,-22 C 30.53125,3.0293 28.983493,1.4815 27,1.4816 l -22,0 z" id="4" opacity="0.2" fill="none" stroke="url(#9)"/>
+ <g transform="translate(-2.5e-7,-0.4998995)" id="5">
+  <path d="m 15.999972,6.833598 c -5.79897,0 -10.4999705,4.700994 -10.4999705,10.50003 0,4.501109 2.83307,8.339375 6.8128505,9.832372 l 2.41967,-6.452501 c -1.36802,-0.51315 -2.34191,-1.832624 -2.34191,-3.379871 0,-1.993409 1.61601,-3.609417 3.60936,-3.609417 1.99341,0 3.60948,1.616008 3.60948,3.609417 0,1.547247 -0.97395,2.866721 -2.34197,3.379871 L 19.687151,27.166 c 3.979717,-1.492997 6.812848,-5.331263 6.812848,-9.832372 0,-5.799036 -4.700927,-10.50003 -10.500027,-10.50003 z" id="D" opacity="0.4"/>
+  <path d="m 15.999972,5.833799 c -5.79897,0 -10.4999705,4.700994 -10.4999705,10.50003 0,4.501109 2.83307,8.339375 6.8128505,9.832372 l 2.41967,-6.452501 c -1.36802,-0.51315 -2.34191,-1.832624 -2.34191,-3.379871 0,-1.993409 1.61601,-3.609417 3.60936,-3.609417 1.99341,0 3.60948,1.616008 3.60948,3.609417 0,1.547247 -0.97395,2.866721 -2.34197,3.379871 l 2.419669,6.452501 c 3.979717,-1.492997 6.812848,-5.331263 6.812848,-9.832372 0,-5.799036 -4.700927,-10.50003 -10.500027,-10.50003 z" id="E" fill="url(#C)"/>
+ </g>
+</svg>
