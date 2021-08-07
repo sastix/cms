@@ -1,0 +1,25 @@
+pipeline {
+    agent { label 'flutter-agent' }
+    stages {
+        stage('Checkout'){
+            steps{
+                checkout scm
+            }
+        }
+        stage('Flutter check'){
+            steps{
+                sh "flutter doctor -v"
+            }
+        }
+        stage('Run Flutter tests for web'){
+            steps{
+                sh "flutter test --platform chrome"
+            }
+        }
+        stage('Flutter Build web'){
+            steps{
+                sh "flutter build web"
+            }
+        }
+    }
+}
