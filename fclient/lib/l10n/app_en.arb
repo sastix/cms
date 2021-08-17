@@ -1,0 +1,136 @@
+{
+    "@@locale" : "en",
+
+    "login": "Login",
+    "@login": {
+        "description": "Login prompt."
+    },
+    "homePagePrompt": "Welcome to Sastix CMS",
+    "@homePagePrompt": {
+        "description": "A welcoming prompt for the Home Page"
+    },
+    "homepagePath": "Homepage",
+    "@homepagePath": {
+        "description": "Homepage"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings prompt."
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "Logout prompt."
+    },
+    "createResourcePrompt": "Create a resource",
+    "@createResourcePrompt": {
+        "description": "A prompt to create a resource"
+    },
+    "enterAuthorError": "Please enter resource author",
+    "@enterAuthorError": {
+        "description": "Message to display if author is empty"
+    },
+    "resourceAuthor": "Resource Author",
+    "@resourceAuthor": {
+        "description": "Form field name"
+    },
+    "externalURIPrompt": "External URI",
+    "@externalURIPrompt": {
+        "description": "Form field name"
+    },
+    "emptyExternalURIError": "Please enter external uri",
+    "@emptyExternalURIError": {
+        "description": "Message to display if external uri is empty"
+    },
+    "invalidExternalURIError": "Please enter a valid uri",
+    "@invalidExternalURIError": {
+        "description": "Message to display if external uri is invalid"
+    },
+    "mediaTypePrompt": "Media Type",
+    "@mediaTypePrompt": {
+        "description": "Form field name"
+    },
+    "emptyMediaTypeError": "Please enter media type",
+    "@emptyMediaTypeError": {
+        "description": "Message to display if media type is empty"
+    },
+    "resources": "Resources",
+    "@resources": {
+        "description": "Resources"
+    },
+    "resourceUID": "Resource UID",
+    "@resourceUID": {
+        "description": "Resource UID"
+    },
+    "resourceURI": "Resource URI",
+    "@resourceURI": {
+        "description": "Check raw file with resource URI to server"
+    },
+    "resourceNamePrompt": "Resource name",
+    "@resourceNamePrompt": {
+        "description": "Form field name"
+    },
+    "emptyResourceNameError": "Please enter name",
+    "@emptyResourceNameError": {
+        "description": "Message to display if resource name is empty"
+    },
+    "tenantIdPrompt": "Tenant Id",
+    "@tenantIdPrompt": {
+        "description": "Form field name"
+    },
+    "emptyTenantIdError": "Please enter tenant id",
+    "@emptyTenantIdError": {
+        "description": "Message to display if tenant id is empty"
+    },
+    "cancelPrompt": "Cancel",
+    "@cancelPrompt": {
+        "description": "Cancel prompt"
+    },
+    "createPrompt": "Create",
+    "@createPrompt": {
+        "description": "Create prompt"
+    },
+    "deletePrompt": "Delete",
+    "@deletePrompt": {
+        "description": "Delete prompt"
+    },
+    "actions": "Actions",
+    "@actions": {
+        "description": "Actions prompt"
+    },
+    "watchVideoPrompt": "Watch",
+    "@watchVideoPrompt": {
+        "description": "A watch video prompt"
+    },
+    "fetchingResources": "Fetching resources",
+    "@fetchingResources": {
+        "description": "A placeholder while fetching resources"
+    },
+    "loadingResources": "Loading resources",
+    "@loadingResources": {
+        "description": "A placeholder while loading resources"
+    },
+    "resourceFetchingFailed": "Failed to get resources, please try to authenticate",
+    "@resourceFetchingFailed": {
+        "description": "Resource fetching failure message"
+    },
+    "unexpectedErrorMessage": "An unexpected error happened!",
+    "@unexpectedErrorMessage": {
+        "description": "Unexpected error message"
+    },
+    "resourceSuccessfullyDeleted": "Resource was successfully deleted",
+    "@resourceSuccessfullyDeleted": {
+        "description": "A resource was deleted"
+    },
+    "creatingResource": "Creating resource",
+    "@creatingResource": {
+        "description": "Creating resource loader"
+    },
+    "resourceSuccessfullyCreated": "Resource was successfully created",
+    "@resourceSuccessfullyCreated": {
+        "description": "A resource was created"
+    },
+    "resourceCreationError": "The resource couldn't be created",
+    "@resourceCreationError": {
+        "description": "A resource was not created"
+    }
+}

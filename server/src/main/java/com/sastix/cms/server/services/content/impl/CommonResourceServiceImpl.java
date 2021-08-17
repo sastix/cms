@@ -122,6 +122,7 @@ public class CommonResourceServiceImpl {
             resourceDTO.setAuthor(resource.getAuthor());
             resourceDTO.setResourceUID(resource.getUid());
             resourceDTO.setResourceURI(resource.getUri());
+            resourceDTO.setMediaType(resource.getMediaType());
             Set<Resource> resources = resource.getResources();
             if (resources != null && resources.size() > 0) {
                 List<ResourceDTO> resourceList = new ArrayList<>();

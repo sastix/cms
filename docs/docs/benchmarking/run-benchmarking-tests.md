@@ -14,6 +14,13 @@ checks. The files that should be changed are:
 use, e.t.c.
 - `urls.txt` : The URLs that the tests will be performed against.
 
+:::caution
+
+The host of the URLs should be a valid IP or DNS. Don't use values
+like localhost or 127.0.0.1.
+
+:::
+
 After the configuration is finished the tests can be run with:
 
 ```

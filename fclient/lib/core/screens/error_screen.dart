@@ -1,14 +1,14 @@
-import 'package:fclient/widgets/app_bar.dart';
+import 'package:fclient/core/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class HomePageScreen extends StatelessWidget {
+class ErrorPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       body: Center(
-        child: Text('Home Screen'),
+        child: Text('Error Screen'),
       ),
     );
   }

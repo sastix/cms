@@ -9,7 +9,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/sastix_logo.ico',
   organizationName: 'ellak',
   projectName: 'gsoc2021-sastixcms',
   themeConfig: {

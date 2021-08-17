@@ -48,6 +48,8 @@ public class ResourceDTO {
      */
     private String resourceURI;
 
+    private String mediaType;
+
     /**
      * A list of all linked resources for this UID, valid only if this UID is a "package" containing several other resources that have been inserted.
      */

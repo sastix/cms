@@ -11,9 +11,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
   openid_client: ^0.4.1
   cupertino_icons: ^1.0.2
   flutter_dotenv: ^5.0.0
+  shared_preferences: ^2.0.6
+  jwt_decoder: ^2.0.1
+  flutter_bloc: ^7.1.0
+  equatable: ^2.0.3
+  dio: ^4.0.0
+  easy_dynamic_theme: ^2.2.0
+  settings_ui: ^1.0.0
+  url_launcher: ^6.0.9
+  chewie: ^1.2.2
+  video_player: ^2.1.13
 
 dev_dependencies:
   flutter_test:
@@ -21,5 +34,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/config/
+    - assets/images/
