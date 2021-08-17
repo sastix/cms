@@ -44,16 +44,12 @@ avoid any conflicts. Default Keycloak and MariaDB passwords can be customized th
 
 ## Change the required configuration to the server properties
 
-```
-cd server
-```
-
 You can change the server configuration by editing the `application.properties` files in
-the `src/main/resources` folder.
+the `src/main/resources` of the `server` folder.
 
 :::info
 
-You probably want to change the following values:
+You should to change the following values:
 - server.port: the development server's port (default is 9082).
 - cms.volume: the folder where the cms will save the resources (you should avoid permission
 issues by specifying a user owned folder).
@@ -67,7 +63,7 @@ changed the server will accept unauthenticated requests.
 
 ## Spin up the spring-boot development server
 
-In the server folder use:
+In the `server` folder use:
 
 ```
 mvn spring-boot:run
@@ -75,13 +71,32 @@ mvn spring-boot:run
 
 ## Spin up the Flutter client
 
-The Flutter application for the web can be started with:
+To run the Flutter client one needs to have Flutter installed on
+one's system. The installation is described in the
+[documentation](https://flutter.dev/docs/get-started/install). After
+installing Flutter you need to set the environment variables in the
+`assets/config/.env` file. Copying from the
+`assets/config/.env.example` file will start the Flutter application
+using the default values for the Docker development environment.
+
+:::caution
+
+The FLUTTER_CLIENT_ID must be the same as the server Keycloak client.
+The default development environment for it is `cms-server`.
+
+:::
+
+Flutter can work with devices, emulators and browsers. For example
+the Chrome browser can be used by setting the `CHROME_EXECUTABLE`
+environment variable to the Chrome executable.
+
+After that the Flutter application for the web can be started with:
 
 ```
+cd fclient
+flutter pub get
 flutter run -d chrome
 ```
-
-with the Chrome bowser installed.
 
 ## Example usage
 

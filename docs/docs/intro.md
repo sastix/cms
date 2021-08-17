@@ -12,3 +12,7 @@ provide stability, scalability, robust monitoring and ease of use.
 🔧 Configurable to fit a range of use cases.
 
 💪 Robust and scalable.
+
+The purpose of Sastix CMS is to provide an easy interface for 
+resource management offering multitenancy and easy deployment of
+robust components.

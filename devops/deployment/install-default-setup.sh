@@ -13,19 +13,28 @@ read -p "Do you want a Keycloak enabled deployment [Y/N]: " keycloak_y
 echo ''
 read -p "Do you want the monitoring stack to be deployed [Y/N]: " monitoring_y
 echo ''
+echo 'The frontend client (Flutter application) will be deployed, too.'
+read -p "What would you like to be you site's name? (e.g. Sastix-CMS): " site_name
+echo ''
+read -p "What protocol do you plan on using? (http or https): " protocol
+echo ''
 echo '================= Building images ================='
 echo ''
 echo 'Building MariaDB image'
 docker build -t sastix/cmsmariadb:1.0 $DEPLOYMENT_FOLDER/mariadb
 
 echo 'Building Sastix-CMS image'
-# docker run --rm -v $ROOT_FOLDER:/work -w /work maven:3.6.3-openjdk-11 bash -c "cd /work && mvn clean install -DskipTests && cd server && mvn clean package -DskipTests"
+docker run --rm -v $ROOT_FOLDER:/work -w /work maven:3.6.3-openjdk-11 bash -c "cd /work && mvn clean install -DskipTests && cd server && mvn clean package -DskipTests"
 docker build -f $DEPLOYMENT_FOLDER/sxcms/Dockerfile -t sastix/sxcms:1.0 $ROOT_FOLDER/server
 
 echo 'Building NGINX image'
-docker build -f $DEPLOYMENT_FOLDER/nginx/Dockerfile -t sxcms-nginx $DEPLOYMENT_FOLDER/nginx
+cp $DEPLOYMENT_FOLDER/nginx/env.templates/.env $ROOT_FOLDER/fclient/assets/config/.env
+sed -i "s/protocol/$protocol/g" $ROOT_FOLDER/fclient/assets/config/.env
+sed -i "s/dns_server_name/$domain/g" $ROOT_FOLDER/fclient/assets/config/.env
+sed -i "s/site_name/$site_name/g" $ROOT_FOLDER/fclient/assets/config/.env
+docker build -f $ROOT_FOLDER/fclient/Dockerfile -t sxcms-nginx $ROOT_FOLDER/fclient
 
-echo '================= Starting database ================='
+echo '================= Starting database =========================='
 cd $DEPLOYMENT_FOLDER/mariadb
 docker-compose up -d
 
