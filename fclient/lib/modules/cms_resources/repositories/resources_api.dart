@@ -38,7 +38,7 @@ class ResourcesAPI {
       DeleteCMSResourceRequestDTO deleteCMSResourceRequestDTO) async {
     RestClient restClient = new RestClient();
     Map<String, dynamic> data = {};
-    data["resourceUID"] = deleteCMSResourceRequestDTO.resourceUID;
+    data = deleteCMSResourceRequestDTO.toMap();
     Response response =
         await restClient.dio.post(deleteResourceEndpoint, data: data);
     return CMSResource.fromCMSJson(response.data);

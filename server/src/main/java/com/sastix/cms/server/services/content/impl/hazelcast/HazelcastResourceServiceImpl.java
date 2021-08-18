@@ -385,18 +385,36 @@ public class HazelcastResourceServiceImpl implements ResourceService {
             throw new ResourceNotOwned("The supplied resource UID[" + lockedResourceDTO.getResourceUID() + "] cannot be modified, there is no active lock.");
         }
 
-        Revision newRevision = new Revision();
-        newRevision.setCreatedAt(latestRevision.getCreatedAt());
-        newRevision.setUpdatedAt(latestRevision.getUpdatedAt());
-        newRevision.setDeletedAt(DateTime.now().toDate());
-        newRevision.setTitle(DateTime.now().toString()); //TODO: what kind of title should we store? It is not described in specs
-        newRevision.setResource(latestRevision.getResource());
-        newRevision.setParentResource(latestRevision.getResource());
-        revisionRepository.save(newRevision);
+        latestRevision.setDeletedAt(DateTime.now().toDate());
+        latestRevision.setDeletedAt(DateTime.now().toDate());
 
-        //remove from cache
         RemoveCacheDTO removeCacheDTO = new RemoveCacheDTO(latestRevision.getResource().getUri());
-        cacheService.removeCachedResource(removeCacheDTO);
+        try{
+            cacheService.removeCachedResource(removeCacheDTO);
+        }catch(DataNotFound e){
+            log.info("The supplied resource UID[" + lockedResourceDTO.getResourceUID() + "]" + "was not found in cache.");
+        }
+
+        return crs.convertToDTO(latestRevision.getResource());
+    }
+
+    @Override
+    @Transactional
+    public ResourceDTO deleteResourceNoLock(ResourceDTO resourceDto) throws ResourceAccessError {
+        final Revision latestRevision = crs.getLatestRevision(resourceDto.getResourceUID());
+        if (latestRevision == null) {
+            throw new ResourceAccessError("The supplied resource UID[" + resourceDto.getResourceUID() + "] does not exist.");
+        }
+
+        latestRevision.setDeletedAt(DateTime.now().toDate());
+        revisionRepository.save(latestRevision);
+
+        RemoveCacheDTO removeCacheDTO = new RemoveCacheDTO(latestRevision.getResource().getUri());
+        try{
+            cacheService.removeCachedResource(removeCacheDTO);
+        }catch(DataNotFound e){
+            log.info("The supplied resource UID[" + resourceDto.getResourceUID() + "]" + "was not found in cache.");
+        }
 
         return crs.convertToDTO(latestRevision.getResource());
     }

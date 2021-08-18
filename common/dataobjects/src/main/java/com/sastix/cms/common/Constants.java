@@ -33,6 +33,7 @@ public interface Constants {
     static String QUERY_RESOURCE = "queryResource";
     static String QUERY_RESOURCE_BY_FIELDS = "queryResourceByFields";
     static String DELETE_RESOURCE = "deleteResource";
+    static String DELETE_RESOURCE_NO_LOCK = "deleteResourceNoLock";
     static String GET_DATA = "getData";
     static String GET_MULTIPART_DATA = "getMultiPartData";
     static String GET_DATA_FROM_UUID = "getDataUuid";

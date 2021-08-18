@@ -31,8 +31,8 @@ class ResourcesQueryBloc
       yield ResourcesQueryStateFailed(error: event.error);
     } else if (event is ResourcesDeleteQueryStarted) {
       yield ResourcesQueryStateInProgress();
-      CMSResource resource = await cmsResourceRepository.deleteResource(
-          DeleteCMSResourceRequestDTO(resourceUID: event.resourceUID));
+      CMSResource resource = await cmsResourceRepository
+          .deleteResource(event.deleteCMSResourceRequestDTO);
       yield ResourcesDeleteQueryStateSuccess(resource: resource);
       List<CMSResource> resources = await cmsResourceRepository.getResources();
       yield ResourcesQueryStateSuccess(resources: resources);

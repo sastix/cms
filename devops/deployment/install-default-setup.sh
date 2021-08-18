@@ -16,7 +16,7 @@ echo ''
 echo 'The frontend client (Flutter application) will be deployed, too.'
 read -p "What would you like to be you site's name? (e.g. Sastix-CMS): " site_name
 echo ''
-read -p "What protocol do you plan on using? (http or https): " protocol
+read -p "What protocol do you plan on using? (http or https): " http_or_https
 echo ''
 echo '================= Building images ================='
 echo ''
@@ -29,7 +29,10 @@ docker build -f $DEPLOYMENT_FOLDER/sxcms/Dockerfile -t sastix/sxcms:1.0 $ROOT_FO
 
 echo 'Building NGINX image'
 cp $DEPLOYMENT_FOLDER/nginx/env.templates/.env $ROOT_FOLDER/fclient/assets/config/.env
-sed -i "s/protocol/$protocol/g" $ROOT_FOLDER/fclient/assets/config/.env
+if [ "$keycloak_y" = "Y" ] || [ "$keycloak_y" = "y" ] ; then
+    sed -i "s/false/true/g" $ROOT_FOLDER/fclient/assets/config/.env
+fi
+sed -i "s/http_or_https/$http_or_https/g" $ROOT_FOLDER/fclient/assets/config/.env
 sed -i "s/dns_server_name/$domain/g" $ROOT_FOLDER/fclient/assets/config/.env
 sed -i "s/site_name/$site_name/g" $ROOT_FOLDER/fclient/assets/config/.env
 docker build -f $ROOT_FOLDER/fclient/Dockerfile -t sxcms-nginx $ROOT_FOLDER/fclient

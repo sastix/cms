@@ -1,5 +1,7 @@
 import 'package:fclient/config/routes/route_paths.dart';
 import 'package:fclient/core/screens/error_screen.dart';
+import 'package:fclient/modules/cms_resources/models/cms_resource.dart';
+import 'package:fclient/modules/cms_resources/screens/resource_details_screen.dart';
 import 'package:fclient/modules/dashboard/screens/home_screen.dart';
 import 'package:fclient/modules/cms_resources/screens/resources_screen.dart';
 import 'package:fclient/modules/users/screens/authentication_screen.dart';
@@ -15,6 +17,9 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => HomePageScreen(), settings: settings);
       case RESOURCES_PAGE_PATH:
+        if (settings.arguments != null){
+          return MaterialPageRoute(builder: (_) => ResourceDetailsScreen(resourceDto: settings.arguments as CMSResource));
+        }
         return MaterialPageRoute(
             builder: (_) => ResourcesScreen(), settings: settings);
       case SETTINGS_PAGE_PATH:

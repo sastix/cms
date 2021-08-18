@@ -43,6 +43,8 @@ public interface ContentApi {
 
     ResourceDTO deleteResource(LockedResourceDTO lockedResourceDTO) throws ResourceNotOwned, ResourceAccessError, ContentValidationException;
 
+    ResourceDTO deleteResourceNoLock(ResourceDTO resourceDTO) throws ResourceAccessError;
+
     String getParentResource(String uuid);
 
     byte[] getData(DataDTO dataDTO) throws ResourceAccessError, ContentValidationException, IOException;

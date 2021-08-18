@@ -170,6 +170,16 @@ public class ResourceController implements BeanFactoryAware {
         return resourceDTO;
     }
 
+    @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.DELETE_RESOURCE_NO_LOCK, method = RequestMethod.POST)
+    @PreAuthorize("hasRole('admin') or filterObject.author == authentication.principal.name")
+    public ResourceDTO deleteResourceNoLock(@Valid @RequestBody ResourceDTO deleteResourceDTO, BindingResult result) throws ContentValidationException, ResourceNotOwned, ResourceAccessError {
+        log.trace(Constants.DELETE_RESOURCE_NO_LOCK);
+        validationHelper.validate(result);
+        final ResourceDTO resourceDTO = resourceService.deleteResourceNoLock(deleteResourceDTO);
+        log.trace(resourceDTO.toString());
+        return resourceDTO;
+    }
+
     @RequestMapping(value = "/v" + Constants.REST_API_1_0 + "/" + Constants.GET_DATA, method = RequestMethod.POST)
     public byte[] getData(@Valid @RequestBody DataDTO dataDTO, HttpServletResponse response, BindingResult result) throws ContentValidationException, ResourceAccessError, IOException {
         log.trace(Constants.GET_DATA);

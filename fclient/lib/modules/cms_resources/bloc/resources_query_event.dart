@@ -22,15 +22,15 @@ class ResourcesQueryFailed extends ResourcesQueryEvent {
 }
 
 class ResourcesDeleteQueryStarted extends ResourcesQueryEvent {
-  final String resourceUID;
+  final DeleteCMSResourceRequestDTO deleteCMSResourceRequestDTO;
 
-  ResourcesDeleteQueryStarted({required this.resourceUID});
+  ResourcesDeleteQueryStarted({required this.deleteCMSResourceRequestDTO});
 }
 
 class ResourcesDeleteQueryFinished extends ResourcesQueryEvent {
-  final String resourceUID;
+  final DeleteCMSResourceRequestDTO deleteCMSResourceRequestDTO;
 
-  ResourcesDeleteQueryFinished({required this.resourceUID});
+  ResourcesDeleteQueryFinished({required this.deleteCMSResourceRequestDTO});
 }
 
 class ResourcesDeleteQueryFailed extends ResourcesQueryEvent {

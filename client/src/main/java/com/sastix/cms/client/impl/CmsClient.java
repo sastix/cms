@@ -171,6 +171,16 @@ public class CmsClient implements ContentClient, LockClient, CacheClient, BeanFa
     }
 
     @Override
+    public ResourceDTO deleteResourceNoLock(ResourceDTO deleteResourceDTO) throws ResourceNotOwned, ResourceAccessError, ContentValidationException {
+        String url = apiVersionClient.getApiUrl() + "/" + Constants.DELETE_RESOURCE_NO_LOCK;
+        log.trace("API call: " + url);
+        log.trace("Request: " + deleteResourceDTO.toString());
+        ResourceDTO resourceDTO = retryRestTemplate.postForObject(url, deleteResourceDTO, ResourceDTO.class);
+        log.trace("Response: " + resourceDTO.toString());
+        return resourceDTO;
+    }
+
+    @Override
     public byte[] getData(DataDTO dataDTO) throws ResourceAccessError, ContentValidationException {
         String url = apiVersionClient.getApiUrl() + "/" + Constants.GET_DATA;
         log.trace("API call: " + url);

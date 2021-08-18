@@ -1,7 +1,9 @@
 import 'package:fclient/core/widgets/app_bar.dart';
 import 'package:fclient/modules/cms_resources/bloc/resources_query_bloc.dart';
+import 'package:fclient/modules/cms_resources/models/cms_resource.dart';
 import 'package:fclient/modules/cms_resources/repositories/cms_resource_repository.dart';
-import 'package:fclient/modules/cms_resources/widgets/resources_data_table.dart';
+import 'package:fclient/modules/cms_resources/widgets/add_resource_popup.dart';
+import 'package:fclient/modules/cms_resources/widgets/data_table/resources_data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,10 +51,27 @@ class ResourcesScreen extends StatelessWidget {
             ),
           ));
     } else if (state is ResourcesQueryStateSuccess) {
-      return Scaffold(
-        appBar: CustomAppBar(),
-        body: ResourcesDataTable(resources: state.resources),
-      );
+      List<CMSResource> resources = state.resources;
+      if (resources.isEmpty){
+        return Scaffold(
+          appBar: CustomAppBar(),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(AppLocalizations.of(context)!.noResourcesFoundWithYourAccount),
+                Text(AppLocalizations.of(context)!.doYouWantToCreateAResource),
+                AddResourcePopup(),
+              ],
+            ),
+          ));
+      }else{
+        return Scaffold(
+          appBar: CustomAppBar(),
+          body: ResourcesDataTable(resources: state.resources),
+        );
+      }
     } else if (state is ResourcesQueryStateFailed) {
       return Scaffold(
           appBar: CustomAppBar(),
@@ -68,10 +87,16 @@ class ResourcesScreen extends StatelessWidget {
     } else if (state is ResourcesDeleteQueryStateSuccess) {
       return Scaffold(
         appBar: CustomAppBar(),
-        body: SnackBar(
-          content:
-              Text(AppLocalizations.of(context)!.resourceSuccessfullyDeleted),
-        ),
+        body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+                Text(AppLocalizations.of(context)!.resourceSuccessfullyDeleted),
+              ],
+            ),
+          ),
       );
     } else if (state is ResourcesCreateQueryStateInProgress) {
       return Scaffold(

@@ -8,6 +8,7 @@
     "logout": "Έξοδος",
     "homepagePath": "Αρχική",
     "resources": "Αρχεία",
+    "resource": "Αρχείο",
     "resourceUID": "UID αρχείου",
     "resourceURI": "URI αρχείου",
     "createResourcePrompt": "Δημιουργία αρχείου",
@@ -34,5 +35,10 @@
     "resourceSuccessfullyDeleted": "Το αρχείο διεγράφη επιτυχώς",
     "creatingResource": "Το αρχείο δημιουργείται",
     "resourceSuccessfullyCreated": "Το αρχείο δημιουργήθηκε επιτυχώς",
-    "resourceCreationError": "Το αρχείο δε μπόρεσε να δημιουργηθεί"
+    "resourceCreationError": "Το αρχείο δε μπόρεσε να δημιουργηθεί",
+    "noResourcesFoundWithYourAccount": "Δε βρέθηκαν προσπελάσιμα αρχεία με το λογαριασμό σας",
+    "doYouWantToCreateAResource": "Θα θέλατε να δημιουργήσετε;",
+    "download": "Κατεβάστε",
+    "name": "Όνομα",
+    "watch": "Δείτε"
 }

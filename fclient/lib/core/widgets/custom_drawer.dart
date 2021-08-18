@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
       children: [
         DrawerHeader(
             decoration: BoxDecoration(color: Colors.blue[100]),
-            child: ImageIcon(AssetImage("images/sastix_logo.png"))),
+            child: ImageIcon(AssetImage("assets/images/sastix_logo.png"))),
         ListTile(
           title: Text(AppLocalizations.of(context)!.homepagePath),
           onTap: () {

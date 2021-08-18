@@ -57,6 +57,10 @@
     "@resources": {
         "description": "Resources"
     },
+    "resource": "Resource",
+    "@resources": {
+        "description": "Resource field"
+    },
     "resourceUID": "Resource UID",
     "@resourceUID": {
         "description": "Resource UID"
@@ -132,5 +136,25 @@
     "resourceCreationError": "The resource couldn't be created",
     "@resourceCreationError": {
         "description": "A resource was not created"
+    },
+    "noResourcesFoundWithYourAccount": "No accessible resources were found with your account",
+    "@noResourcesFoundWithYourAccount": {
+        "description": "No accessible resources alert"
+    },
+    "doYouWantToCreateAResource": "Would you like to create one?",
+    "@doYouWantToCreateAResource": {
+        "description": "Create resource prompt"
+    },
+    "download": "Download",
+    "@download": {
+        "description": "Download prompt"
+    },
+    "name": "Name",
+    "@name": {
+        "description": "Name field"
+    },
+    "watch": "Watch",
+    "@watch": {
+        "description": "Watch prompt"
     }
 }

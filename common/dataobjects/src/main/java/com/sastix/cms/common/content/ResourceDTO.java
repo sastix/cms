@@ -48,6 +48,8 @@ public class ResourceDTO {
      */
     private String resourceURI;
 
+    private String name;
+
     private String mediaType;
 
     /**
